@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    console.log('The “if” statement');
+    let year = prompt('In which year was ECMAScript-2015 specification published?', '');
+    if (year == 2015) {
+        console.log("That's correct!");
+        console.log("You're so smart!");
+    } else {
+        console.log('How can you be so wrong?'); // 2015 以外的任何值
+    }
+</script>
+<script>
+    console.log('Several conditions: “else if”');
+    let year1 = prompt('In which year was ECMAScript-2015 specification published?', '');
+
+    if (year1 < 2015) {
+        console.log('Too early...');
+    } else if (year1 > 2015) {
+        console.log('Too late');
+    } else {
+        console.log('Exactly!');
+    }
+</script>
+<script>
+    console.log('Conditional operator ‘?’');
+    let accessAllowed;
+    let age = prompt('How old are you?', '');
+
+    if (age > 18) {
+        accessAllowed = true;
+    } else {
+        accessAllowed = false;
+    }
+    console.log(accessAllowed);
+
+    let accessAllowed2 = (age > 18) ? true : false;
+    console.log(accessAllowed2)
+</script>
+<script>
+    console.log('Multiple ‘?’');
+    let age3 = prompt('age?', 18);
+    let message =
+        (age < 3) ? 'Hi, baby!' :
+            (age < 18) ? 'Hello!' :
+                (age < 100) ? 'Greetings' :
+                    'What an unusual age!';
+    console.log(message)
+</script>
+<script>
+    console.log('Non-traditional use of ‘?’');
+    let company = prompt('Which company created JavaScript?', '');
+
+    (company == 'Netscape') ?
+        alert('Right!') :
+        alert('Wrong.');
+</script>
+</body>
+</html>
