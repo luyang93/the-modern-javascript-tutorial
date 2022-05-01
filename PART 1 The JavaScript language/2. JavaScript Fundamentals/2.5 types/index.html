@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    let message = "hello";
+    message = 12345;
+</script>
+<script>
+    let n = 123;
+    n = 1234.567
+</script>
+<script>
+    alert(1 / 0);
+    alert(Infinity);
+    alert("sdfhs" / 2);
+    alert(NaN + 1);
+    alert(2 * NaN);
+    alert("sdjlfj" / 2 - 1);
+</script>
+<script>
+    const bigInt = 1234567890123456789012345678901234567890n;
+    const bigInt2 = BigInt(1234567890123456789012345678901234567890);
+</script>
+<script>
+    let str = "Hello";
+    let str2 = 'Single quotes are ok too';
+    let phrase = `can embed another ${str}`;
+</script>
+<script>
+    let name = "John";
+
+    // 嵌入一个变量
+    alert(`Hello, ${name}!`); // Hello, John!
+
+    // 嵌入一个表达式
+    alert(`the result is ${1 + 2}`); // the result is 3
+    alert("the result is $(1+2)")
+</script>
+<script>
+    let nameFieldChecked = true; // yes, name field is checked
+    let ageFieldChecked = false; // no, age field is not checked
+    let isGreater = 4 > 1;
+    alert(isGreater)
+</script>
+<script>
+    let age = null;
+    alert(age);
+</script>
+<script>
+    let age2;
+    alert(age2);
+</script>
+<script>
+    let age3 = 100;
+    age3 = undefined;
+    console.log(age3)
+</script>
+<script>
+    console.log(typeof undefined);
+    console.log(typeof 0);
+    console.log(typeof 10n);
+    console.log(typeof true);
+    console.log(typeof 'foo');
+    console.log(typeof Symbol('id'));
+    console.log(typeof Math);
+    console.log(typeof null);
+    console.log(typeof alert);
+</script>
+</body>
+</html>
