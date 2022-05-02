@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    console.log('|| (OR)');
+    console.log(true || true);
+    console.log(false || true);
+    console.log(true || false);
+    console.log(false || false);
+    if (1 || 0) { // 工作原理相当于 if( true || false )
+        alert('truthy!');
+    }
+    let hour = 12;
+    let isWeekend = true;
+
+    if (hour < 10 || hour > 18 || isWeekend) {
+        alert('The office is closed.'); // 是周末
+    }
+</script>
+<script>
+    console.log('OR "||" finds the first truthy value');
+    console.log(1 || 0); // 1（1 是真值）
+
+    console.log(null || 1); // 1（1 是第一个真值）
+    console.log(null || 0 || 1); // 1（第一个真值）
+
+    console.log(undefined || null || 0); // 0（都是假值，返回最后一个值）
+</script>
+<script>
+    console.log('Getting the first truthy value from a list of variables or expressions.');
+    let firstName = "";
+    let lastName = "";
+    let nickName = "SuperCoder";
+
+    console.log(firstName || lastName || nickName || "Anonymous"); // SuperCoder
+</script>
+<script>
+    console.log('Short-circuit evaluation.');
+    true || alert("not printed");
+    false || alert("printed");
+</script>
+<script>
+    console.log('&& (AND)');
+    console.log(true && true);   // true
+    console.log(false && true);  // false
+    console.log(true && false);  // false
+    console.log(false && false); // false
+
+    let hour1 = 12;
+    let minute1 = 30;
+
+    if (hour1 == 12 && minute1 == 30) {
+        console.log('Time is 12:30');
+    }
+</script>
+<script>
+    console.log('AND “&&” finds the first falsy value');
+    console.log(1 && 0);
+    console.log(1 && 5);
+    console.log(null && 5);
+    console.log(0 && 'no matter what');
+    console.log(1 && 2 && null && 3);
+    console.log(1 && 2 && 3);
+</script>
+<script>
+    console.log('! (NOT)')
+    console.log(!true);
+    console.log(!0);
+    console.log(!!'non-empty string');
+    console.log(!!null);
+</script>
+</body>
+</html>
