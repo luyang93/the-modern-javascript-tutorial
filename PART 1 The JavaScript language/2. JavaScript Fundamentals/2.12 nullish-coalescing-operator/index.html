@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    let user;
+
+    console.log(user ?? 'Anonymous');
+</script>
+<script>
+    let firstName = null;
+    let lastName = null;
+    let nickName = "Supercoder";
+
+    // shows the first defined value:
+    console.log(firstName ?? lastName ?? nickName ?? "Anonymous"); // Supercoder
+</script>
+<script>
+    let height = 0;
+
+    console.log(height || 100); // 100
+    console.log(height ?? 100); // 0
+</script>
+<script>
+    let height1 = null;
+    let width1 = null;
+    let area = (height1 ?? 100) * (width1 ?? 50);
+    console.log(area);
+</script>
+<script>
+    // console.log(1 && 2 ?? 3);
+    console.log((1 && 2) ?? 3);
+</script>
+</body>
+</html>
