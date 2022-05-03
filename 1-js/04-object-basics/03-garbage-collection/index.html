@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+  // user 具有对这个对象的引用
+  let user = {
+    name: 'John',
+  };
+
+  user = null;
+</script>
+<script>
+  let user2 = {
+    name: 'John',
+  };
+
+  let admin = user2;
+  user2 = null;
+
+  console.log(user2);
+  console.log(admin);
+</script>
+<script>
+  function marry(man, woman) {
+    woman.husband = man;
+    man.wife = woman;
+
+    return {
+      father: man,
+      mother: woman,
+    };
+  }
+
+  let family = marry(
+      {
+        name: 'John',
+      },
+      {
+        name: 'Ann',
+      },
+  );
+
+  delete family.father;
+  delete family.mother.husband;
+  console.log(family);
+</script>
+</body>
+</html>
