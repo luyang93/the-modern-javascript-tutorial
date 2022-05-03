@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+  let user = {name: 'John'};
+
+  let admin = user;
+
+  admin.name = 'Pete'; // 通过 "admin" 引用来修改
+
+  console.log(user.name); // 'Pete'，修改能通过 "user" 引用看到
+</script>
+<script>
+  let a = {};
+  let b = a; // 复制引用
+
+  console.log(a == b); // true，都引用同一对象
+  console.log(a === b); // true
+
+  let a2 = {};
+  let b2 = {}; // 两个独立的对象
+
+  console.log(a2 == b2); // false
+</script>
+<script>
+  let user2 = {name: 'John'};
+
+  let permissions1 = {canView: true};
+  let permissions2 = {canView: true};
+
+  Object.assign(user2, permissions1, permissions2);
+  console.log(user2);
+</script>
+</body>
+</html>
