@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+  let user = {     // 一个对象
+    name: 'John',  // 键 "name"，值 "John"
+    age: 30,        // 键 "age"，值 30
+  };
+
+  // 读取文件的属性：
+  console.log(user.name); // John
+  console.log(user.age); // 30
+
+  user.isAdmin = true;
+  delete user.age;
+</script>
+<script>
+  let user2 = {
+    name: 'John',
+    age: 30,
+    'likes birds': true,  // 多词属性名必须加引号
+  };
+
+  // 设置
+  user2['likes birds'] = true;
+
+  // 读取
+  console.log(user2['likes birds']); // true
+
+  // 删除
+  delete user2['likes birds'];
+
+  let key = 'likes birds';
+
+  // 跟 user["likes birds"] = true; 一样
+  user2[key] = true;
+</script>
+<script>
+  let fruit = 'apple';
+  let bag = {
+    [fruit + '  Computers']: 5, // bag.appleComputers = 5
+  };
+
+  console.log(bag);
+</script>
+<script>
+  function makeUser(name, age) {
+    return {
+      name: name,
+      age: age,
+      // ……其他的属性
+    };
+  }
+
+  function makeUser2(name, age) {
+    return {
+      name, // 与 name: name 相同
+      age,  // 与 age: age 相同
+      // ...
+    };
+  }
+
+  let user3 = makeUser('John', 30);
+  console.log(user3.name); // John
+
+  let user4 = {
+    name,  // 与 name:name 相同
+    age: 30,
+  };
+</script>
+<script>
+  let obj = {
+    0: 'test', // 等同于 "0": "test"
+  };
+
+  // 都会输出相同的属性（数字 0 被转为字符串 "0"）
+  console.log(obj['0']); // test
+  console.log(obj[0]); // test (相同的属性)
+</script>
+<script>
+  let obj2 = {};
+  obj2.__proto__ = 5; // 分配一个数字
+  console.log(obj2.__proto__); // [object Object] — 值为对象，与预期结果不同
+</script>
+<script>
+  let user5 = {};
+  console.log(user5.noSuchProperty === undefined);
+
+  let user6 = {name: 'John', age: 30};
+
+  console.log('age' in user6); // true，user.age 存在
+  console.log('blabla' in user6); // false，user.blabla 不存在。
+
+  let obj3 = {
+    test: undefined,
+  };
+
+  console.log(obj3.test); // 显示 undefined，所以属性不存在？
+
+  console.log('test' in obj3); // true，属性存在！
+</script>
+<script>
+  let user7 = {
+    name: 'John',
+    age: 30,
+    isAdmin: true,
+  };
+
+  for (let key in user7) {
+    // keys
+    console.log(key);  // name, age, isAdmin
+    // 属性键的值
+    console.log(user7[key]); // John, 30, true
+  }
+</script>
+<script>
+  let codes = {
+    '49': 'Germany',
+    '41': 'Switzerland',
+    '44': 'Great Britain',
+    // ..,
+    '1': 'USA',
+  };
+
+  for (let code in codes) {
+    console.log(code); // 1, 41, 44, 49
+  }
+
+  let user8 = {
+    name: 'John',
+    surname: 'Smith',
+  };
+  user8.age = 25; // 增加一个
+
+  // 非整数属性是按照创建的顺序来排列的
+  for (let prop in user8) {
+    console.log(prop); // name, surname, age
+  }
+
+  let codes2 = {
+    '+49': 'Germany',
+    '+41': 'Switzerland',
+    '+44': 'Great Britain',
+    // ..,
+    '+1': 'USA',
+  };
+
+  for (let code in codes2) {
+    console.log(+code); // 49, 41, 44, 1
+  }
+</script>
+</body>
+</html>
