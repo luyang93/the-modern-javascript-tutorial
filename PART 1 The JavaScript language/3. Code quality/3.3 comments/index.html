@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+  function showPrimes(n) {
+
+    for (let i = 2; i < n; i++) {
+      if (!isPrime(i)) continue;
+
+      alert(i);
+    }
+  }
+
+  function isPrime(n) {
+    for (let i = 2; i < n; i++) {
+      if (n % i == 0) return false;
+    }
+
+    return true;
+  }
+</script>
+<script>
+  /**
+   * 返回 x 的 n 次幂的值。
+   *
+   * @param {number} x 要改变的值。
+   * @param {number} n 幂数，必须是一个自然数。
+   * @return {number} x 的 n 次幂的值。
+   */
+  function pow(x, n) {
+
+  }
+</script>
+</body>
+</html>
