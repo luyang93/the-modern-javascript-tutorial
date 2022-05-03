@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+  let sum = (a, b) => a + b;
+  alert(sum(1, 2));
+</script>
+<script>
+  let double = n => n * 2;
+  alert(double(3));
+</script>
+<script>
+  let sayHi = () => alert('Hello!');
+  sayHi();
+</script>
+<script>
+  let age = prompt('What is your age?', 18);
+
+  let welcome = (age < 18) ?
+      () => alert('Hello!') :
+      () => alert('Greetings!');
+  welcome();
+</script>
+<script>
+  let sum1 = (a, b) => {
+    let result = a + b;
+    return result;
+  };
+  console.log(sum1(8, 10));
+</script>
+<script>
+  function ask(question, yes, no) {
+    if (confirm(question)) yes();
+    else no();
+  }
+
+  ask(
+      'Do you agree?',
+      () => alert('You agreed.'),
+      () => alert('You canceled the execution.'),
+  );
+</script>
+</body>
+</html>

@@ -6,130 +6,130 @@
 </head>
 <body>
 <script>
-    function showessage() {
-        console.log('Hello everyone!');
-    }
+  function showessage() {
+    console.log('Hello everyone!');
+  }
 
-    showessage();
-    showessage();
+  showessage();
+  showessage();
 </script>
 <script>
-    function showMessage() {
-        let message1 = "Hello, I'm JavaScript!"; // 局部变量
+  function showMessage() {
+    let message1 = 'Hello, I\'m JavaScript!'; // 局部变量
 
-        alert(message1);
-    }
+    alert(message1);
+  }
 
-    showMessage(); // Hello, I'm JavaScript!
+  showMessage(); // Hello, I'm JavaScript!
 
-    // alert( message ); // <-- 错误！变量是函数的局部变量
+  // alert( message ); // <-- 错误！变量是函数的局部变量
 </script>
 <script>
-    let userName = 'John';
+  let userName = 'John';
 
-    function showMessage() {
-        userName = "Bob"; // (1) 改变外部变量
+  function showMessage() {
+    userName = 'Bob'; // (1) 改变外部变量
 
-        let message = 'Hello, ' + userName;
-        alert(message);
-    }
+    let message = 'Hello, ' + userName;
+    alert(message);
+  }
 
-    alert(userName); // John 在函数调用之前
+  alert(userName); // John 在函数调用之前
 
-    showMessage();
+  showMessage();
 
-    alert(userName); // Bob，值被函数修改了
+  alert(userName); // Bob，值被函数修改了
 </script>
 <script>
-    let userName2 = 'John';
+  let userName2 = 'John';
 
-    function showMessage() {
-        let userName2 = "Bob"; // 声明一个局部变量
+  function showMessage() {
+    let userName2 = 'Bob'; // 声明一个局部变量
 
-        let message2 = 'Hello, ' + userName2; // Bob
-        alert(message2);
-    }
+    let message2 = 'Hello, ' + userName2; // Bob
+    alert(message2);
+  }
 
-    // 函数会创建并使用它自己的 userName
-    showMessage();
+  // 函数会创建并使用它自己的 userName
+  showMessage();
 
-    alert(userName2); // John，未被更改，函数没有访问外部变量。
+  alert(userName2); // John，未被更改，函数没有访问外部变量。
 </script>
 <script>
-    function showMessage(from, text) { // 参数：from 和 text
-        alert(from + ': ' + text);
-    }
+  function showMessage(from, text) { // 参数：from 和 text
+    alert(from + ': ' + text);
+  }
 
-    showMessage('Ann', 'Hello!'); // Ann: Hello! (*)
-    showMessage('Ann', "What's up?"); // Ann: What's up? (**)
+  showMessage('Ann', 'Hello!'); // Ann: Hello! (*)
+  showMessage('Ann', 'What\'s up?'); // Ann: What's up? (**)
 </script>
 <script>
-    function showMessage(from2, text2) {
+  function showMessage(from2, text2) {
 
-        from2 = '*' + from2 + '*'; // 让 "from" 看起来更优雅
+    from2 = '*' + from2 + '*'; // 让 "from" 看起来更优雅
 
-        alert(from2 + ': ' + text2);
-    }
+    alert(from2 + ': ' + text2);
+  }
 
-    let from2 = "Ann";
+  let from2 = 'Ann';
 
-    showMessage(from2, "Hello"); // *Ann*: Hello
+  showMessage(from2, 'Hello'); // *Ann*: Hello
 
-    // "from" 值相同，函数修改了一个局部的副本。
-    alert(from2); // Ann
+  // "from" 值相同，函数修改了一个局部的副本。
+  alert(from2); // Ann
 </script>
 <script>
-    function showMessage(from, text = "no text given") {
-        alert(from + ": " + text);
-    }
+  function showMessage(from, text = 'no text given') {
+    alert(from + ': ' + text);
+  }
 
-    showMessage("Ann"); // Ann: no text given
+  showMessage('Ann'); // Ann: no text given
 </script>
 <script>
-    function checkAge(age) {
-        if (age >= 18) {
-            return true;
-        } else {
-            return confirm('Got a permission from the parents?');
-        }
-    }
-
-    let age = prompt('How old are you?', 18);
-
-    if (checkAge(age)) {
-        alert('Access granted');
+  function checkAge(age) {
+    if (age >= 18) {
+      return true;
     } else {
-        alert('Access denied');
+      return confirm('Got a permission from the parents?');
     }
+  }
+
+  let age = prompt('How old are you?', 18);
+
+  if (checkAge(age)) {
+    alert('Access granted');
+  } else {
+    alert('Access denied');
+  }
 </script>
 <script>
-    function doNothing() {
-        return;
-    }
+  function doNothing() {
 
-    alert(doNothing() === undefined); // true
+  }
+
+  alert(doNothing() === undefined); // true
 </script>
 <script>
-    function showPrimes(n) {
+  function showPrimes(n) {
 
-        for (let i = 2; i < n; i++) {
-            if (!isPrime(i)) {
-                continue;
-            }
-            console.log(i);  // 一个素数
-        }
+    for (let i = 2; i < n; i++) {
+      if (!isPrime(i)) {
+        continue;
+      }
+      console.log(i);  // 一个素数
     }
+  }
 
-    function isPrime(n) {
-        for (let i = 2; i < n; i++) {
-            if (n % i == 0) {
-                return false;
-            }
-        }
-        return true;
+  function isPrime(n) {
+    for (let i = 2; i < n; i++) {
+      if (n % i == 0) {
+        return false;
+      }
     }
+    return true;
+  }
 
-    showPrimes(100)
+  showPrimes(100);
 </script>
 </body>
 </html>

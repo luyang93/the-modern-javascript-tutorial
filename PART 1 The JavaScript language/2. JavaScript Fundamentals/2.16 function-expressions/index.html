@@ -6,86 +6,86 @@
 </head>
 <body>
 <script>
-    let sayHi = function () {
-        alert('Hello');
-    };
-    let func = sayHi;
-    sayHi()
-    func()
+  let sayHi = function() {
+    alert('Hello');
+  };
+  let func = sayHi;
+  sayHi();
+  func();
 </script>
 <script>
-    function ask(qustion, yes, no) {
-        if (confirm(qustion)) {
-            yes();
-        } else {
-            no();
-        }
-    }
-
-    function showOK() {
-        alert('You agreed.');
-    }
-
-    function showCancle() {
-        alert('You cancled the execution.');
-    }
-
-    ask('Do you agree', showOK, showCancle);
-</script>
-<script>
-    function ask2(question, yes, no) {
-        if (confirm(question)) {
-            yes();
-        } else {
-            no();
-        }
-    }
-
-    ask2(
-        "Do you agree?",
-        function () {
-            alert('You agreed.');
-        },
-        function () {
-            alert('You cancled the excution.');
-        }
-    )
-</script>
-<script>
-    function sum1(a, b) {
-        return a + b;
-    }
-
-    let sum2 = function (a, b) {
-        return a + b;
-    }
-</script>
-<script>
-    let age = prompt("What is your age?", 18);
-
-    let welcome;
-
-    if (age < 18) {
-        welcome = function () {
-            alert("Hello!");
-        };
+  function ask(qustion, yes, no) {
+    if (confirm(qustion)) {
+      yes();
     } else {
-        welcome = function () {
-            alert("Greetings!");
-        };
+      no();
     }
+  }
+
+  function showOK() {
+    alert('You agreed.');
+  }
+
+  function showCancle() {
+    alert('You cancled the execution.');
+  }
+
+  ask('Do you agree', showOK, showCancle);
+</script>
+<script>
+  function ask2(question, yes, no) {
+    if (confirm(question)) {
+      yes();
+    } else {
+      no();
+    }
+  }
+
+  ask2(
+      'Do you agree?',
+      function() {
+        alert('You agreed.');
+      },
+      function() {
+        alert('You cancled the excution.');
+      },
+  );
+</script>
+<script>
+  function sum1(a, b) {
+    return a + b;
+  }
+
+  let sum2 = function(a, b) {
+    return a + b;
+  };
+</script>
+<script>
+  let age = prompt('What is your age?', 18);
+
+  let welcome;
+
+  if (age < 18) {
+    welcome = function() {
+      alert('Hello!');
+    };
+  } else {
+    welcome = function() {
+      alert('Greetings!');
+    };
+  }
 
 </script>
 <script>
-    let age3 = prompt('What is your age?', 18);
-    let welcome3 = (age3 < 18) ?
-        function () {
-            alert('Hello!');
-        } :
-        function () {
-            alert('Greetings!');
-        };
-    welcome3()
+  let age3 = prompt('What is your age?', 18);
+  let welcome3 = (age3 < 18) ?
+      function() {
+        alert('Hello!');
+      } :
+      function() {
+        alert('Greetings!');
+      };
+  welcome3();
 </script>
 </body>
 </html>

@@ -6,72 +6,72 @@
 </head>
 <body>
 <script>
-    let i = 0;
-    while (i < 3) {
-        console.log(i);
-        i++;
-    }
+  let i = 0;
+  while (i < 3) {
+    console.log(i);
+    i++;
+  }
 </script>
 <script>
-    let i1 = 3;
-    while (i1) {
-        console.log(i1);
-        i1--;
-    }
+  let i1 = 3;
+  while (i1) {
+    console.log(i1);
+    i1--;
+  }
 </script>
 <script>
-    let i2 = 0;
-    do {
-        console.log(i2);
-        i2++;
-    } while (i2 < 3);
+  let i2 = 0;
+  do {
+    console.log(i2);
+    i2++;
+  } while (i2 < 3);
 </script>
 <script>
-    for (let i3 = 0; i3 < 3; i3++) {
-        console.log(i3);
-    }
+  for (let i3 = 0; i3 < 3; i3++) {
+    console.log(i3);
+  }
 </script>
 <script>
-    let i4 = 0;
-    for (; i4 < 3; i4++) {
-        console.log(i4);
-    }
+  let i4 = 0;
+  for (; i4 < 3; i4++) {
     console.log(i4);
+  }
+  console.log(i4);
 </script>
 <script>
-    let i5 = 0;
-    for (; i5 < 3;) {
-        console.log(i5++);
-    }
+  let i5 = 0;
+  for (; i5 < 3;) {
+    console.log(i5++);
+  }
 </script>
 <script>
-    let sum = 0;
-    while (true) {
-        let value = +prompt('Enter a number', '');
-        if (!value) {
-            break;
-        }
-        sum += value;
+  let sum = 0;
+  while (true) {
+    let value = +prompt('Enter a number', '');
+    if (!value) {
+      break;
     }
-    console.log('Sum: ' + sum);
+    sum += value;
+  }
+  console.log('Sum: ' + sum);
 </script>
 <script>
-    for (let i = 0; i < 10; i++) {
-        if (i % 2 == 0) {
-            continue;
-        }
-        console.log(i);
+  for (let i = 0; i < 10; i++) {
+    if (i % 2 == 0) {
+      continue;
     }
+    console.log(i);
+  }
 </script>
 <script>
-    outer: for (let i2 = 0; i2 < 3; i2++) {
-        for (let j2 = 0; j2 < 3; j2++) {
-            let input = prompt(`Value at coords (${i2},${j2})`, '');
-            if (!input) {
-                break outer;
-            }
-        }
+  outer: for (let i2 = 0; i2 < 3; i2++) {
+    for (let j2 = 0; j2 < 3; j2++) {
+      let input = prompt(`Value at coords (${i2},${j2})`, '');
+      if (!input) {
+        break outer;
+      }
     }
+  }
 </script>
 </body>
 </html>

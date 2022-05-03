@@ -6,99 +6,99 @@
 </head>
 <body>
 <script>
-    let x = 1;
-    let y = 3;
+  let x = 1;
+  let y = 3;
 
-    x = -x;
-    console.log(x); // -1，一元负号运算符生效
-    console.log(y - x); // 2，二元运算符减号做减运算
+  x = -x;
+  console.log(x); // -1，一元负号运算符生效
+  console.log(y - x); // 2，二元运算符减号做减运算
 </script>
 <script>
-    console.log('Remainder %');
-    console.log(5 % 2);
-    console.log(8 % 3);
-    console.log('Exponentiation **');
-    console.log(4 ** (1 / 2));
-    console.log(8 ** (1 / 2));
-    console.log('String concatenation with binary +');
-    console.log('my' + 'string');
-    console.log('1' + 2);
-    console.log(1 + '2');
-    console.log(2 + 2 + '1');
-    console.log('1' + 2 + 2);
-    console.log('Other arithmetic operators work only with numbers and always convert their operands to numbers.');
-    console.log(6 - '2');
-    console.log('6' / '2');
+  console.log('Remainder %');
+  console.log(5 % 2);
+  console.log(8 % 3);
+  console.log('Exponentiation **');
+  console.log(4 ** (1 / 2));
+  console.log(8 ** (1 / 2));
+  console.log('String concatenation with binary +');
+  console.log('my' + 'string');
+  console.log('1' + 2);
+  console.log(1 + '2');
+  console.log(2 + 2 + '1');
+  console.log('1' + 2 + 2);
+  console.log('Other arithmetic operators work only with numbers and always convert their operands to numbers.');
+  console.log(6 - '2');
+  console.log('6' / '2');
 </script>
 <script>
-    console.log('Numeric conversion, unary +');
-    let x1 = 1;
-    let y1 = -2;
-    console.log(+x1);
-    console.log(+y1);
-    console.log(+true);
-    console.log(+'');
+  console.log('Numeric conversion, unary +');
+  let x1 = 1;
+  let y1 = -2;
+  console.log(+x1);
+  console.log(+y1);
+  console.log(+true);
+  console.log(+'');
 </script>
 <script>
-    let apples = "2";
-    let oranges = "3";
-    console.log(+apples + +oranges);
-    console.log(Number(apples) + Number(oranges));
+  let apples = '2';
+  let oranges = '3';
+  console.log(+apples + +oranges);
+  console.log(Number(apples) + Number(oranges));
 </script>
 <script>
-    console.log('Assignment');
-    let x2 = 2 * 2 + 1;
-    console.log(x2);
+  console.log('Assignment');
+  let x2 = 2 * 2 + 1;
+  console.log(x2);
 
-    let a1 = 1;
-    let b1 = 2;
-    let c1 = 3 - (a1 = b1 + 1);
-    console.log(a1);
-    console.log(c1);
+  let a1 = 1;
+  let b1 = 2;
+  let c1 = 3 - (a1 = b1 + 1);
+  console.log(a1);
+  console.log(c1);
 </script>
 <script>
-    console.log('Chaining assignments');
-    let a2, b2, c2;
-    a2 = b2 = c2 = 2 + 2;
+  console.log('Chaining assignments');
+  let a2, b2, c2;
+  a2 = b2 = c2 = 2 + 2;
 
-    console.log(a2);
-    console.log(b2);
-    console.log(c2);
+  console.log(a2);
+  console.log(b2);
+  console.log(c2);
 </script>
 <script>
-    console.log('Modify-in-place');
-    let n = 2;
-    n += 5;
-    n *= 2;
-    console.log(n);
+  console.log('Modify-in-place');
+  let n = 2;
+  n += 5;
+  n *= 2;
+  console.log(n);
 
-    let n1 = 2;
-    n1 *= 3 + 5;
-    console.log(n1);
+  let n1 = 2;
+  n1 *= 3 + 5;
+  console.log(n1);
 </script>
 <script>
-    console.log('Increment/decrement');
-    let counter = 2;
-    counter++;
-    console.log(counter);
-    counter--;
-    console.log(counter);
-    let a3 = ++counter;
-    console.log(a3);
-    console.log(counter)
-    let a4 = counter++;
-    console.log(a4);
-    console.log(counter);
+  console.log('Increment/decrement');
+  let counter = 2;
+  counter++;
+  console.log(counter);
+  counter--;
+  console.log(counter);
+  let a3 = ++counter;
+  console.log(a3);
+  console.log(counter);
+  let a4 = counter++;
+  console.log(a4);
+  console.log(counter);
 </script>
 <script>
-    console.log('Comma');
-    let a5 = (1 + 2, 3 + 4);
-    console.log(a5);
-    for (a6 = 1, b6 = 3, c6 = a6 * b6; a6 < 10; a6++) {
-        console.log(a6);
-        console.log(b6);
-        console.log(c6);
-    }
+  console.log('Comma');
+  let a5 = (1 + 2, 3 + 4);
+  console.log(a5);
+  for (a6 = 1, b6 = 3, c6 = a6 * b6; a6 < 10; a6++) {
+    console.log(a6);
+    console.log(b6);
+    console.log(c6);
+  }
 </script>
 </body>
 </html>
