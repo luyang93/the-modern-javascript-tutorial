@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+  let user = {
+    name: 'John',
+    money: 1000,
+
+    [Symbol.toPrimitive](hint) {
+      console.log(`hint: ${hint}`);
+      return hint == 'string' ? `{name:"${this.name}"}` : this.money;
+    },
+  };
+
+  // 转换演示：
+  console.log(user);
+  alert(user); // hint: string -> {name: "John"}
+  console.log(+user); // hint: number -> 1000
+  console.log(user + 500); // hint: default -> 1500
+</script>
+<script>
+  let user2 = {name: 'John'};
+
+  console.log(user2);
+  alert(user2);
+  console.log(user2.valueOf() === user2);
+</script>
+<script>
+  let user3 = {
+    name: 'John',
+    money: 1000,
+
+    // 对于 hint="string"
+    toString() {
+      return `{name:"${this.name}"}`;
+    },
+
+    // 对于 hint="number" 或 "default"
+    valueOf() {
+      return this.money;
+    },
+  };
+
+  console.log(user3);
+  alert(user3); // hint: string -> {name: "John"}
+  console.log(+user3); // hint: number -> 1000
+  console.log(user3 + 500); // hint: default -> 1500
+</script>
+<script>
+  let user4 = {
+    name: 'John',
+
+    toString() {
+      return this.name;
+    },
+  };
+
+  console.log(user4);
+  alert(user4);
+  console.log(user4 + 500);
+</script>
+<script>
+  let obj = {
+    toString() {
+      return '2';
+    },
+  };
+
+  console.log(obj * 2);
+  console.log(obj + 2);
+</script>
+</body>
+</html>
