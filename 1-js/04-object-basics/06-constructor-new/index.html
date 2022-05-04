@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+  function User(name) {
+    this.name = name;
+    this.isAdmin = false;
+  }
+
+  let user = new User('Jack');
+
+  console.log(user.name);
+  console.log(user.isAdmin);
+</script>
+<script>
+  let user2 = new function() {
+    this.name = 'John';
+    this.isAdmin = false;
+  };
+</script>
+<script>
+  function User3() {
+    console.log(new.target);
+  }
+
+  User3();
+
+  new User3();
+</script>
+<script>
+  function User4(name) {
+    if (!new.target) {
+      return new User4(name);
+    }
+
+    this.name = name;
+  }
+
+  let user4_john = User4('John');
+  console.log(user4_john.name);
+
+  let user4_snow = new User4('Snow');
+  console.log(user4_snow.name);
+</script>
+<script>
+  function BigUser() {
+
+    this.name = 'John';
+
+    return {name: 'Godzilla'};  // <-- 返回这个对象
+  }
+
+  console.log(new BigUser().name);  // Godzilla，得到了那个对象
+
+  function SmallUser() {
+
+    this.name = 'John';
+
+     // <-- 返回 this
+  }
+
+  console.log(new SmallUser().name);  // John
+</script>
+<script>
+  let user5 = new User; // <-- 没有参数
+  // 等同于
+  let user6 = new User();
+</script>
+<script>
+  function User7(name) {
+    this.name = name;
+
+    this.sayHi = function() {
+      console.log('My name is: ' + this.name);
+    };
+  }
+
+  let john = new User7('John');
+
+  john.sayHi();
+</script>
+<script>
+  function Calculator() {
+    this.read = function() {
+      this.a = +prompt('a?', 0);
+      this.b = +prompt('b?', 0);
+    };
+
+    this.sum = function() {
+      return this.a + this.b;
+    };
+
+    this.mul = function() {
+      return this.a * this.b;
+    };
+  }
+
+  let calculator = new Calculator();
+  calculator.read();
+
+  console.log('Sum=' + calculator.sum());
+  console.log('Mul=' + calculator.mul());
+</script>
+<script>
+  function Accumulator(startingValue) {
+    this.value = startingValue;
+
+    this.read = function() {
+      this.value += +prompt('How much to add?', 0);
+    };
+  }
+
+  let accumulator = new Accumulator(1); // 初始值 1
+
+  accumulator.read(); // 添加用户输入的 value
+  accumulator.read(); // 添加用户输入的 value
+
+  alert(accumulator.value); // 显示这些值的总和
+</script>
+</body>
+</html>
