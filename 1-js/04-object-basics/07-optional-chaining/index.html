@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+  let user = {}; // user 没有 address 属性
+
+  console.log(user?.address?.street); // undefined（不报错）
+  console.log(document.querySelector('.elem')?.innerHTML); // 如果没有符合的元素，则为 undefined
+</script>
+<script>
+  let user2 = null;
+
+  console.log(user2?.address); // undefined
+  console.log(user2?.address.street); // undefined
+</script>
+<script>
+  let user3 = null;
+  let x = 0;
+
+  user3?.sayHi(x++); // 没有 "user"，因此代码执行没有到达 sayHi 调用和 x++
+
+  console.log(x); // 0，值没有增加
+</script>
+<script>
+  let userAdmin = {
+    admin() {
+      console.log('I am admin');
+    },
+  };
+
+  let userGuest = {};
+
+  userAdmin.admin?.(); // I am admin
+
+  userGuest.admin?.(); // 啥都没发生（没有这样的方法）
+</script>
+<script>
+  let key = 'firstName';
+
+  let user4 = {
+    firstName: 'John',
+  };
+
+  let user5 = null;
+
+  console.log(user4?.[key]); // John
+  console.log(user5?.[key]); // undefined
+
+  console.log(user4);
+  delete user4?.[key];
+  console.log(user4);
+</script>
+</body>
+</html>
