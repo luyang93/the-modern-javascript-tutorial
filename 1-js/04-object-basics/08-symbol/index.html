@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+  let id1 = Symbol('id');
+  let id2 = Symbol('id');
+
+  console.log(id1 == id2); // false
+  console.log(id1);
+  console.log(id1.toString());
+  console.log(id1.description);
+</script>
+<script>
+  let user = {
+    name: 'John',
+  };
+
+  let id = Symbol('id');
+
+  user[id] = 1;
+  console.log(user[id]);
+</script>
+<script>
+  let id3 = Symbol('id');
+
+  let user2 = {
+    name: 'John',
+    [id3]: 123,
+  };
+</script>
+<script>
+  let id4 = Symbol('id');
+
+  let user3 = {
+    name: 'John',
+    age: 30,
+    [id4]: 123,
+  };
+
+  for (let key in user3) {
+    console.log(key);
+  }
+
+  console.log(Object.keys(user3));
+
+  console.log('Direct: ' + user3[id4]);
+</script>
+<script>
+  let id5 = Symbol('id');
+  let user5 = {
+    [id5]: 123,
+  };
+
+  console.log(Object.keys(user5));
+
+  let clone = Object.assign({}, user5);
+
+  console.log(clone);
+  console.log(clone[id5]);
+</script>
+<script>
+  let id6 = Symbol.for('id6');
+
+  let id6Again = Symbol.for('id6');
+
+  console.log(id6 === id6Again);
+</script>
+<script>
+  let sym = Symbol.for('name');
+  let sym2 = Symbol.for('id');
+
+  console.log(Symbol.keyFor(sym));
+  console.log(Symbol.keyFor(sym2));
+</script>
+<script>
+  let globalSymbol = Symbol.for('name');
+  let localSymbol = Symbol('name');
+
+  console.log(Symbol.keyFor(globalSymbol));
+  console.log(Symbol.keyFor(localSymbol));
+
+  console.log(localSymbol.description);
+</script>
+</body>
+</html>
