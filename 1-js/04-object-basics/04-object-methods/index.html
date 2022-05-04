@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+  let user = {
+    name: 'John',
+    age: 30,
+  };
+
+  user.sayHi = function() {
+    console.log('Hello!');
+  };
+
+  user.sayHi(); // Hello!
+</script>
+<script>
+  let user2 = {
+    sayHi() { // 与 "sayHi: function(){...}" 一样
+      console.log('Hello');
+    },
+  };
+  user2.sayHi();
+
+  user3 = {
+    sayHi: function() {
+      console.log('Hello');
+    },
+  };
+  user3.sayHi();
+</script>
+<script>
+  let user4 = {
+    name: 'John',
+    age: 30,
+
+    sayHi() {
+      console.log(this.name);
+    },
+  };
+
+  user4.sayHi();
+</script>
+<script>
+  'use strict';
+  let user5 = {name: 'John'};
+  let admin5 = {name: 'Admin'};
+
+  function sayHi() {
+    console.log(this.name);
+  }
+
+  user5.f = sayHi;
+  admin5.f = sayHi;
+
+  user5.f();
+  admin5.f();
+
+  admin5['f']();
+</script>
+<script>
+  let user6 = {
+    firstName: 'Ilya',
+    sayHi() {
+      let arrow = () => console.log(this.firstName);
+      arrow();
+    },
+  };
+
+  user6.sayHi();
+</script>
+</body>
+</html>

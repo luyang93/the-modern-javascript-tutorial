@@ -14,11 +14,11 @@ describe('pow', function() {
     }
   });
 
-  it("for negative n the result is NaN", function() {
+  it('for negative n the result is NaN', function() {
     assert.isNaN(pow(2, -1));
   });
 
-  it("for non-integer n the result is NaN", function() {
+  it('for non-integer n the result is NaN', function() {
     assert.isNaN(pow(2, 1.5));
   });
 });
