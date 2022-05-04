@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+  let john = {
+    name: 'John',
+    sayHi: function() {
+      console.log('Hi buddy!');
+    },
+  };
+
+  john.sayHi(); // Hi buddy!
+</script>
+<script>
+  let str = 'Hello';
+
+  console.log(str.toUpperCase()); // HELLO
+</script>
+<script>
+  let n = 1.23456;
+
+  console.log(n.toFixed(2)); // 1.23
+</script>
+<script>
+  console.log(typeof 0); // "number"
+
+  console.log(typeof Number(0)); // "object"!
+
+  let zero = Number(0);
+
+  if (zero) { // zero 为 true，因为它是一个对象
+    console.log('zero is truthy?!?');
+  }
+
+  let num = Number('123'); // 将字符串转成数字
+  console.log(num);
+</script>
+<script>
+  console.log(null?.test);
+  console.log(undefined?.test);
+</script>
+</body>
+</html>
