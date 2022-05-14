@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+  let single = 'single-quoted';
+  let double = 'double-quoted';
+
+  let backticks = `backticks`;
+  console.log(single, double, backticks);
+
+  function sum(a, b) {
+    return a + b;
+  }
+
+  console.log(`1 + 2 = ${sum(1, 2)}.`); // 1 + 2 = 3.
+
+  let guestList = `Guests:
+ * John
+ * Pete
+ * Mary
+`;
+
+  console.log(guestList); // 客人清单，多行
+</script>
+<script>
+  let guestList2 = 'Guests:\n * John\n * Pete\n * Mary';
+
+  console.log(guestList2); // 一个多行的客人列表
+
+  let str1 = 'Hello\nWorld'; // 使用“换行符”创建的两行字符串
+
+  // 使用反引号和普通的换行创建的两行字符串
+  let str2 = `Hello
+World`;
+
+  console.log(str1 == str2); // true
+</script>
+<script>
+  console.log('\u00A9'); // ©
+  console.log('\u{20331}'); // 佫，罕见的中国象形文字（长 Unicode）
+  console.log('\u{1F60D}'); // 😍，笑脸符号（另一个长 Unicode）
+  console.log('I\'m the Walrus!'); // I'm the Walrus!
+  console.log(`I'm the Walrus!`); // I'm the Walrus!
+  console.log(`The backslash: \\`); // The backslash: \
+</script>
+<script>
+  console.log(`My\n`.length); // 3
+</script>
+<script>
+  let str = `Hello`;
+
+  // 第一个字符
+  console.log(str[0]); // H
+  console.log(str.charAt(0)); // H
+
+  // 最后一个字符
+  console.log(str[str.length - 1]); // o
+</script>
+<script>
+  let str3 = `Hello`;
+
+  console.log(str3[1000]); // undefined
+  console.log(str3.charAt(1000)); // ''（空字符串）
+</script>
+<script>
+  for (let char of 'Hello') {
+    console.log(char); // H,e,l,l,o（char 变为 "H"，然后是 "e"，然后是 "l" 等）
+  }
+</script>
+<script>
+  let str4 = 'Hi';
+
+  str4[0] = 'h'; // error
+  console.log(str4[0]); // 无法运行
+</script>
+<script>
+  let str5 = 'Hi';
+
+  str6 = 'h' + str5[1];  // 替换字符串
+
+  console.log(str6); // hi
+</script>
+<script>
+  console.log('Interface'.toUpperCase()); // INTERFACE
+  console.log('Interface'.toLowerCase()); // interface
+  console.log(`Interface`.toUpperCase());
+  console.log('Interface'[0].toLowerCase());
+</script>
+<script>
+  let str7 = 'Widget with id';
+
+  console.log(str7.indexOf('Widget')); // 0，因为 'Widget' 一开始就被找到
+  console.log(str7.indexOf('widget')); // -1，没有找到，检索是大小写敏感的
+
+  console.log(str7.indexOf('id')); // 1，"id" 在位置 1 处（……idget 和 id）
+  console.log(str7.indexOf('id', 2)); // 12
+</script>
+<script>
+  let str8 = 'as sly as a fox, as strong as an ox';
+
+  let target = 'as';
+
+  let pos = 0;
+  while (true) {
+    let foundPos = str8.indexOf(target, pos);
+    if (foundPos == -1) {
+      break;
+    }
+
+    console.log(`Found at ${foundPos}`);
+    pos = foundPos + 1;
+  }
+
+  let pos2 = -1;
+  while ((pos2 = str8.indexOf(target, pos2 + 1)) != -1) {
+    console.log(`Found at ${pos2}`);
+  }
+
+  let pos3 = str8.length;
+  while (true) {
+    let foundPos = str8.lastIndexOf(target, pos3 - 1);
+    console.log(`Found at ${foundPos}`);
+    pos3 = foundPos - 1;
+    if (pos3 == -1) {
+      break;
+    }
+  }
+</script>
+<script>
+  let str9 = 'Widget with id';
+
+  if (str9.indexOf('Widget') != -1) {
+    console.log('We found it'); // 现在工作了！
+  }
+
+  if (~str9.indexOf('Widget')) {
+    console.log('Found it!'); // 正常运行
+  }
+</script>
+<script>
+  console.log(~2); // -3，和 -(2+1) 相同
+  console.log(~1); // -2，和 -(1+1) 相同
+  console.log(~0); // -1，和 -(0+1) 相同
+  console.log(~-1); // 0，和 -(-1+1) 相同
+</script>
+<script>
+  console.log('includes，startsWith，endsWith');
+  console.log('Widget with id'.includes('Widget'));
+  console.log('Hello'.includes('Bye'));
+  console.log('Midget'.includes('id'));
+  console.log('Midget'.includes('id', 3));
+  console.log('Widget'.startsWith('Wid'));
+  console.log('Widget'.endsWith('get'));
+</script>
+<script>
+  console.log('获取子字符串');
+  let str10 = 'stringify';
+
+  console.log(str10.slice(0, 5));
+  console.log(str10.slice(0, 1));
+  console.log(str10.slice(2));
+  console.log(str10.slice(-4, -1));
+
+  console.log(str10.substring(2, 6), str10.substring(6, 2));
+  console.log(str10.slice(2, 6), str10.slice(6, 2));
+
+  console.log(str10.substr(2, 4), str.substr(-4, 2));
+</script>
+<script>
+  console.log('比较字符串');
+
+  console.log('a' > 'Z');
+  console.log('Österreich' > 'Zealand');
+  console.log('z'.codePointAt(0)); // 122
+  console.log('Z'.codePointAt(0)); // 90
+  console.log(String.fromCodePoint(90)); // Z
+  console.log('\u005a'); // Z
+
+  let str11 = '';
+
+  for (let i = 65; i <= 220; i++) {
+    str11 += String.fromCodePoint(i);
+  }
+  console.log(str11);
+
+  console.log('Österreich'.localeCompare('Zealand'));
+</script>
+<script>
+  console.log('𝒳'.length); // 2，大写数学符号 X
+  console.log('😂'.length); // 2，笑哭表情
+  console.log('𩷶'.length); // 2，罕见的中国象形文字
+  console.log('𝒳'[0], '𝒳'[1]);
+  console.log('𝒳'.charCodeAt(0).toString(16), '𝒳'.charCodeAt(1).toString(16));
+</script>
+<script>
+  console.log('S\u0307');
+  console.log('S\u0307\u0323');
+  let s1 = 'S\u0307\u0323'; // Ṩ，S + 上点 + 下点
+  let s2 = 'S\u0323\u0307'; // Ṩ，S + 下点 + 上点
+
+  console.log(`s1: ${s1}, s2: ${s2}`);
+
+  console.log(s1 == s2); // false，尽管字符看起来相同（?!）
+
+  console.log('S\u0307\u0323'.normalize() == 'S\u0323\u0307'.normalize()); // true
+  console.log('S\u0307\u0323'.normalize().length); // 1
+  console.log('S\u0307\u0323'.normalize() == '\u1e68'); // true
+</script>
+<script>
+  function ucFirst(str) {
+    if (!str) return str;
+
+    return str[0].toUpperCase() + str.slice(1);
+  }
+
+  console.log(ucFirst('john'));
+</script>
+<script>
+  function checkSpam(str) {
+    let lowserStr = str.toLowerCase();
+
+    return lowserStr.includes('viagra') || lowserStr.includes('xxx');
+  }
+
+  console.log(checkSpam('buy ViAgRA now'));
+  console.log(checkSpam('free xxxxx'));
+  console.log(checkSpam('innocent rabbit'));
+</script>
+<script>
+  function truncate(str, maxlength) {
+    if (str.length > maxlength) {
+      return str.slice(0, maxlength - 1) + '…';
+    } else {
+      return str;
+    }
+  }
+
+  console.log(truncate('What I\'d like to tell on this topic is:', 20));
+
+  console.log(truncate('Hi everyone!', 20));
+</script>
+<script>
+  function extractCurrencyValue(str) {
+    return +str.slice(1);
+  }
+
+  console.log(extractCurrencyValue('$120'));
+</script>
+</body>
+</html>
