@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+  let arr = [];
+  let arr2 = [];
+  let fruits = ['Apple', 'Orange', 'Plum'];
+  console.log(fruits[0], fruits[1], fruits[2]);
+  fruits[2] = 'Pear';
+  fruits[3] = 'Lemon';
+  console.log(fruits);
+  console.log(fruits.length);
+</script>
+<script>
+  let arr3 = [
+    'Apple',
+    {name: 'John'},
+    true,
+    function() {
+      console.log('hello');
+    },
+  ];
+  console.log(arr3);
+  console.log(arr3[1].name);
+  arr3[3]();
+
+  let fruits2 = [
+    'Apple',
+    'Orange',
+    'Plum',
+  ];
+</script>
+<script>
+  let fruits3 = ['Apple', 'Orange', 'Plum'];
+
+  console.log(fruits3[fruits3.length - 1]); // Plum
+  console.log(fruits3.at(-1));
+</script>
+<script>
+  let fruits4 = ['Apple', 'Orange', 'Pear'];
+
+  console.log(fruits4.pop());
+  console.log(fruits4);
+
+  fruits4.push('Pear');
+  console.log(fruits4);
+
+  console.log(fruits4.shift());
+  console.log(fruits4);
+
+  fruits4.unshift('Apple');
+  console.log(fruits4);
+
+  fruits4.push('Orange', 'Peach');
+  console.log(fruits4);
+
+  fruits4.unshift('Pineapple', 'Lemon');
+  console.log(fruits4);
+</script>
+<script>
+  let fruits5 = ['Banana'];
+
+  let arr5 = fruits5;
+
+  console.log(arr5 === fruits5);
+
+  arr5.push('Pear');
+
+  console.log(fruits5);
+</script>
+<script>
+  let fruits6 = [];
+
+  fruits6.push('dfdf');
+  fruits6[9999] = 5;
+  fruits6.age = 25;
+  console.log(fruits6);
+</script>
+<script>
+  let arr7 = ['Apple', 'Orange', 'Pear'];
+
+  for (let i = 0; i < arr7.length; i++) {
+    console.log(arr7[i]);
+  }
+
+  for (let fruit of arr7) {
+    console.log(fruit);
+  }
+
+  for (let key in arr7) {
+    console.log(arr7[key]);
+  }
+</script>
+<script>
+  let fruits8 = [];
+  fruits8[123] = 'Apple';
+
+  console.log(fruits8.length);
+</script>
+<script>
+  let arr9 = [1, 2, 3, 4, 5];
+  arr9.length = 2;
+  console.log(arr9);
+
+  arr9.length = 3;
+  console.log(arr9[3]);
+</script>
+<script>
+  let arr10 = ['Apple', 'Pear', 'etc'];
+  console.log(arr10);
+
+  arr10.length = 0;
+  console.log(arr10);
+</script>
+<script>
+  let matrix = [
+    [1, 2, 3],
+    [4, 5, 6],
+    [7, 8, 9],
+  ];
+
+  console.log(matrix[1][1]); // 最中间的那个数
+</script>
+<script>
+  let arr11 = [1, 2, 3];
+
+  console.log(arr11); // 1,2,3
+  console.log(String(arr11) === '1,2,3'); // true
+  console.log([] + 1); // "1"
+  console.log([1] + 1); // "11"
+  console.log([1, 2] + 1); // "1,21"
+</script>
+<script>
+  console.log([] == []); // false
+  console.log([0] == [0]); // false
+
+  console.log(0 == []); // true
+
+  console.log('0' == []); // false
+</script>
+<script>
+  let arr12 = ['Jazz', 'Blues'];
+
+  console.log(arr12);
+
+  arr12.push('Rock-n-Roll');
+  console.log(arr12);
+
+  arr12[Math.floor((arr12.length - 1) / 2)] = 'Classics';
+  console.log(arr12);
+
+  console.log(arr12.shift());
+  console.log(arr12);
+
+  arr12.unshift('Rap', 'Reggae');
+  console.log(arr12);
+</script>
+<script>
+  let arr13 = ['a', 'b'];
+
+  arr13.push(function() {
+    console.log(this);
+  });
+
+  arr13[2](); // ?
+</script>
+<script>
+  function sumInput() {
+    let numbers = [];
+
+    while (true) {
+      let value = prompt('A number please?', 0);
+
+      if (value === '' || value === null || !isFinite(value)) {
+        break;
+      }
+
+      numbers.push(+value);
+    }
+
+    let sum = 0;
+    for (let number of numbers) {
+      sum += number;
+    }
+    return sum;
+  }
+
+  console.log(sumInput());
+</script>
+<script>
+  function getMaxSubSum(arr) {
+    let maxSum = 0;
+    let partialSum = 0;
+
+    for (let item of arr) {
+      partialSum += item;
+      maxSum = Math.max(maxSum, partialSum);
+      if (partialSum < 0) partialSum = 0;
+    }
+    return maxSum;
+  }
+
+  console.log(getMaxSubSum([-1, 2, 3, -9])); // 5
+  console.log(getMaxSubSum([-1, 2, 3, -9, 11])); // 11
+  console.log(getMaxSubSum([-2, -1, 1, 2])); // 3
+  console.log(getMaxSubSum([100, -9, 2, -3, 5])); // 100
+  console.log(getMaxSubSum([1, 2, 3])); // 6
+  console.log(getMaxSubSum([-1, -2, -3])); // 0
+</script>
+</body>
+</html>
