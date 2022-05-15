@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+  let range = {
+    from: 1,
+    to: 5,
+  };
+
+  range[Symbol.iterator] = function() {
+    return {
+      current: this.from,
+      last: this.to,
+
+      next() {
+        if (this.current <= this.last) {
+          return {done: false, value: this.current++};
+        } else {
+          return {done: true};
+        }
+      },
+    };
+  };
+
+  for (let num of range) {
+    console.log(num);
+  }
+</script>
+<script>
+  let range2 = {
+    from: 1,
+    to: 5,
+
+    [Symbol.iterator]() {
+      this.current = this.from;
+      return this;
+    },
+
+    next() {
+      if (this.current <= this.to) {
+        return {done: false, value: this.current++};
+      } else {
+        return {done: true};
+      }
+    },
+  };
+
+  for (let num of range2) {
+    console.log(num); // 1, 然后是 2, 3, 4, 5
+  }
+</script>
+<script>
+  for (let char of 'test') {
+    // 触发 4 次，每个字符一次
+    console.log(char); // t, then e, then s, then t
+  }
+
+  let str = '𝒳😂';
+  for (let char of str) {
+    console.log(char); // 𝒳，然后是 😂
+  }
+</script>
+<script>
+  let str2 = 'Hello';
+
+  let iterator = str2[Symbol.iterator]();
+
+  while (true) {
+    let result = iterator.next();
+    if (result.done) {
+      break;
+    }
+    console.log(result.value);
+  }
+</script>
+<script>
+  let arrayLike = { // 有索引和 length 属性 => 类数组对象
+    0: 'Hello',
+    1: 'World',
+    length: 2,
+  };
+
+  // Error (no Symbol.iterator)
+
+  let arr = Array.from(arrayLike);
+  console.log(arr.pop());
+
+  let arr2 = Array.from(range);
+  console.log(arr2);
+  console.log(Array.from(range2));
+</script>
+<script>
+  let arr3 = Array.from(range, num => num * num);
+  console.log(arr3);
+
+  let str3 = '𝒳😂';
+
+  // 将 str 拆分为字符数组
+  let chars = Array.from(str3);
+
+  console.log(chars[0]); // 𝒳
+  console.log(chars[1]); // 😂
+  console.log(chars.length); // 2
+
+  let chars3 = [];
+  for (let char of str3) {
+    chars3.push(char);
+  }
+
+  console.log(chars3);
+</script>
+<script>
+  function slice(str, start, end) {
+    return Array.from(str).slice(start, end).join('');
+  }
+
+  let str4 = '𝒳😂𩷶';
+
+  console.log(slice(str4, 1, 3)); // 😂𩷶
+
+  // 原生方法不支持识别代理对（译注：UTF-16 扩展字符）
+  console.log(str4.slice(1, 3)); // 乱码（两个不同 UTF-16 扩展字符碎片拼接的结果）
+</script>
+</body>
+</html>
