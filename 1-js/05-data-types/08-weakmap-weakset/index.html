@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+  let john = {
+    name: 'John',
+  };
+
+  let array = [john];
+
+  let map = new Map();
+  map.set(john, '...');
+
+  john = null;
+</script>
+<script>
+  let weakMap = new WeakMap();
+
+  let obj = {};
+
+  weakMap.set(obj, 'ok');
+
+  let john2 = {name: 'john'};
+
+  let weakMap2 = new WeakMap();
+  weakMap2.set(john2);
+
+  console.log(weakMap2);
+  john2 = null;
+  console.log(weakMap2);
+  console.log(john2);
+</script>
+<script>
+  // 📁 visitsCount.js
+  let visitsCountMap = new WeakMap(); // map: user => visits count
+
+  // 递增用户来访次数
+  function countUser(user) {
+    let count = visitsCountMap.get(user) || 0;
+    visitsCountMap.set(user, count + 1);
+  }
+
+  // 📁 main.js
+  let john3 = {name: 'John'};
+
+  countUser(john3); // count his visits
+
+  // 不久之后，john 离开了
+  john3 = null;
+</script>
+<script>
+  // 📁 cache.js
+  let cache = new WeakMap();
+
+  // 计算并记结果
+  function process(obj) {
+    if (!cache.has(obj)) {
+      let result = /* calculate the result for */ obj;
+
+      cache.set(obj, result);
+    }
+
+    return cache.get(obj);
+  }
+
+  // 📁 main.js
+  let obj4 = {/* some object */};
+
+  let result1 = process(obj4);
+  let result2 = process(obj4);
+
+  // ……稍后，我们不再需要这个对象时：
+  obj4 = null;
+
+  // 无法获取 cache.size，因为它是一个 WeakMap，
+  // 要么是 0，或即将变为 0
+  // 当 obj 被垃圾回收，缓存的数据也会被清除
+</script>
+<script>
+  let visitedSet = new WeakSet();
+
+  let john5 = {name: 'John'};
+  let pete5 = {name: 'Pete'};
+  let mary5 = {name: 'Mary'};
+
+  visitedSet.add(john5); // John 访问了我们
+  visitedSet.add(pete5); // 然后是 Pete
+  visitedSet.add(john5); // John 再次访问
+
+  console.log(visitedSet.has(john5));
+  console.log(visitedSet.has(mary5));
+
+  john5 = null;
+  console.log(visitedSet);
+</script>
+<script>
+  let messages = [
+    {text: 'Hello', from: 'John'},
+    {text: 'How goes?', from: 'John'},
+    {text: 'See you soon', from: 'Alice'},
+  ];
+
+  let readMessages = new WeakSet();
+  let readMap = new WeakMap();
+
+  // 两个消息已读
+  readMessages.add(messages[0]);
+  readMessages.add(messages[1]);
+  // readMessages 包含两个元素
+
+  // ……让我们再读一遍第一条消息！
+  readMessages.add(messages[0]);
+  // readMessages 仍然有两个不重复的元素
+
+  readMap.set(messages[0], new Date(2017, 1, 1));
+
+  // 回答：message[0] 已读？
+  console.log('Read message 0: ' + readMessages.has(messages[0])); // true
+
+  messages.shift();
+  // 现在 readMessages 有一个元素（技术上来讲，内存可能稍后才会被清理）
+  console.log(readMessages, readMap);
+</script>
+</body>
+</html>
