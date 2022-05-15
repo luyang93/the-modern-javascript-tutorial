@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+  // 我们有一个存放了名字和姓氏的数组
+  let arr = ['John', 'Smith'];
+
+  // 解构赋值
+  // sets firstName = arr[0]
+  // and surname = arr[1]
+  let [firstName, surname] = arr;
+
+  console.log(firstName); // John
+  console.log(surname);  // Smith
+
+  let [firstName2, surname2] = 'John Smith'.split(' ');
+  console.log(firstName2); // John
+  console.log(surname2);  // Smith
+</script>
+<script>
+  // 不需要第二个元素
+  let [firstName3, , title] = ['Julius', 'Caesar', 'Consul', 'of the Roman Republic'];
+
+  console.log(title); // Consul
+</script>
+<script>
+  let [a, b, c] = 'abc'; // ["a", "b", "c"]
+  let [one, two, three] = new Set([1, 2, 3]);
+
+  console.log(a, b, c);
+  console.log(one, two, three);
+</script>
+<script>
+  let user5 = {};
+  [user5.name, user5.surname] = 'John Smith'.split(' ');
+
+  console.log(user5.name); // John
+  console.log(user5.surname); // Smith
+</script>
+<script>
+  let user6 = {
+    name: 'John',
+    age: 30,
+  };
+
+  // 循环遍历键—值对
+  for (let [key, value] of Object.entries(user6)) {
+    console.log(`${key}:${value}`); // name:John, then age:30
+  }
+
+  let user7 = new Map();
+  user7.set('name', 'John');
+  user7.set('age', '30');
+
+  // Map 是以 [key, value] 对的形式进行迭代的，非常便于解构
+  for (let [key, value] of user7) {
+    console.log(`${key}:${value}`); // name:John, then age:30
+  }
+</script>
+<script>
+  let guest = 'Jane';
+  let admin = 'Pete';
+
+  // 让我们来交换变量的值：使得 guest = Pete，admin = Jane
+  [guest, admin] = [admin, guest];
+
+  console.log(`${guest} ${admin}`); // Pete Jane（成功交换！）
+</script>
+<script>
+  let [name1, name2, ...rest] = ['Julius', 'Caesar', 'Consul', 'of the Roman Republic'];
+
+  // rest 是包含从第三项开始的其余数组项的数组
+  console.log(rest[0]); // Consul
+  console.log(rest[1]); // of the Roman Republic
+  console.log(rest.length); // 2
+</script>
+<script>
+  let [firstName8, surname8] = [1];
+
+  console.log(firstName8); // 1
+  console.log(surname8); // undefined
+</script>
+<script>
+  // 默认值
+  let [name9 = 'Guest', surname9 = 'Anonymous'] = ['Julius'];
+
+  console.log(name9);    // Julius（来自数组的值）
+  console.log(surname9); // Anonymous（默认值被使用了）
+
+  // 只会提示输入姓氏
+  let [name10 = prompt('name?'), surname10 = prompt('surname?')] = ['Julius'];
+
+  console.log(name10);    // Julius（来自数组）
+  console.log(surname10); // 你输入的值
+</script>
+<script>
+  let options = {
+    title11: 'Menu',
+    width11: 100,
+    height11: 200,
+  };
+
+  let {title11, width11, height11} = options;
+
+  console.log(title11);  // Menu
+  console.log(width11);  // 100
+  console.log(height11); // 200
+</script>
+<script>
+  let options12 = {
+    title12: 'Menu',
+    width: 100,
+    height: 200,
+  };
+
+  // { sourceProperty: targetVariable }
+  let {width: w12, height: h12, title12} = options12;
+
+  // width -> w
+  // height -> h
+  // title -> title
+
+  console.log(title12);  // Menu
+  console.log(w12);      // 100
+  console.log(h12);      // 200
+</script>
+<script>
+  let options13 = {
+    title13: 'Menu',
+  };
+
+  let {width: w13 = 100, height: h13 = 200, title13} = options13;
+
+  console.log(title13);  // Menu
+  console.log(w13);      // 100
+  console.log(h13);      // 200
+</script>
+<script>
+  let options14 = {
+    title14: 'Menu',
+    height14: 200,
+    width14: 100,
+  };
+
+  // title = 名为 title 的属性
+  // rest = 存有剩余属性的对象
+  let {title14, ...rest14} = options14;
+
+  // 现在 title="Menu", rest={height: 200, width: 100}
+  console.log(rest14.height14);  // 200
+  console.log(rest14.width14);   // 100
+  console.log(rest14);
+</script>
+<script>
+  let title15, width15, height15;
+
+  // 现在就可以了
+  ({title15, width15, height15} = {title15: 'Menu', width15: 200, height15: 100});
+
+  console.log(title15); // Menu
+</script>
+<script>
+  let options16 = {
+    size: {
+      width16: 100,
+      height16: 200,
+    },
+    items: ['Cake', 'Donut'],
+    extra: true,
+  };
+
+  // 为了清晰起见，解构赋值语句被写成多行的形式
+  let {
+    size: { // 把 size 赋值到这里
+      width16,
+      height16,
+    },
+    items: [item1, item2], // 把 items 赋值到这里
+    title16 = 'Menu', // 在对象中不存在（使用默认值）
+  } = options16;
+
+  console.log(title16);  // Menu
+  console.log(width16);  // 100
+  console.log(height16); // 200
+  console.log(item1);  // Cake
+  console.log(item2);  // Donut
+</script>
+<script>
+  // 我们传递一个对象给函数
+  let options17 = {
+    title17: 'My menu',
+    items17: ['Item1', 'Item2'],
+  };
+
+  // ……然后函数马上把对象展开成变量
+  function showMenu({title17 = 'Untitled', width = 200, height = 100, items17 = []} = {}) {
+    // title, items – 提取于 options，
+    // width, height – 使用默认值
+    console.log(`${title17} ${width} ${height}`); // My Menu 200 100
+    console.log(items17); // Item1, Item2
+  }
+
+  showMenu(options17);
+  showMenu();
+</script>
+<script>
+  function topSalary(salaries) {
+    let maxSalary = 0;
+    let maxName = null;
+
+    for (let [name, salary] of Object.entries(salaries)) {
+      if (maxSalary < salary) {
+        maxSalary = salary;
+        maxName = name;
+      }
+    }
+
+    return maxName;
+  }
+
+  let salaries = {
+    'John': 100,
+    'Pete': 300,
+    'Mary': 250,
+  };
+
+  console.log(topSalary(salaries));
+</script>
+</body>
+</html>
