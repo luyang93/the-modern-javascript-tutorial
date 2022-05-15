@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+  let now = new Date();
+  console.log(now); // 显示当前的日期/时间
+
+  // 0 表示 01.01.1970 UTC+0
+  let Jan01_1970 = new Date(0);
+  console.log(Jan01_1970);
+
+  // 现在增加 24 小时，得到 02.01.1970 UTC+0
+  let Jan02_1970 = new Date(24 * 3600 * 1000);
+  console.log(Jan02_1970);
+
+  // 31 Dec 1969
+  let Dec31_1969 = new Date(-24 * 3600 * 1000);
+  console.log(Dec31_1969);
+
+  let date = new Date('2017-01-26');
+  console.log(date);
+  // 该时间未被设定，因此被假定为格林尼治标准时间（GMT）的午夜（midnight）
+  // 并会根据你运行代码时的时区进行调整
+  // 因此，结果可能是
+  // Thu Jan 26 2017 11:00:00 GMT+1100 (Australian Eastern Daylight Time)
+  // 或
+  // Wed Jan 25 2017 16:00:00 GMT-0800 (Pacific Standard Time)
+
+  console.log(new Date(2011, 0, 1, 0, 0, 0, 0)); // 1 Jan 2011, 00:00:00
+  console.log(new Date(2011, 0, 1)); // 同样，时分秒等均为默认值 0
+
+  console.log(new Date(2011, 0, 1, 2, 3, 4, 567)); // 1.01.2011, 02:03:04.567
+</script>
+<script>
+  //  当前日期
+  let date2 = new Date();
+
+  // 当地时区的小时数
+  console.log(date2.getHours());
+
+  // 在 UTC+0 时区的小时数（非夏令时的伦敦时间）
+  console.log(date2.getUTCHours());
+
+  console.log(
+    date2.getFullYear(),
+    date2.getMonth(),
+    date2.getDate(),
+    date2.getHours(),
+    date2.getMinutes(),
+    date2.getSeconds(),
+    date2.getMilliseconds(),
+    date2.getDay(),
+  );
+
+  console.log(
+    date2.getUTCFullYear(),
+    date2.getUTCMonth(),
+    date2.getUTCDate(),
+    date2.getUTCHours(),
+    date2.getUTCMinutes(),
+    date2.getUTCSeconds(),
+    date2.getUTCMilliseconds(),
+    date2.getUTCDay(),
+  );
+
+  console.log(
+    date2.getTime(),
+    date2.getTimezoneOffset(),
+  );
+</script>
+<script>
+  let today = new Date();
+
+  today.setFullYear(2222);
+  console.log(today);
+  today.setMonth(2);
+  console.log(today);
+  today.setDate(2);
+  console.log(today);
+  today.setHours(2);
+  console.log(today);
+  today.setMinutes(2);
+  console.log(today);
+  today.setSeconds(2);
+  console.log(today);
+  today.setMilliseconds(2);
+  console.log(today);
+
+  today.setUTCFullYear(2222);
+  console.log(today);
+  today.setUTCMonth(2);
+  console.log(today);
+  today.setUTCDate(2);
+  console.log(today);
+  today.setUTCHours(2);
+  console.log(today);
+  today.setUTCMinutes(2);
+  console.log(today);
+  today.setUTCSeconds(2);
+  console.log(today);
+  today.setUTCMilliseconds(2);
+  console.log(today);
+
+  today.setHours(0);
+  console.log(today); // 日期依然是今天，但是小时数被改为了 0
+
+  today.setHours(0, 0, 0, 0);
+  console.log(today); // 日期依然是今天，时间为 00:00:00。
+
+  today.setTime(1234);
+  console.log(today);
+</script>
+<script>
+  let date4 = new Date(2013, 0, 32); // 32 Jan 2013 ?!?
+  console.log(date4); // ……是 1st Feb 2013!
+
+  let date5 = new Date(2016, 1, 28);
+  date.setDate(date5.getDate() + 2);
+
+  console.log(date); // 1 Mar 2016
+
+  let date6 = new Date();
+  date.setSeconds(date6.getSeconds() + 70);
+  console.log(date); // 显示正确的日期信息
+
+  let date7 = new Date(2016, 0, 2); // 2016 年 1 月 2 日
+
+  date7.setDate(1); // 设置为当月的第一天
+  console.log(date7);
+
+  date7.setDate(0); // 天数最小可以设置为 1，所以这里设置的是上一月的最后一天
+  console.log(date7); // 31 Dec 2015
+</script>
+<script>
+  let date8 = new Date();
+  console.log(+date8); // 以毫秒为单位的数值，与使用 date.getTime() 的结果相同
+
+  let start = new Date(); // 开始测量时间
+
+  // do the job
+  for (let i = 0; i < 1000000000; i++) {
+    let doSomething = i * i * i;
+  }
+
+  let end = new Date(); // 结束测量时间
+
+  console.log(`The loop took ${end - start} ms`);
+</script>
+<script>
+  let start2 = Date.now(); // 从 1 Jan 1970 至今的时间戳
+
+  // do the job
+  for (let i = 0; i < 1000000000; i++) {
+    let doSomething = i * i * i;
+  }
+
+  let end2 = Date.now(); // 完成
+
+  console.log(`The loop took ${end2 - start2} ms`); // 相减的是时间戳，而不是日期
+</script>
+<script>
+  // 我们有 date1 和 date2，哪个函数会更快地返回两者的时间差？
+  function diffSubtract(date1, date2) {
+    return date2 - date1;
+  }
+
+  // or
+  function diffGetTime(date1, date2) {
+    return date2.getTime() - date1.getTime();
+  }
+
+  function bench(f) {
+    let date1 = new Date(0);
+    let date2 = new Date();
+
+    let start = Date.now();
+    for (let i = 0; i < 1000000; i++) f(date1, date2);
+    return Date.now() - start;
+  }
+
+  console.log('Time of diffSubtract: ' + bench(diffSubtract) + 'ms');
+  console.log('Time of diffGetTime: ' + bench(diffGetTime) + 'ms');
+</script>
+<script>
+  function diffSubtract2(date1, date2) {
+    return date2 - date1;
+  }
+
+  function diffGetTime2(date1, date2) {
+    return date2.getTime() - date1.getTime();
+  }
+
+  function bench2(f) {
+    let date1 = new Date(0);
+    let date2 = new Date();
+
+    let start = Date.now();
+    for (let i = 0; i < 1000000; i++) f(date1, date2);
+    return Date.now() - start;
+  }
+
+  let time1 = 0;
+  let time2 = 0;
+
+  bench2(diffSubtract2);
+  bench2(diffGetTime2);
+
+  // 交替运行 bench(diffSubtract) 和 bench(diffGetTime) 各 10 次
+  for (let i = 0; i < 10; i++) {
+    time1 += bench2(diffSubtract2);
+    time2 += bench2(diffGetTime2);
+  }
+
+  console.log('Total time for diffSubtract: ' + time1 + 'ms');
+  console.log('Total time for diffGetTime: ' + time2 + 'ms');
+</script>
+<script>
+  let ms = Date.parse('2012-01-26T13:51:50.417-07:00');
+
+  console.log(ms); // 1327611110417  (时间戳)
+
+  let date17 = new Date(Date.parse('2012-01-26T13:51:50.417-07:00'));
+
+  console.log(date17);
+</script>
+<script>
+  console.log(`Loading started ${performance.now()}ms ago`);
+  // 类似于 "Loading started 34731.26000000001ms ago"
+  // .26 表示的是微秒（260 微秒）
+  // 小数点后超过 3 位的数字是精度错误，只有前三位数字是正确的
+</script>
+<script>
+  console.log(new Date(2012, 1, 20, 3, 12));
+</script>
+<script>
+  function getWeekDay(date) {
+    let days = ['SU', 'MO', 'TU', 'WE', 'TH', 'FR', 'SA'];
+
+    return days[date.getDay()];
+  }
+
+  let date18 = new Date(2012, 0, 3);  // 3 Jan 2012
+  console.log(getWeekDay(date18));
+</script>
+<script>
+  function getLocalDay(date) {
+    let day = date.getDay();
+
+    if (day == 0) {
+      day = 7;
+    }
+
+    return day;
+  }
+
+  let date19 = new Date(2012, 0, 3);  // 3 Jan 2012
+  console.log(getLocalDay(date19));       // 星期二，应该显示 2
+</script>
+<script>
+  function getDateAgo(date, days) {
+    let dateCopy = new Date(date);
+
+    dateCopy.setDate(date.getDate() - days);
+
+    return dateCopy.getDate();
+  }
+
+  let date20 = new Date(2015, 0, 2);
+
+  console.log(getDateAgo(date20, 1)); // 1, (1 Jan 2015)
+  console.log(getDateAgo(date20, 2)); // 31, (31 Dec 2014)
+  console.log(getDateAgo(date20, 365)); // 2, (2 Jan 2014)
+</script>
+<script>
+  function getLastDayOfMonth(year, month) {
+    let date = new Date(year, month + 1, 0);
+
+    return date.getDate();
+  }
+
+  console.log(getLastDayOfMonth(2012, 0)); // 31
+  console.log(getLastDayOfMonth(2012, 1)); // 29
+  console.log(getLastDayOfMonth(2013, 1)); // 28
+</script>
+<script>
+  function getSecondsToTomorrow() {
+    let now = new Date();
+
+    let tomorrow = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
+
+    return Math.round((tomorrow - now) / 1000);
+  }
+
+  console.log(getSecondsToTomorrow());
+</script>
+<script>
+  function formatDate(date) {
+    let diff = new Date() - date; // 以毫秒表示的差值
+
+    if (diff < 1000) { // 少于 1 秒
+      return 'right now';
+    }
+
+    let sec = Math.floor(diff / 1000); // 将 diff 转换为秒
+
+    if (sec < 60) {
+      return sec + ' sec. ago';
+    }
+
+    let min = Math.floor(diff / 60000); // 将 diff 转换为分钟
+
+    if (min < 60) {
+      return min + ' min. ago';
+    }
+
+    // 格式化 date
+    // 将前置 0 加到一位数 day/month/hours/minutes 前
+    let d = date;
+    d = [
+      '0' + d.getDate(),
+      '0' + (d.getMonth() + 1),
+      '' + d.getFullYear(),
+      '0' + d.getHours(),
+      '0' + d.getMinutes(),
+    ].map(component => component.slice(-2)); // 得到每个组件的后两位
+
+    // 将时间信息和日期组合在一起
+    return d.slice(0, 3).join('.') + ' ' + d.slice(3).join(':');
+  }
+
+  console.log(formatDate(new Date(new Date - 1))); // "right now"
+
+  console.log(formatDate(new Date(new Date - 30 * 1000))); // "30 sec. ago"
+
+  console.log(formatDate(new Date(new Date - 5 * 60 * 1000))); // "5 min. ago"
+
+  // 昨天的日期如：31.12.2016 20:00
+  console.log(formatDate(new Date(new Date - 86400 * 1000)));
+</script>
+</body>
+</html>
