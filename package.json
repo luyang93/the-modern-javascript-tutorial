@@ -2,7 +2,13 @@
   "name": "The Modern JavaScript Tutorial",
   "packageManager": "yarn@3.2.0",
   "devDependencies": {
+    "@babel/core": "^7.17.10",
+    "@babel/preset-env": "^7.17.10",
+    "babel-loader": "^8.2.5",
     "eslint": "^8.14.0",
-    "eslint-plugin-vue": "^8.7.1"
+    "eslint-plugin-vue": "^8.7.1",
+    "lodash": "^4.17.21",
+    "underscore": "^1.13.3",
+    "webpack": "^5.72.1"
   }
 }
