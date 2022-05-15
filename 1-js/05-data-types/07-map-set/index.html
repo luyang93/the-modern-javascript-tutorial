@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+  let map = new Map();
+
+  map.set('1', 'str1');   // 字符串键
+  map.set(1, 'num1');     // 数字键
+  map.set(true, 'bool1'); // 布尔值键
+
+  // 还记得普通的 Object 吗? 它会将键转化为字符串
+  // Map 则会保留键的类型，所以下面这两个结果不同：
+  console.log(map.get(1)); // 'num1'
+  console.log(map.get('1')); // 'str1'
+
+  console.log(map.size); // 3
+  console.log(map);
+</script>
+<script>
+  let john = {name: 'John'};
+  let ben = {name: 'Ben'};
+
+  // 存储每个用户的来访次数
+  let visitsCountMap = new Map();
+  let visitsCountObj = {}; // 尝试使用对象
+
+  // john 是 Map 中的键
+  visitsCountMap.set(john, 123);
+
+  console.log(visitsCountMap.get(john)); // 123
+  console.log(visitsCountMap);
+
+  visitsCountObj[ben] = 234; // 尝试将对象 ben 用作键
+  visitsCountObj[john] = 123; // 尝试将对象 john 用作键，但我们会发现使用对象 ben 作为键存下的值会被替换掉
+
+  // 变成这样了！
+  console.log(visitsCountObj['[object Object]']); // 123
+  console.log(visitsCountObj);
+
+  console.log(map.set('1', 'str1').set(1, 'num1').set(true, 'bool1'));
+</script>
+<script>
+  let recipeMap = new Map([
+    ['cucumber', 500],
+    ['tomatoes', 350],
+    ['onion', 50],
+  ]);
+
+  // 遍历所有的键（vegetables）
+  for (let vegetable of recipeMap.keys()) {
+    console.log(vegetable); // cucumber, tomatoes, onion
+  }
+
+  // 遍历所有的值（amounts）
+  for (let amount of recipeMap.values()) {
+    console.log(amount); // 500, 350, 50
+  }
+
+  // 遍历所有的实体 [key, value]
+  for (let entry of recipeMap) { // 与 recipeMap.entries() 相同
+    console.log(entry); // cucumber,500 (and so on)
+  }
+
+  recipeMap.forEach((value, key, map) => {
+    console.log(`${key}: ${value}`); // cucumber: 500 etc
+  });
+</script>
+<script>
+  // 键值对 [key, value] 数组
+  let map2 = new Map([
+    ['1', 'str1'],
+    [1, 'num1'],
+    [true, 'bool1'],
+  ]);
+
+  console.log(map2.get('1')); // str1
+  console.log(map2);
+
+  let obj3 = {
+    name: 'John',
+    age: 30,
+  };
+
+  let map3 = new Map(Object.entries(obj3));
+
+  console.log(map3.get('name')); // John
+  console.log(map3);
+</script>
+<script>
+  let prices = Object.fromEntries(
+    [
+      ['banana', 1],
+      ['orange', 2],
+      ['meat', 4],
+    ],
+  );
+
+  // 现在 prices = { banana: 1, orange: 2, meat: 4 }
+
+  console.log(prices.orange); // 2
+  console.log(prices);
+</script>
+<script>
+  let map4 = new Map();
+  map4.set('banana', 1);
+  map4.set('orange', 2);
+  map4.set('meat', 4);
+
+  let obj = Object.fromEntries(map4.entries()); // 创建一个普通对象（plain object）(*)
+
+  // 完成了！
+  // obj = { banana: 1, orange: 2, meat: 4 }
+
+  console.log(obj.orange); // 2
+  console.log(obj);
+  console.log(Object.fromEntries(map4));
+</script>
+<script>
+  let set = new Set();
+
+  let john2 = {name: 'John'};
+  let pete2 = {name: 'Pete'};
+  let mary2 = {name: 'Mary'};
+
+  // visits，一些访客来访好几次
+  set.add(john2);
+  set.add(pete2);
+  set.add(mary2);
+  set.add(john2);
+  set.add(mary2);
+
+  // set 只保留不重复的值
+  console.log(set.size); // 3
+
+  for (let user of set) {
+    console.log(user.name); // John（然后 Pete 和 Mary）
+  }
+</script>
+<script>
+  let set2 = new Set(['oranges', 'apples', 'bananas']);
+
+  for (let value of set2) {
+    console.log(value);
+  }
+
+  // 与 forEach 相同：
+  set2.forEach(
+    (value, valueAgain, set) => {
+      console.log(value);
+    },
+  );
+
+  console.log(set2.keys());
+  console.log(set2.values());
+  console.log(set2.entries());
+</script>
+<script>
+  function unique(arr) {
+    return Array.from(new Set(arr));
+  }
+
+  let values = [
+    'Hare', 'Krishna', 'Hare', 'Krishna',
+    'Krishna', 'Krishna', 'Hare', 'Hare', ':-O',
+  ];
+
+  console.log(unique(values));
+</script>
+<script>
+  function aclean(arr) {
+    let map = new Map();
+
+    for (let word of arr) {
+      let sorted = word.toLowerCase().split('').sort().join('');
+
+      map.set(sorted, word);
+    }
+
+    return Array.from(map.values());
+  }
+
+  function aclean2(arr) {
+    let obj = {};
+
+    for (let word of arr) {
+      let sorted = word.toLowerCase().split('').sort().join('');
+      obj[sorted] = word;
+    }
+    return Object.values(obj);
+  }
+
+  let arr5 = ['nap', 'teachers', 'cheaters', 'PAN', 'ear', 'era', 'hectares'];
+
+  console.log(aclean(arr5));
+  console.log(aclean2(arr5));
+</script>
+<script>
+  let map6 = new Map();
+
+  map6.set('name', 'John');
+
+  let keys6 = Array.from(map6.keys());
+
+  console.log(keys6);
+  keys6.push('more');
+  console.log(keys6);
+</script>
+</body>
+</html>
