@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+  let user = {
+    name: 'John',
+    age: 30,
+
+    toString() {
+      return `{name: "${this.name}", age: ${this.age}}`;
+    },
+  };
+
+  console.log(user); // {name: "John", age: 30}
+</script>
+<script>
+  let student = {
+    name: 'John',
+    age: 30,
+    isAdmin: false,
+    courses: ['html', 'css', 'js'],
+    wife: null,
+  };
+
+  let json = JSON.stringify(student);
+
+  console.log(json); // {"name":"John","age":30,"isAdmin":false,"courses":["html","css","js"],"wife":null}
+  console.log(typeof json); // we've got a string!
+</script>
+<script>
+  // 数字在 JSON 还是数字
+  console.log(JSON.stringify(1)); // 1
+
+  // 字符串在 JSON 中还是字符串，只是被双引号扩起来
+  console.log(JSON.stringify('test')); // "test"
+
+  console.log(JSON.stringify(true)); // true
+
+  console.log(JSON.stringify([1, 2, 3])); // [1,2,3]
+</script>
+<script>
+  let user2 = {
+    sayHi() { // 被忽略
+      console.log('Hello');
+    },
+    [Symbol('id')]: 123, // 被忽略
+    something: undefined, // 被忽略
+  };
+
+  console.log(JSON.stringify(user2)); // {}（空对象）
+</script>
+<script>
+  let meetup = {
+    title: 'Conference',
+    room: {
+      number: 23,
+      participants: ['john', 'ann'],
+    },
+  };
+
+  console.log(JSON.stringify(meetup));
+  /* 整个解构都被字符串化了
+  {
+    "title":"Conference",
+    "room":{"number":23,"participants":["john","ann"]},
+  }
+  */
+</script>
+<script>
+  let room2 = {
+    number: 23,
+  };
+
+  let meetup2 = {
+    title: 'Conference',
+    participants: [{name: 'John'}, {name: 'Alice'}],
+    place: room2, // meetup 引用了 room
+  };
+
+  room2.occupiedBy = meetup2; // room 引用了 meetup
+
+  console.log(JSON.stringify(meetup2, ['title', 'participants']));
+  // {"title":"Conference","participants":[{},{}]}
+</script>
+<script>
+  let room3 = {
+    number: 23,
+  };
+
+  let meetup3 = {
+    title: 'Conference',
+    participants: [{name: 'John'}, {name: 'Alice'}],
+    place: room3, // meetup 引用了 room
+  };
+
+  room3.occupiedBy = meetup; // room 引用了 meetup
+
+  console.log(JSON.stringify(meetup3, ['title', 'participants', 'place', 'name', 'number']));
+  /*
+  {
+    "title":"Conference",
+    "participants":[{"name":"John"},{"name":"Alice"}],
+    "place":{"number":23}
+  }
+  */
+</script>
+<script>
+  let room4 = {
+    number: 23,
+  };
+
+  let meetup4 = {
+    title: 'Conference',
+    participants: [{name: 'John'}, {name: 'Alice'}],
+    place: room4, // meetup 引用了 room
+  };
+
+  room4.occupiedBy = meetup4; // room 引用了 meetup
+
+  console.log(JSON.stringify(
+      meetup4,
+      function replacer(key, value) {
+        console.log(`${key}: ${value}`);
+        return (key == 'occupiedBy') ? undefined : value;
+      },
+    ),
+  );
+
+  /* key:value pairs that come to replacer:
+  :             [object Object]
+  title:        Conference
+  participants: [object Object],[object Object]
+  0:            [object Object]
+  name:         John
+  1:            [object Object]
+  name:         Alice
+  place:        [object Object]
+  number:       23
+  occupiedBy: [object Object]
+  */
+</script>
+<script>
+  let user5 = {
+    name: 'John',
+    age: 25,
+    roles: {
+      isAdmin: false,
+      isEditor: true,
+    },
+  };
+
+  console.log(JSON.stringify(user5, null, 2));
+  /* 两个空格的缩进：
+  {
+    "name": "John",
+    "age": 25,
+    "roles": {
+      "isAdmin": false,
+      "isEditor": true
+    }
+  }
+  */
+
+  /* 对于 JSON.stringify(user, null, 4) 的结果会有更多缩进：
+  {
+      "name": "John",
+      "age": 25,
+      "roles": {
+          "isAdmin": false,
+          "isEditor": true
+      }
+  }
+  */
+</script>
+<script>
+  let room6 = {
+    number: 23,
+    toJSON() {
+      return this.number;
+    },
+  };
+
+  let meetup6 = {
+    title: 'Conference',
+    date: new Date(Date.UTC(2017, 0, 1)),
+    room6,
+  };
+
+  console.log(room6.toJSON());
+
+  console.log(JSON.stringify(meetup6));
+  /*
+    {
+      "title":"Conference",
+      "date":"2017-01-01T00:00:00.000Z",  // (1)
+      "room": {"number":23}               // (2)
+    }
+  */
+</script>
+<script>
+  // 字符串化数组
+  let numbers = '[0, 1, 2, 3]';
+
+  numbers = JSON.parse(numbers);
+
+  console.log(numbers[1]); // 1
+</script>
+<script>
+
+  let userData7 = '{ "name": "John", "age": 35, "isAdmin": false, "friends": [0,1,2,3] }';
+
+  let user7 = JSON.parse(userData7);
+
+  console.log(user7.friends[1]); // 1
+</script>
+<script>
+  // title: (meetup title), date: (meetup date)
+  let str = '{"title":"Conference","date":"2017-11-30T12:00:00.000Z"}';
+
+  let meetup8 = JSON.parse(
+    str,
+    function(key, value) {
+      if (key == 'date') {
+        return new Date(value);
+      } else {
+        return value;
+      }
+    },
+  );
+  console.log(meetup8);
+  console.log(meetup8.date.getDate()); // 现在正常运行了！
+</script>
+<script>
+  let schedule9 = `{
+  "meetups": [
+    {"title":"Conference","date":"2017-11-30T12:00:00.000Z"},
+    {"title":"Birthday","date":"2017-04-18T12:00:00.000Z"}
+  ]
+}`;
+
+  schedule9 = JSON.parse(schedule9, function(key, value) {
+    if (key == 'date') return new Date(value);
+    return value;
+  });
+
+  console.log(schedule9);
+  console.log(schedule9.meetups[1].date.getDate()); // 正常运行了！
+</script>
+<script>
+  let user10 = {
+    name: 'John Smith',
+    age: 35,
+  };
+  console.log(JSON.parse(JSON.stringify(user10)));
+</script>
+<script>
+  let room11 = {
+    number: 23,
+  };
+
+  let meetup11 = {
+    title: 'Conference',
+    occupiedBy: [{name: 'John'}, {name: 'Alice'}],
+    place: room11,
+  };
+
+  // 循环引用
+  room11.occupiedBy = meetup11;
+  meetup11.self = meetup11;
+
+  console.log(meetup11);
+  console.log(
+    JSON.stringify(
+      meetup11,
+      function replacer(key, value) {
+        if (key != '' && value == meetup11) {
+          return undefined;
+        } else {
+          return value;
+        }
+      },
+    ),
+  );
+</script>
+</body>
+</html>
