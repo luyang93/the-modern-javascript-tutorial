@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+  {
+    // 显示 message
+    let message = 'Hello';
+    console.log(message);
+  }
+
+  {
+    // 显示另一个 message
+    let message = 'Goodbye';
+    console.log(message);
+  }
+
+  if (true) {
+    let phrase = 'Hello!';
+
+    console.log(phrase); // Hello!
+  }
+
+  for (let i = 0; i < 3; i++) {
+    // 变量 i 仅在这个 for 循环的内部可见
+    console.log(i); // 0，然后是 1，然后是 2
+  }
+</script>
+<script>
+  function sayHiBye(firstName, lastName) {
+
+    // 辅助嵌套函数使用如下
+    function getFullName() {
+      return firstName + ' ' + lastName;
+    }
+
+    console.log('Hello, ' + getFullName());
+    console.log('Bye, ' + getFullName());
+  }
+
+  sayHiBye('First', 'Last');
+</script>
+<script>
+  function makeCounter() {
+    let count = 0;
+
+    return function() {
+      return count++;
+    };
+  }
+
+  let counter = makeCounter();
+
+  console.log(counter);
+  console.log(counter()); // 0
+  console.log(counter()); // 1
+  console.log(counter()); // 2
+  console.log(counter);
+</script>
+<script>
+  let phrase = 'Hello';
+
+  function say(name) {
+    console.log(`${phrase} ${name}`);
+  }
+
+  say('John');
+</script>
+<script>
+  function f1() {
+    let value = 123;
+
+    return function() {
+      alert(value);
+    };
+  }
+
+  let g = f1(); // g.[[Environment]] 存储了对相应 f() 调用的词法环境的引用
+</script>
+<script>
+  function f2() {
+    let value = Math.random();
+
+    return function() {
+      console.log(value);
+    };
+  }
+
+  // 数组中的 3 个函数，每个都与来自对应的 f() 的词法环境相关联
+  let arr = [f2(), f2(), f2()];
+  console.log(arr);
+</script>
+<script>
+  function f() {
+    let value = 123;
+
+    return function() {
+      alert(value);
+    };
+  }
+
+  let g2 = f(); // 当 g 函数存在时，该值会被保留在内存中
+  alert(g2.value);
+  g2 = null; // ……现在内存被清理了
+
+</script>
+<script>
+  function f5() {
+    let value = Math.random();
+
+    function g5() {
+      debugger; // 在 Console 中：输入 alert(value); No such variable!
+    }
+
+    return g5;
+  }
+
+  let g5 = f5();
+  g5();
+</script>
+<script>
+  let value = 'Surprise!';
+
+  function f3() {
+    let value = 'the closest value';
+
+    function g3() {
+      debugger; // 在 console 中：输入 alert(value); Surprise!
+    }
+
+    return g3;
+  }
+
+  let g4 = f3();
+  g4();
+</script>
+<script>
+  function makeCounter2() {
+    let count2 = 0;
+
+    return function() {
+      return count2++;
+    };
+  }
+
+  let counter2 = makeCounter2();
+  let counter22 = makeCounter2();
+
+  alert(counter2()); // 0
+  alert(counter2()); // 1
+
+  alert(counter22()); // ?
+  alert(counter22()); // ?
+</script>
+<script>
+  function Counter3() {
+    let count3 = 0;
+
+    this.up = function() {
+      return ++count3;
+    };
+    this.down = function() {
+      return --count3;
+    };
+  }
+
+  let counter3 = new Counter3();
+
+  alert(counter3.up()); // ?
+  alert(counter3.up()); // ?
+  alert(counter3.down()); // ?
+</script>
+<script>
+  function sum(a) {
+    return function(b) {
+      return a + b;
+    };
+  }
+
+  alert(sum(1)(2)); // 3
+  alert(sum(5)(-1)); // 4
+</script>
+<script>
+  function inBetween(a, b) {
+    return function(x) {
+      return x >= a && x <= b;
+    };
+  }
+
+  let arr7 = [1, 2, 3, 4, 5, 6, 7];
+  console.log(arr7.filter(inBetween(3, 6))); // 3,4,5,6
+</script>
+<script>
+  function inArray(arr) {
+    return function(x) {
+      return arr.includes(x);
+    };
+  }
+
+  let arr8 = [1, 2, 3, 4, 5, 6, 7];
+  console.log(arr8.filter(inArray([1, 2, 10]))); // 1,2
+</script>
+<script>
+  function byField(fieldName) {
+    return (a, b) => a[fieldName] > b[fieldName] ? 1 : -1;
+  }
+
+  let users = [
+    {name: 'John', age: 20, surname: 'Johnson'},
+    {name: 'Pete', age: 18, surname: 'Peterson'},
+    {name: 'Ann', age: 19, surname: 'Hathaway'},
+  ];
+
+  users.sort(byField('name'));
+  console.log(users);
+
+  users.sort(byField('age'));
+  console.log(users);
+</script>
+<script>
+  function makeArmy() {
+    let shooters = [];
+
+    let i = 0;
+    while (i < 10) {
+      let j = i;
+      let shooter = function() {
+        alert(j);
+      };
+      shooters.push(shooter);
+      i++;
+    }
+    return shooters;
+  }
+
+  let army = makeArmy();
+
+  army[7]();
+</script>
+<script>
+  function makeArmy2() {
+    let shooters = [];
+
+    for (let i = 0; i < 10; i++) {
+      let shooter = function() {
+        alert(i);
+      };
+      shooters.push(shooter);
+    }
+
+    return shooters;
+  }
+
+  let army2 = makeArmy2();
+  army2[8]();
+</script>
+</body>
+</html>
