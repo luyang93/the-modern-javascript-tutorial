@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+  console.log('Hello');
+  window.console.log('Hello');
+  globalThis.console.log('Hello');
+</script>
+<script>
+  var gVar = 5;
+  console.log(window.gVar);
+
+  let gLet = 5;
+  console.log(window.gLet);
+</script>
+<script>
+  // 将当前用户信息全局化，以允许所有脚本访问它
+  window.currentUser = {
+    name: 'John',
+  };
+
+  // 代码中的另一个位置
+  console.log(currentUser.name);  // John
+
+  // 或者，如果我们有一个名为 "currentUser" 的局部变量
+  // 从 window 显式地获取它（这是安全的！）
+  console.log(window.currentUser.name); // John
+</script>
+<script>
+  if (!window.Promise) {
+    console.log("Your browser is really old!");
+  }
+</script>
+</body>
+</html>
