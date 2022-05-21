@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+  function sayHi() {
+    console.log('Hi');
+  }
+
+  console.log(sayHi.name); // sayHi
+</script>
+<script>
+  let sayHi2 = function() {
+    console.log('Hi');
+  };
+
+  console.log(sayHi2.name); // sayHi2（有名字！）
+</script>
+<script>
+  function f(
+    sayHi3 = function() {
+    },
+  ) {
+    console.log(sayHi3.name); // sayHi（生效了！）
+  }
+
+  f();
+</script>
+<script>
+  let user = {
+
+    sayHi() {
+      // ...
+    },
+
+    sayBye: function() {
+      // ...
+    },
+
+  };
+
+  console.log(user.sayHi.name); // sayHi
+  console.log(user.sayBye.name); // sayBye
+</script>
+<script>
+  // 函数是在数组中创建的
+  let arr = [
+    function() {
+    }];
+
+  console.log(arr[0].name); // <空字符串>
+  // 引擎无法设置正确的名字，所以没有值
+</script>
+<script>
+  function f1(a) {
+  }
+
+  function f2(a, b) {
+  }
+
+  function many(a, b, ...more) {
+  }
+
+  console.log(f1.length); // 1
+  console.log(f2.length); // 2
+  console.log(many.length); // 2
+</script>
+<script>
+  function ask(question, ...handlers) {
+    let isYes = confirm(question);
+
+    for (let handler of handlers) {
+      console.log(handler.length);
+      if (handler.length == 0) {
+        if (isYes) handler();
+      } else {
+        handler(isYes);
+      }
+    }
+  }
+
+  ask(
+    'Question?',
+    () => console.log('You said yes'),
+    result => console.log(result),
+  );
+</script>
+<script>
+  function sayHi6() {
+    console.log('Hi');
+
+    sayHi6.counter++;
+  }
+
+  sayHi6.counter = 0;
+
+  sayHi6();
+  sayHi6();
+
+  console.log(`Called ${sayHi6.counter} times`);
+</script>
+<script>
+  function makeCounter() {
+    function counter() {
+      return counter.count++;
+    }
+
+    counter.count = 0;
+
+    return counter;
+  }
+
+  let counter = makeCounter();
+  console.log(counter());
+  console.log(counter());
+  counter.count = 10;
+  console.log(counter());
+</script>
+<script>
+  // let sayHi2 = function(who) {
+  //   console.log(`Hello, ${who}`);
+  // };
+
+  let sayHi3 = function func(who) {
+    console.log(`Hello, ${who}`);
+  };
+
+  sayHi3('John');
+</script>
+<script>
+  let sayHi4 = function func2(who) {
+    if (who) {
+      console.log(`Hello, ${who}`);
+    } else {
+      func2('Guest'); // 使用 func2 再次调用函数自身
+    }
+  };
+
+  sayHi4();
+  sayHi4('JJ');
+</script>
+<script>
+  let sayHi5 = function func(who) {
+    if (who) {
+      console.log(`Hello, ${who}`);
+    } else {
+      func('Guest'); // Error: sayHi is not a function
+    }
+  };
+
+  let welcome = sayHi5;
+  sayHi5 = null;
+
+  welcome(); // Error，嵌套调用 sayHi 不再有效！
+</script>
+<script>
+  function makeCounter2() {
+    let count = 0;
+
+    function counter() {
+      return count++;
+    }
+
+    counter.set = value => count = value;
+
+    counter.decrease = () => count--;
+
+    return counter;
+  }
+
+  count2 = makeCounter2();
+  console.log(count2());
+
+  count2.set(5);
+  console.log(count2());
+
+  count2.decrease();
+  console.log(count2());
+</script>
+<script>
+  function sum(a) {
+    let currentSum = a;
+
+    function f(b) {
+      currentSum += b;
+      return f;
+    }
+
+    f.toString = function() {
+      return currentSum;
+    };
+
+    return f;
+  }
+
+  console.log(sum(1)(2) == 3); // 3
+  console.log(sum(5)(-1)(2) == 6); // 6
+  console.log(sum(6)(-1)(-2)(-3) == 0); // 0
+  console.log(sum(0)(1)(2)(3)(4)(5) == 15); // 15
+</script>
+</body>
+</html>
