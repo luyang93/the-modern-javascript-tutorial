@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+  function sumAll(...args) { // 数组名为 args
+    let sum = 0;
+
+    for (let arg of args) sum += arg;
+
+    return sum;
+  }
+
+  console.log(sumAll(1)); // 1
+  console.log(sumAll(1, 2)); // 3
+  console.log(sumAll(1, 2, 3)); // 6
+</script>
+<script>
+  function showName(firstName, lastName, ...titles) {
+    console.log(firstName + ' ' + lastName); // Julius Caesar
+
+    // 剩余的参数被放入 titles 数组中
+    // i.e. titles = ["Consul", "Imperator"]
+    console.log(titles[0]); // Consul
+    console.log(titles[1]); // Imperator
+    console.log(titles.length); // 2
+  }
+
+  showName('Julius', 'Caesar', 'Consul', 'Imperator');
+</script>
+<script>
+  function showName2() {
+    console.log(arguments.length);
+    console.log(arguments[0]);
+    console.log(arguments[1]);
+
+    // 它是可遍历的
+    // for(let arg of arguments) console.log(arg);
+  }
+
+  // 依次显示：2，Julius，Caesar
+  showName2('Julius', 'Caesar');
+
+  // 依次显示：1，Ilya，undefined（没有第二个参数）
+  showName2('Ilya');
+</script>
+<script>
+  function f() {
+    console.log(arguments);
+    let showArg = () => {
+      console.log(arguments[0]);
+    };
+    showArg(4);
+  }
+
+  f(1, 2, 3); // 1
+</script>
+<script>
+  console.log(Math.max(3, 5, 1));
+
+  arr = [3, 5, 1];
+  console.log(Math.max(arr)); // NaN
+  console.log(Math.max(...arr)); // 5
+
+  let arr1 = [1, -2, 3, 4];
+  let arr2 = [8, 3, -8, 1];
+
+  console.log(Math.max(...arr1, ...arr2)); // 8
+  console.log(Math.max(1, ...arr1, 2, ...arr2, 25)); // 25
+
+  let merged = [0, ...arr1, 2, ...arr2];
+  console.log(merged);
+
+  let str2 = 'Hello';
+  console.log([...str2]);
+  console.log(Array.from(str2));
+</script>
+<script>
+  let arr3 = [1, 2, 3];
+
+  let arrCopy = [...arr3];
+  console.log(JSON.stringify(arr3) === JSON.stringify(arrCopy));
+  console.log(arr3 === arrCopy);
+  arr3.push(4);
+  console.log(arr3);
+  console.log(arrCopy);
+</script>
+</body>
+</html>
