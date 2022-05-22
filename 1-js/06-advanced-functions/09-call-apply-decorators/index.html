@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+  function slow(x) {
+    console.log(`Called with ${x}`);
+    return x;
+  }
+
+  function cachingDecorator(func) {
+    let cache = new Map();
+
+    return function(x) {
+      if (cache.has(x)) {
+        return cache.get(x);
+      }
+
+      let result = func(x);
+
+      cache.set(x, result);
+      return result;
+    };
+  }
+
+  slow = cachingDecorator(slow);
+
+  console.log(slow(1)); // slow(1) 被缓存下来了，并返回结果
+  console.log('Again: ' + slow(1)); // 返回缓存中的 slow(1) 的结果
+
+  console.log(slow(2)); // slow(2) 被缓存下来了，并返回结果
+  console.log('Again: ' + slow(2)); // 返回缓存中的 slow(2) 的结果
+</script>
+<script>
+  let worker = {
+    someMethod() {
+      return 1;
+    },
+
+    slow(x) {
+      console.log('Called with ' + x);
+      return x * this.someMethod();
+    },
+  };
+
+  function cachingDecorator2(func) {
+    let cache = new Map();
+    return function(x) {
+      if (cache.has(x)) {
+        return cache.get(x);
+      }
+      let result = func(x);
+      cache.set(x, result);
+      return result;
+    };
+  }
+
+  console.log(worker.slow(1));
+
+  worker.slow = cachingDecorator2(worker.slow);
+  console.log(worker.slow(2));
+</script>
+<script>
+  function sayHi() {
+    console.log(this.name);
+  }
+
+  let user = {name: 'John'};
+  let admin = {name: 'Admin'};
+
+  // 使用 call 将不同的对象传递为 "this"
+  sayHi.call(user); // John
+  sayHi.call(admin); // Admin
+</script>
+<script>
+  function say(phrase) {
+    console.log(this.name + ': ' + phrase);
+  }
+
+  let user2 = {name: 'John'};
+
+  say.call(user2, 'Hello');
+</script>
+<script>
+  let worker2 = {
+    someMethod() {
+      return 1;
+    },
+
+    slow(x) {
+      console.log('Called with ' + x);
+      return x * this.someMethod();
+    },
+  };
+
+  function cachingDecorator3(func) {
+    let cache = new Map();
+    return function(x) {
+      if (cache.has(x)) {
+        console.log(`Found ${x}`);
+        return cache.get(x);
+      }
+      let result = func.call(this, x); // 现在 "this" 被正确地传递了
+      cache.set(x, result);
+      return result;
+    };
+  }
+
+  worker2.slow = cachingDecorator3(worker2.slow);
+
+  console.log(worker2.slow(2));
+  console.log(worker2.slow(2));
+</script>
+<script>
+  let worker4 = {
+    slow(min, max) {
+      console.log(`Called with ${min},${max}`);
+      return min + max;
+    },
+  };
+
+  function cachingDecorator4(func, hash) {
+    let cache = new Map();
+
+    return function() {
+      let key = hash(arguments);
+      if (cache.has(key)) {
+        return cache.get(key);
+      }
+
+      let result = func.call(this, ...arguments);
+
+      cache.set(key, result);
+      return result;
+    };
+  }
+
+  function hash(args) {
+    return args[0] + ',' + args[1];
+  }
+
+  worker4.slow = cachingDecorator4(worker4.slow, hash);
+
+  console.log(worker4.slow(3, 5));
+  console.log('Again ' + worker4.slow(3, 5));
+</script>
+<script>
+  let wrapper = function() {
+    return func.apply(this, arguments);
+  };
+</script>
+<script>
+  function hash2() {
+    console.log([].join.call(arguments)); // 1,2
+  }
+
+  hash2(1, 2);
+</script>
+<script>
+  function work5(a, b) {
+    console.log(a + b);
+  }
+
+  function spy(func) {
+    function wrapper(...args) {
+      wrapper.calls.push(args);
+      return func.apply(this, args);
+    }
+
+    wrapper.calls = [];
+
+    return wrapper;
+  }
+
+  work5 = spy(work5);
+
+  work5(1, 2); // 3
+  work5(4, 5); // 9
+
+  for (let args of work5.calls) {
+    console.log('call:' + args.join()); // "call:1,2", "call:4,5"
+  }
+</script>
+<script>
+  function f(x) {
+    console.log(x);
+  }
+
+  function delay(func, ms) {
+    return function() {
+      setTimeout(
+        () => f.apply(this, arguments),
+        ms,
+      );
+    };
+  }
+
+  let f1000 = delay(f, 1000);
+  let f1500 = delay(f, 1500);
+
+  f1000('test1000'); // 在 1000ms 后显示 "test"
+  f1500('test1500'); // 在 1500ms 后显示 "test"
+</script>
+<script>
+  function debounce(func, ms) {
+    let timeout;
+    return function() {
+      clearTimeout(timeout);
+      timeout = setTimeout(
+        () => func.apply(this, arguments),
+        ms,
+      );
+    };
+  }
+
+  let f2 = debounce(console.log, 1000);
+
+  f2('a');
+  setTimeout(() => f2('b'), 200);
+  setTimeout(() => f2('c'), 500);
+</script>
+<script>
+  function f4(a) {
+    console.log(`throttle ${a}`);
+  }
+
+  function throttle(func, ms) {
+
+    let isThrottled = false,
+      savedArgs,
+      savedThis;
+
+    function wrapper() {
+
+      if (isThrottled) { // (2)
+        savedArgs = arguments;
+        savedThis = this;
+        return;
+      }
+      isThrottled = true;
+
+      func.apply(this, arguments); // (1)
+
+      setTimeout(
+        function() {
+          isThrottled = false; // (3)
+          if (savedArgs) {
+            wrapper.apply(savedThis, savedArgs);
+            savedArgs = savedThis = null;
+          }
+        },
+        ms,
+      );
+    }
+
+    return wrapper;
+  }
+
+  let f4_1000 = throttle(f4, 1000);
+
+  f4_1000(1);
+  f4_1000(2);
+  f4_1000(3);
+</script>
+</body>
+</html>
