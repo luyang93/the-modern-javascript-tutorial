@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+  function sayHi() {
+    console.log('Hello');
+  }
+
+  setTimeout(sayHi, 1000);
+</script>
+<script>
+  function sayHi2(phrase, who) {
+    console.log(phrase + ', ' + who);
+  }
+
+  setTimeout(sayHi2, 1000, 'Hello', 'John'); // Hello, John
+</script>
+<script>
+  setTimeout('console.log(\'Hello11\')', 1000);
+  setTimeout(() => console.log('Hello22'), 1000);
+</script>
+<script>
+  let timeId = setTimeout(sayHi2, 1000, 'Hello', 'John');
+  console.log(timeId);
+
+  clearTimeout(timeId);
+  console.log(timeId);
+</script>
+<script>
+  let timerId = setInterval(() => console.log('tick'), 2000);
+
+  setTimeout(() => {
+    clearInterval(timerId);
+    console.log('stop');
+  }, 10000);
+</script>
+<script>
+  let timerId2 = setTimeout(
+    function tick() {
+      console.log('tick2');
+      timerId2 = setTimeout(tick, 2000); // (*)
+    },
+    2000,
+  );
+</script>
+<script>
+  let delay = 5000;
+
+  let timerId3 = setTimeout(
+    function request() {
+      if (true) {
+        delay *= 2;
+        console.log(delay);
+      }
+
+      timerId3 = setTimeout(request, delay);
+    },
+    delay,
+  );
+</script>
+<script>
+  setTimeout(() => console.log('World'));
+
+  console.log('Hello');
+</script>
+<script>
+  let start = Date.now();
+  let times = [];
+
+  setTimeout(function run() {
+      times.push(Date.now() - start);
+
+      if (start + 100 < Date.now()) {
+        console.log(times);
+      } else {
+        setTimeout(run);
+      }
+    },
+  );
+</script>
+<script>
+  function printNumbers(from, to) {
+    let current = from;
+
+    let timeId = setInterval(
+      function() {
+        console.log(current);
+        if (current == to) {
+          clearInterval(timeId);
+        }
+        current++;
+      },
+      1000,
+    );
+  }
+
+  printNumbers(5, 10);
+</script>
+<script>
+  function printNumbers2(from, to) {
+    let current = from;
+
+    setTimeout(
+      function go() {
+        console.log(current);
+        if (current < to) {
+          setTimeout(go, 1000);
+        }
+        current++;
+      },
+      1000,
+    );
+  }
+
+  printNumbers2(5, 10);
+</script>
+</body>
+</html>
