@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+  let user = {
+    firstName: 'John',
+    sayHi() {
+      console.log(`Hello, ${this.firstName}!`);
+    },
+  };
+
+  setTimeout(user.sayHi, 1000); // Hello, undefined!
+</script>
+<script>
+  let user2 = {
+    firstName: 'John',
+    sayHi() {
+      console.log(`Hello, ${this.firstName}!`);
+    },
+  };
+
+  setTimeout(
+    function() {
+      user2.sayHi();
+    },
+    1000,
+  );
+</script>
+<script>
+  let user3 = {
+    firstName: 'John',
+    sayHi() {
+      console.log(`Hello, ${this.firstName}!`);
+    },
+  };
+
+  setTimeout(
+    () => user3.sayHi(),
+    1000,
+  );
+
+  user3 = {
+    sayHi() {
+      console.log('Another user3 in setTimeout!');
+    },
+  };
+</script>
+<script>
+  let user4 = {
+    firstName: 'John4',
+  };
+
+  function func(phrase) {
+    console.log(phrase + ', ' + this.firstName);
+  }
+
+  let funcUser = func.bind(user4);
+  funcUser('Hello');
+</script>
+<script>
+  let user5 = {
+    firstName: 'John',
+    sayHi(phrase) {
+      console.log(`${phrase}, ${this.firstName}!`);
+    },
+  };
+  let sayHi = user5.sayHi.bind(user5);
+
+  sayHi();
+  sayHi('Hello');
+  sayHi('Bye');
+
+  setTimeout(sayHi, 1000);
+  user5 = {
+    sayHi() {
+      console.log('Another user5 in setTimeout!');
+    },
+  };
+</script>
+<script>
+  function mul(a, b) {
+    return a * b;
+  }
+
+  let double = mul.bind(null, 2);
+
+  console.log(double(3)); // = mul(2, 3) = 6
+  console.log(double(4)); // = mul(2, 4) = 8
+  console.log(double(5)); // = mul(2, 5) = 10
+
+  let triple = mul.bind(null, 3);
+
+  console.log(triple(3)); // = mul(3, 3) = 9
+  console.log(triple(4)); // = mul(3, 4) = 12
+  console.log(triple(5)); // = mul(3, 5) = 15
+</script>
+<script>
+  function partial(func, ...argsBound) {
+    return function(...args) {
+      return func.call(this, ...argsBound, ...args);
+    };
+  }
+
+  let user6 = {
+    firstName: 'John',
+    say(time, phrase) {
+      console.log(`[${time}] ${this.firstName}: ${phrase}!`);
+    },
+  };
+
+  user6.sayNow = partial(
+    user6.say,
+    new Date().getHours() +
+    ':' +
+    new Date().getMinutes(),
+  );
+
+  user6.sayNow('Hello');
+</script>
+<script>
+  function f() {
+    console.log(this);
+  }
+
+  let user7 = {
+    g: f.bind(null),
+  };
+
+  user7.g();
+</script>
+<script>
+  function f() {
+    console.log(this.name);
+  }
+
+  f = f.bind(
+    {name: 'John'},
+  ).bind(
+    {name: 'Ann'},
+  );
+
+  f();
+</script>
+<script>
+  function sayHi7() {
+    console.log(tthis.name);
+  }
+
+  sayHi7.test = 5;
+
+  let bound = sayHi7.bind(
+    {name: 'John'},
+  );
+
+  console.log(bound.test);
+</script>
+<script>
+  function askPassword(ok, fail) {
+    let password = prompt('Password?', '');
+    if (password == 'rockstar') ok();
+    else fail();
+  }
+
+  let user8 = {
+    name: 'John',
+
+    loginOk() {
+      console.log(`${this.name} logged in`);
+    },
+
+    loginFail() {
+      console.log(`${this.name} failed to log in`);
+    },
+
+  };
+
+  askPassword(
+    user8.loginOk.bind(user8),
+    user8.loginFail.bind(user8),
+  );
+
+  askPassword(
+    () => user8.loginOk(),
+    () => user8.loginFail(),
+  );
+</script>
+<script>
+  function askPassword2(ok, fail) {
+    let password = prompt('Password?', '');
+    if (password == 'rockstar') ok();
+    else fail();
+  }
+
+  let user9 = {
+    name: 'John',
+
+    login(result) {
+      console.log(this.name + (result ? ' logged in' : ' failed to log in'));
+    },
+  };
+
+  askPassword2(
+    () => user9.login(true),
+    () => user9.login(false),
+  );
+  askPassword2(
+    user9.login.bind(user9, true),
+    user9.login.bind(user9, false),
+  );
+</script>
+</body>
+</html>
