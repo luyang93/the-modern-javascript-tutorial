@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+  let user = {
+    name: 'John',
+  };
+
+  let descriptor = Object.getOwnPropertyDescriptor(user, 'name');
+
+  console.log(descriptor);
+  console.log(JSON.stringify(descriptor, null, 2));
+  /* 属性描述符：
+  {
+    "value": "John",
+    "writable": true,
+    "enumerable": true,
+    "configurable": true
+  }
+  */
+</script>
+<script>
+  let user2 = {};
+
+  Object.defineProperty(
+    user2,
+    'name',
+    {value: 'John'},
+  );
+
+  let descriptor2 = Object.getOwnPropertyDescriptor(user2, 'name');
+
+  console.log(descriptor2);
+</script>
+<script>
+  'use strict';
+  let user3 = {
+    name: 'John',
+  };
+
+  Object.defineProperty(
+    user3,
+    'name',
+    {writable: false},
+  );
+
+  user3.name = 'Pete'; // Error: Cannot assign to read only property 'name'
+</script>
+<script>
+  'use strict';
+  let user4 = {};
+
+  Object.defineProperty(
+    user4,
+    'name',
+    {value: 'John', enumerable: true, configurable: true},
+  );
+
+  console.log(user4.name);
+  user4.name = 'Pete';
+</script>
+<script>
+  let user5 = {
+    name: 'John',
+    toString() {
+      return this.name;
+    },
+  };
+
+  // 默认情况下，我们的两个属性都会被列出：
+  for (let key in user5) {
+    console.log(key);
+  } // name, toString
+  console.log(Object.keys(user5));
+</script>
+<script>
+  let user6 = {
+    name: 'John',
+    toString() {
+      return this.name;
+    },
+  };
+
+  Object.defineProperty(
+    user6,
+    'toString',
+    {enumerable: false},
+  );
+
+  for (let key in user6) {
+    console.log(key);
+  }
+
+  console.log(Object.keys(user6));
+</script>
+<script>
+  'use strict';
+  let descriptor7 = Object.getOwnPropertyDescriptor(Math, 'PI');
+
+  console.log(descriptor7);
+
+  console.log(JSON.stringify(descriptor7, null, 2));
+  /*
+  {
+    "value": 3.141592653589793,
+    "writable": false,
+    "enumerable": false,
+    "configurable": false
+  }
+  */
+  Object.defineProperty(
+    Math,
+    'PI',
+    {writable: true},
+  );
+
+  Math.PI = 3;
+</script>
+<script>
+  'use strict';
+  let user8 = {
+    name: 'John',
+  };
+
+  Object.defineProperty(
+    user8,
+    'name',
+    {configurable: false},
+  );
+
+  user8.name = 'Pete';
+  delete user8.name;
+</script>
+<script>
+  'use strict';
+  let user9 = {
+    name: 'John',
+  };
+
+  Object.defineProperty(
+    user9,
+    'name',
+    {writable: false, configurable: false},
+  );
+
+  user9.name = 'Pete';
+  delete user9.name;
+  Object.defineProperty(user9, 'name', {value: 'Pete'});
+</script>
+<script>
+  let user10 = {};
+
+  Object.defineProperties(
+    user10,
+    {
+      name: {
+        value: 'John', writable: false,
+      },
+      surname: {
+        value: 'Smith', writable: false,
+      },
+    },
+  );
+
+  console.log(Object.getOwnPropertyDescriptors(user10));
+</script>
+<script>
+  let user11 = {
+    name: 'John',
+  };
+
+  let clone = Object.defineProperties(
+    {},
+    Object.getOwnPropertyDescriptors(user11),
+  );
+
+  console.log(clone);
+</script>
+<script>
+  // Object.preventExtensions(obj)
+  //
+  // Object.seal(obj)
+  //
+  // Object.freeze(obj)
+  //
+  // Object.isExtensible(obj)
+  //
+  // Object.isSealed(obj)
+  //
+  // Object.isFrozen(obj)
+</script>
+</body>
+</html>
