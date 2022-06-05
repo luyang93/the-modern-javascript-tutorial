@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+  let group = {
+    tittle: 'Our Group',
+    students: ['John', 'Pete', 'Alice'],
+
+    showList() {
+      this.students.forEach(
+        student => console.log(this.tittle + ': ' + student),
+      );
+    },
+  };
+
+  group.showList();
+</script>
+<script>
+  let group2 = {
+    title: 'Our Group',
+    students: ['John', 'Pete', 'Alice'],
+
+    showList() {
+      this.students.forEach(function(student) {
+        // Error: Cannot read property 'title' of undefined
+        console.log(this.title + ': ' + student);
+      });
+    },
+  };
+
+  group2.showList();
+</script>
+<script>
+  function defer(f, ms) {
+    return function() {
+      setTimeout(() => f.apply(this, arguments), ms);
+    };
+  }
+
+  function sayHi(who) {
+    console.log('Hello, ' + who);
+  }
+
+  let sayHiDeferred = defer(sayHi, 2000);
+  sayHiDeferred('John');
+</script>
+<script>
+  function defer2(f, ms) {
+    return function(...args) {
+      let ctx = this;
+      setTimeout(
+        function() {
+          return f.apply(ctx, args);
+        },
+        ms,
+      );
+    };
+  }
+
+  function sayHi2(who) {
+    console.log('Hello, ' + who);
+  }
+
+  let sayHiDeferred2 = defer2(sayHi2, 2000);
+  sayHiDeferred2('John');
+</script>
+</body>
+</html>
