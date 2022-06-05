@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+  let user = {
+    name: 'John',
+    surname: 'Smith',
+
+    get fullName() {
+      return `${this.name} ${this.surname}`;
+    },
+
+    set fullName(value) {
+      [this.name, this.surname] = value.split(' ');
+    },
+  };
+
+  console.log(user.fullName);
+
+  // set fullName 将以给定值执行
+  user.fullName = 'Alice Cooper';
+
+  console.log(user.name); // Alice
+  console.log(user.surname); // Cooper
+</script>
+<script>
+  let user2 = {
+    name: 'John',
+    surname: 'Smith',
+  };
+
+  Object.defineProperty(
+    user2,
+    'fullName',
+    {
+      get() {
+        return `${this.name} ${this.surname}`;
+      },
+
+      set(value) {
+        [this.name, this.surname] = value.split(' ');
+      },
+    },
+  );
+
+  console.log(user2.fullName);
+
+  for (let key in user2) console.log(key); // name, surname
+</script>
+<script>
+  // Error: Invalid property descriptor.
+  Object.defineProperty(
+    {},
+    'prop',
+    {
+      get() {
+        return 1;
+      },
+      value: 2,
+    },
+  );
+</script>
+<script>
+  let user3 = {
+    get name() {
+      return this._name;
+    },
+
+    set name(value) {
+      if (value.length < 4) {
+        console.log('Name is too short, need at least 4 characters');
+        return;
+      }
+      this._name = value;
+    },
+  };
+
+  user3.name = 'Pete';
+  console.log(user3.name);
+
+  user3.name = 'Pet';
+</script>
+<script>
+  function User(name, age) {
+    this.name = name;
+    this.age = age;
+  }
+
+  let john = new User('John', 25);
+
+  console.log(john.age); // 25
+
+  function User2(name, birthday) {
+    this.name = name;
+    this.birthday = birthday;
+
+    Object.defineProperty(
+      this,
+      'age',
+      {
+        get() {
+          let todayYear = new Date().getFullYear();
+          return todayYear - this.birthday.getFullYear();
+        },
+      },
+    );
+  }
+
+  let john2 = new User2('John', new Date(1992, 6, 1));
+
+  console.log(john2.age);
+  console.log(john2.birthday);
+</script>
+</body>
+</html>
