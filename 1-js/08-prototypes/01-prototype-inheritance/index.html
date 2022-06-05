@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+  let animal = {
+    eats: true,
+    walk() {
+      console.log('Animal walk');
+    },
+  };
+
+  let rabbit = {
+    jumps: true,
+  };
+
+  rabbit.__proto__ = animal; // 设置 rabbit.[[Prototype]] = animal
+
+  console.log(rabbit.eats);
+  console.log(rabbit.jumps);
+  rabbit.walk();
+</script>
+<script>
+  let animal2 = {
+    eats: true,
+    walk() {
+      console.log('Animal walk');
+    },
+  };
+
+  let rabbit2 = {
+    jumps: true,
+    __proto__: animal2,
+  };
+
+  let longEar2 = {
+    earLength: 10,
+    __proto__: rabbit2,
+  };
+
+  longEar2.walk();
+  console.log(longEar2.jumps);
+</script>
+<script>
+  let animal3 = {
+    eats: true,
+    walk() {
+      /* rabbit 不会使用此方法 */
+    },
+  };
+
+  let rabbit3 = {
+    __proto__: animal3,
+  };
+
+  rabbit3.walk = function() {
+    console.log('Rabbit! Bounce-bounce!');
+  };
+
+  rabbit3.walk(); // Rabbit! Bounce-bounce!
+</script>
+<script>
+  let user4 = {
+    name: 'John',
+    surname: 'Smith',
+
+    set fullName(value) {
+      [this.name, this.surname] = value.split(' ');
+    },
+
+    get fullName() {
+      return `${this.name} ${this.surname}`;
+    },
+  };
+
+  let admin4 = {
+    __proto__: user4,
+    isAdmin: true,
+  };
+
+  console.log(admin4.fullName); // John Smith (*)
+
+  // setter triggers!
+  admin4.fullName = 'Alice Cooper'; // (**)
+
+  console.log(admin4.fullName); // Alice Cooper，admin 的内容被修改了
+  console.log(user4.fullName);  // John Smith，user 的内容被保护了
+</script>
+<script>
+  // animal 有一些方法
+  let animal5 = {
+    walk() {
+      if (!this.isSleeping) {
+        console.log(`I walk`);
+      }
+    },
+    sleep() {
+      this.isSleeping = true;
+    },
+  };
+
+  let rabbit5 = {
+    name: 'White Rabbit',
+    __proto__: animal5,
+  };
+
+  console.log(rabbit5.isSleeping);
+
+  // 修改 rabbit.isSleeping
+  rabbit5.sleep();
+
+  console.log(rabbit5.isSleeping); // true
+  console.log(animal5.isSleeping); // undefined（原型中没有此属性）
+</script>
+<script>
+  let animal6 = {
+    eats: true,
+  };
+
+  let rabbit6 = {
+    jumps: true,
+    __proto__: animal6,
+  };
+
+  // Object.keys 只返回自己的 key
+  console.log(Object.keys(rabbit6)); // jumps
+
+  // for..in 会遍历自己以及继承的键
+  for (let prop in rabbit6) console.log(prop); // jumps，然后是 eats
+</script>
+<script>
+  let animal7 = {
+    eats: true,
+  };
+
+  let rabbit7 = {
+    jumps: true,
+    __proto__: animal7,
+  };
+
+  for (let prop in rabbit7) {
+    let isOwn = rabbit7.hasOwnProperty(prop);
+
+    if (isOwn) {
+      console.log(`Our: ${prop}`); // Our: jumps
+    } else {
+      console.log(`Inherited: ${prop}`); // Inherited: eats
+    }
+  }
+</script>
+<script>
+  let animal8 = {
+    jumps: null,
+  };
+  let rabbit8 = {
+    __proto__: animal8,
+    jumps: true,
+  };
+
+  console.log(rabbit8.jumps); // ? (1)
+
+  delete rabbit8.jumps;
+
+  console.log(rabbit8.jumps); // ? (2)
+
+  delete animal8.jumps;
+
+  console.log(rabbit8.jumps); // ? (3)
+</script>
+<script>
+  let head = {
+    glasses: 1,
+  };
+
+  let table = {
+    pen: 3,
+    __proto__: head,
+  };
+
+  let bed = {
+    sheet: 1,
+    pillow: 2,
+    __proto__: table,
+  };
+
+  let pockets = {
+    money: 2000,
+    __proto__: bed,
+  };
+
+  console.log(pockets.pen); // 3
+  console.log(bed.glasses); // 1
+  console.log(table.money); // undefined
+</script>
+<script>
+  let animal9 = {
+    eat() {
+      this.full = true;
+    },
+  };
+
+  let rabbit9 = {
+    __proto__: animal9,
+  };
+
+  console.log(rabbit9.full);
+  rabbit9.eat();
+  console.log(rabbit9.full);
+</script>
+<script>
+  let hamster = {
+    stomach: [],
+
+    eat(food) {
+      // 分配给 this.stomach 而不是 this.stomach.push
+      this.stomach = [food];
+    },
+  };
+
+  let speedy = {
+    __proto__: hamster,
+  };
+
+  let lazy = {
+    __proto__: hamster,
+  };
+
+  // 仓鼠 Speedy 找到了食物
+  speedy.eat('apple');
+  console.log(speedy.stomach); // apple
+
+  // 仓鼠 Lazy 的胃是空的
+  console.log(lazy.stomach); // <nothing>
+</script>
+</body>
+</html>
