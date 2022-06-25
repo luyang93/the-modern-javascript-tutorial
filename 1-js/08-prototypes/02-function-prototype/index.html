@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+  let animal = {
+    eats: true,
+  };
+
+  function Rabbit(name) {
+    this.name = name;
+  }
+
+  Rabbit.prototype = animal;
+
+  let rabbit = new Rabbit('White Rabbit');
+  console.log(rabbit.eats);
+</script>
+<script>
+  function Rabbit2() {
+
+  }
+
+  console.log(Rabbit2.prototype.constructor == Rabbit2); // true
+  console.log(Rabbit2.prototype.constructor);
+</script>
+<script>
+  function Rabbit3() {
+
+  }
+
+  let rabbit3 = new Rabbit3();
+
+  console.log(rabbit3.constructor == Rabbit3);
+  console.log(rabbit3.constructor);
+</script>
+<script>
+  function Rabbit4(name) {
+    this.name = name;
+    console.log(name);
+  }
+
+  let rabbit4 = new Rabbit4('White Rabbit');
+  let rabbit5 = new rabbit4.constructor('Black Rabbit');
+</script>
+<script>
+  function Rabbit6() {
+  }
+
+  Rabbit6.prototype = {
+    jumps: true,
+  };
+
+  let rabbit6 = new Rabbit6();
+  console.log(rabbit6.constructor === Rabbit6);
+</script>
+<script>
+  function Rabbit7() {
+  }
+
+  Rabbit7.prototype.jumps = true;
+
+  let rabbit7 = new Rabbit7();
+  console.log(rabbit7.constructor === Rabbit7);
+</script>
+<script>
+  function Rabbit8() {
+  }
+
+  Rabbit8.prototype = {
+    jumps: true,
+    constructor: Rabbit8,
+  };
+
+  let rabbit8 = new Rabbit8();
+  console.log(rabbit8.constructor === Rabbit8);
+</script>
+<script>
+  function Rabbit9() {
+
+  }
+
+
+</script>
+</body>
+</html>
