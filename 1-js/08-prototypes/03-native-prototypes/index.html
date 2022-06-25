@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+  let obj = {};
+  console.log(obj);
+  alert(obj);
+
+  console.log(obj.__proto__ === Object.prototype);
+  console.log(obj.toString === obj.__proto__.toString);
+  console.log(obj.toString === Object.prototype.toString);
+  console.log(Object.prototype.__proto__);
+</script>
+<script>
+  let arr = [1, 2, 3];
+
+  console.log(arr.__proto__ === Array.prototype);
+  console.log(arr.__proto__.__proto__ === Object.prototype);
+  console.log(arr.__proto__.__proto__.__proto__);
+</script>
+<script>
+  function f() {
+  }
+
+  console.log(f.__proto__ === Function.prototype);
+  console.log(f.__proto__.__proto__ === Object.prototype);
+</script>
+<script>
+  console.log(String.prototype);
+  console.log(Number.prototype);
+  console.log(Boolean.prototype);
+</script>
+<script>
+  String.prototype.show = function() {
+    console.log(this.toString());
+  };
+
+  'BOOM!'.show();
+</script>
+<script>
+  if (!String.prototype.repeat) { // 如果这儿没有这个方法
+    // 那就在 prototype 中添加它
+
+    String.prototype.repeat = function(n) {
+      // 重复传入的字符串 n 次
+
+      // 实际上，实现代码比这个要复杂一些（完整的方法可以在规范中找到）
+      // 但即使是不够完美的 polyfill 也常常被认为是足够好的
+      return new Array(n + 1).join(this);
+    };
+  }
+
+  console.log('La'.repeat(3)); // LaLaLa
+</script>
+<script>
+  let obj2 = {
+    0: 'Hello',
+    1: 'world!',
+    length: 2,
+  };
+  obj2.join = Array.prototype.join;
+
+  console.log(obj2.join(','));
+</script>
+<script>
+  Function.prototype.defer = function(ms) {
+    setTimeout(this, ms);
+  };
+
+  function f2() {
+    console.log('Hello!');
+  }
+
+  f2.defer(1000);
+</script>
+<script>
+  Function.prototype.defer = function(ms) {
+    let f = this;
+    return function(...args) {
+      setTimeout(
+          () => f.apply(this, args), ms,
+      );
+    };
+  };
+
+  function f3(a, b) {
+    console.log(a + b);
+  }
+
+  f3.defer(1000)(1, 2); // 1 秒后显示 3
+
+  let user = {
+    name: 'John',
+    sayHi() {
+      console.log(this.name);
+    },
+  };
+
+  user.sayHi = user.sayHi.defer(1000);
+
+  user.sayHi();
+</script>
+</body>
+</html>
