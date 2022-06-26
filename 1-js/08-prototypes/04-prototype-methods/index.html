@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+  let animal = {
+    eats: true,
+  };
+
+  let rabbit = Object.create(animal);
+  console.log(rabbit.eats);
+  console.log(Object.getPrototypeOf(rabbit) === animal);
+  Object.setPrototypeOf(rabbit, {});
+</script>
+<script>
+  let animal2 = {
+    eats: true,
+  };
+
+  let rabbit2 = Object.create(animal2, {
+        jumps: {
+          value: true,
+        },
+      },
+  );
+
+  console.log(rabbit2.jumps);
+</script>
+<script>
+  let clone = Object.create(Object.getPrototypeOf(animal2), Object.getOwnPropertyDescriptors(animal2));
+</script>
+<script>
+  /**
+   Object.create(proto, [descriptors]) —— 利用给定的 proto 作为 [[Prototype]]（可以是 null）和可选的属性描述来创建一个空对象。
+   Object.getPrototypeOf(obj) —— 返回对象 obj 的 [[Prototype]]（与 __proto__ 的 getter 相同）。
+   Object.setPrototypeOf(obj, proto) —— 将对象 obj 的 [[Prototype]] 设置为 proto（与 __proto__ 的 setter 相同）。
+   Object.keys(obj) / Object.values(obj) / Object.entries(obj) —— 返回一个可枚举的由自身的字符串属性名/值/键值对组成的数组。
+   Object.getOwnPropertySymbols(obj) —— 返回一个由自身所有的 symbol 类型的键组成的数组。
+   Object.getOwnPropertyNames(obj) —— 返回一个由自身所有的字符串键组成的数组。
+   Reflect.ownKeys(obj) —— 返回一个由自身所有键组成的数组。
+   obj.hasOwnProperty(key)：如果 obj 拥有名为 key 的自身的属性（非继承而来的），则返回 true。
+   **/
+</script>
+<script>
+  let dictonary = Object.create(
+      null,
+      {
+        toString: {
+          value() {
+            return Object.keys(this).join();
+          },
+        },
+      },
+  );
+
+  dictonary.apple = 'Apple';
+  dictonary.__proto__ = 'test';
+
+  for (let key in dictonary) {
+    console.log(key);
+  }
+
+  console.log(dictonary);
+  alert(dictonary);
+</script>
+<script>
+  function Rabbit3(name) {
+    this.name = name;
+  }
+
+  Rabbit3.prototype.sayHi = function() {
+    console.log(this.name);
+  };
+
+  let rabbit3 = new Rabbit3('Rabbit3');
+
+  rabbit3.sayHi();
+  Rabbit3.prototype.sayHi();
+  Object.getPrototypeOf(rabbit3).sayHi();
+  rabbit3.__proto__.sayHi();
+</script>
+</body>
+</html>
