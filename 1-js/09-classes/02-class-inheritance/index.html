@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+  class Animal {
+    constructor(name) {
+      this.speed = 0;
+      this.name = name;
+    }
+
+    run(speed) {
+      this.speed = speed;
+      console.log(`${this.name} runs with speed ${this.speed}.`);
+    }
+
+    stop() {
+      this.speed = 0;
+      console.log(`${this.name} stands still.`);
+    }
+  }
+
+  let animal = new Animal('My animal');
+
+  class Rabbit extends Animal {
+    hide() {
+      console.log(`${this.name} hides`);
+    }
+  }
+
+  let rabbit = new Rabbit('White Rabbit');
+
+  rabbit.run(5);
+  rabbit.hide();
+</script>
+<script>
+  function f(phrase) {
+    return class {
+      sayHi() {
+        console.log(phrase);
+      }
+    };
+  }
+
+  class User extends f('Hello') {
+  }
+
+  new User().sayHi();
+</script>
+<script>
+  class Rabbit2 extends Animal {
+    stop() {
+      console.log('Rewrite Rabbit2 stop!');
+    }
+  }
+
+  new Rabbit('Rabbit').stop();
+  new Rabbit2('Rabbit2').stop();
+</script>
+<script>
+  class Rabbit3 extends Animal {
+    hide() {
+      console.log(`${this.name} hides!`);
+    }
+
+    stop() {
+      super.stop();
+      this.hide();
+    }
+  }
+
+  let rabbit3 = new Rabbit3('White Rabbit');
+
+  rabbit3.run(5);
+  rabbit3.stop();
+</script>
+<script>
+  class Rabbit4 extends Animal {
+    stop() {
+      setTimeout(
+          () => super.stop(), 1000,
+      );
+    }
+  }
+
+  new Rabbit4('Rabbit4').stop();
+</script>
+<script>
+  class Rabbit5 extends Animal {
+    constructor(...args) {
+      super(...args);
+    }
+  }
+</script>
+<script>
+  class Rabbit6 extends Animal {
+    constructor(name, earLength) {
+      super(name);
+      this.earLength = earLength;
+    }
+  }
+
+  let rabbit6 = new Rabbit6('White Rabbit6', 10);
+  console.log(rabbit6.name);
+  console.log(rabbit6.earLength);
+</script>
+<script>
+  class Animal7 {
+    name = 'animal7';
+
+    constructor() {
+      console.log(this.name);
+      this.showName();
+    }
+
+    showName() {
+      console.log('animal7 showName function');
+    }
+  }
+
+  class Rabbit7 extends Animal7 {
+    name = 'rabbit7';
+
+    showName() {
+      console.log('rabbit7 showName function');
+    }
+  }
+
+  new Animal7();
+  new Rabbit7();
+</script>
+<script>
+  let animal8 = {
+    name: 'Animal8',
+    eat() {
+      console.log(`${this.name} eats.`);
+    },
+  };
+
+  let rabbit8 = {
+    __proto__: animal8,
+    name: 'Rabbit8',
+    eat() {
+      this.__proto__.eat.call(this);
+    },
+  };
+
+  let longEar8 = {
+    __proto__: rabbit8,
+    eat() {
+      this.__proto__.eat.call(this);
+    },
+  };
+  rabbit8.eat();
+  longEar8.eat();
+</script>
+<script>
+  let animal9 = {
+    name: 'Animal9',
+    eat() {
+      console.log(`${this.name} eats.`);
+    },
+  };
+
+  let rabbit9 = {
+    __proto__: animal9,
+    name: 'Rabbit9',
+    eat() {
+      super.eat();
+    },
+  };
+
+  let longEar9 = {
+    __proto__: rabbit9,
+    name: 'Long Ear9',
+    eat() {
+      super.eat();
+    },
+  };
+
+  longEar9.eat();
+</script>
+<script>
+  let animal10 = {
+    sayHi() {
+      console.log(`I'm an animal10`);
+    },
+  };
+
+  let rabbit10 = {
+    __proto__: animal10,
+    sayHi() {
+      super.sayHi();
+    },
+  };
+
+  let plant = {
+    sayHi() {
+      console.log('I\'m a plant');
+    },
+  };
+
+  let tree = {
+    __proto__: plant,
+    sayHi: rabbit10.sayHi,
+  };
+
+  tree.sayHi();
+</script>
+<script>
+  class Animal11 {
+    constructor(name) {
+      this.name = name;
+    }
+  }
+
+  class Rabbit11 extends Animal11 {
+    constructor(name) {
+      super(name);
+      this.created = Date.now();
+    }
+  }
+
+  let rabbit11 = new Rabbit11('White Rabbit11');
+  console.log(rabbit11.name);
+</script>
+<script>
+  class Clock {
+    constructor({template}) {
+      this.template = template;
+    }
+
+    render() {
+      let date = new Date();
+
+      let hours = date.getHours();
+      if (hours < 10) hours = '0' + hours;
+
+      let mins = date.getMinutes();
+      if (mins < 10) mins = '0' + mins;
+
+      let secs = date.getSeconds();
+      if (secs < 10) secs = '0' + secs;
+
+      let output = this.template.replace('h', hours).replace('m', mins).replace('s', secs);
+
+      console.log(output);
+    }
+
+    stop() {
+      clearInterval(this.timer);
+    }
+
+    start() {
+      this.render();
+      this.timer = setInterval(() => this.render(), 1000);
+    }
+  }
+
+  class ExtendedClock extends Clock {
+    constructor(options) {
+      super(options);
+      let {precision = 1000} = options;
+      this.precision = precision;
+    }
+
+    start() {
+      this.render();
+      this.timer = setInterval(() => this.render(), this.precision);
+    }
+  }
+
+  new ExtendedClock(
+      {
+        template: 'h:m:s',
+        precision: 500,
+      },
+  ).start();
+</script>
+</body>
+</html>
