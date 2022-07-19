@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+  class CoffeeMachine {
+    waterAmount = 0; // 内部的水量
+
+    constructor(power) {
+      this.power = power;
+      console.log(`Created a coffee-machine, power: ${power}`);
+    }
+  }
+
+  // 创建咖啡机
+  let coffeeMachine = new CoffeeMachine(100);
+
+  // 加水
+  coffeeMachine.waterAmount = 200;
+</script>
+<script>
+  class CoffeeMachine2 {
+    _waterAmount = 0;
+
+    set waterAmount(value) {
+      if (value < 0) {
+        value = 0;
+      }
+      this._waterAmount = value;
+    }
+
+    get waterAmount() {
+      return this._waterAmount;
+    }
+
+    constructor(power) {
+      this._power = power;
+    }
+
+    get power() {
+      return this._power;
+    }
+  }
+
+  // 创建咖啡机
+  let coffeeMachine2 = new CoffeeMachine2(100);
+
+  console.log(`Power is: ${coffeeMachine2.power}W`); // 功率是：100W
+
+  // 加水
+  coffeeMachine2.waterAmount = -10;
+
+  coffeeMachine2.power = 25; // Error（没有 setter）
+  console.log(`Power is: ${coffeeMachine2.power}W`);
+</script>
+<script>
+  class CoffeeMachine3 {
+    _waterAmount = 0;
+
+    setWaterAmount(value) {
+      if (value < 0) value = 0;
+      this._waterAmount = value;
+    }
+
+    getWaterAmount() {
+      return this._waterAmount;
+    }
+  }
+
+  let coffeeMachine3 = new CoffeeMachine3(200);
+  coffeeMachine3.setWaterAmount(100);
+</script>
+<script>
+  class CoffeeMachine4 {
+    #waterLimit = 200;
+
+    #fixWaterAmount(value) {
+      if (value < 0) return 0;
+      if (value > this.#waterLimit) return this.#waterLimit;
+    }
+
+    setWaterAmount(value) {
+      this.#waterLimit = this.#fixWaterAmount(value);
+    }
+  }
+
+  let coffeeMachine4 = new CoffeeMachine4();
+
+  // 不能从类的外部访问类的私有属性和方法
+  coffeeMachine4.#fixWaterAmount(123); // Error
+  coffeeMachine4.#waterLimit = 1000; // Error
+</script>
+<script>
+  class CoffeeMachine5 {
+    #waterAmount = 0;
+
+    get waterAmount() {
+      return this.#waterAmount;
+    }
+
+    set waterAmount(value) {
+      if (value < 0) value = 0;
+      this.#waterAmount = value;
+    }
+  }
+
+  let machine5 = new CoffeeMachine5();
+
+  machine5.waterAmount = 100;
+  console.log(machine5.waterAmount);
+  // console.log(machine5.#waterAmount); // Error
+</script>
+<script>
+  class MegaCoffeeMachine5 extends CoffeeMachine5 {
+    method() {
+      console.log(this.#waterAmount);
+    }
+  }
+</script>
+<script>
+  class User {
+    sayHi() {
+      let fieldName = 'name';
+      console.log(`Hello, ${this[fieldName]}`);
+    }
+  }
+
+  new User().sayHi();
+</script>
+</body>
+</html>
