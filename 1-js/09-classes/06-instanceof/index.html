@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+  class Rabbit {}
+
+  let rabbit = new Rabbit();
+
+  console.log(rabbit instanceof Rabbit);
+</script>
+<script>
+  function Rabbit2() {}
+
+  console.log(new Rabbit2() instanceof Rabbit2);
+</script>
+<script>
+  let arr = [1, 2, 3];
+  console.log(arr instanceof Array);
+  console.log(arr instanceof Object);
+</script>
+<script>
+  // 设置 instanceOf 检查
+  // 并假设具有 canEat 属性的都是 animal
+  class Animal {
+    static [Symbol.hasInstance](obj) {
+      if (obj.canEat) return true;
+    }
+  }
+
+  let obj = {canEat: true};
+
+  console.log(obj instanceof Animal);
+
+  // obj.__proto__ === Class.prototype ?
+  //   obj.__proto__.__proto__ === Class.prototype ?
+  //     obj.__proto__.__proto__.__proto__ === Class.prototype ?
+</script>
+<script>
+  class Animal3 {}
+
+  class Rabbit3 extends Animal3 {}
+
+  let rabbit3 = new Rabbit3();
+  console.log(rabbit3 instanceof Animal3);
+
+  console.log(rabbit3.__proto__ === Animal3.prototype);
+  console.log(rabbit3.__proto__.__proto__ === Animal3.prototype);
+  console.log(Animal3.prototype.isPrototypeOf(rabbit3));
+</script>
+<script>
+  function Rabbit4() {}
+
+  let rabbit4 = new Rabbit4();
+
+  // 修改了 prototype
+  Rabbit4.prototype = {};
+
+  console.log(Rabbit4.prototype);
+  console.log(rabbit4 instanceof Rabbit4);
+</script>
+<script>
+  let obj2 = {};
+
+  console.log(obj2);
+  console.log(obj2.toString());
+</script>
+<script>
+  let objectToString = Object.prototype.toString;
+
+  let arr2 = [];
+
+  console.log(objectToString.call(arr2));
+  console.log(objectToString.call(123));
+  console.log(objectToString.call(null));
+  console.log(objectToString.call(alert));
+</script>
+<script>
+  let user = {
+    [Symbol.toStringTag]: 'User',
+  };
+
+  console.log({}.toString.call(user));
+</script>
+<script>
+  console.log(window[Symbol.toStringTag]);
+  console.log(XMLHttpRequest.prototype[Symbol.toStringTag]);
+
+  console.log({}.toString.call(window));
+  console.log({}.toString.call(new XMLHttpRequest()));
+</script>
+<script>
+  function A() {}
+
+  function B() {}
+
+  A.prototype = B.prototype = {};
+
+  let a = new A();
+
+  console.log(a instanceof B);
+
+  console.log(a.__proto__ === B.prototype);
+</script>
+</body>
+</html>
