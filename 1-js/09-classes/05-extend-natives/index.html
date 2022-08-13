@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+  // 给 PowerArray 新增了一个方法（可以增加更多）
+  class PowerArray extends Array {
+    isEmpty() {
+      return this.length === 0;
+    }
+  }
+
+  let arr = new PowerArray(1, 2, 5, 10, 50);
+  console.log(arr.isEmpty());
+
+  let filteredArr = arr.filter(item => item >= 10);
+  console.log(filteredArr);
+  console.log(filteredArr.isEmpty());
+
+  console.log(arr.constructor === PowerArray);
+</script>
+<script>
+  class PowerArray2 extends Array {
+    isEmpty() {
+      return this.length === 0;
+    }
+
+    // 内建方法将使用这个作为 constructor
+    static get [Symbol.species]() {
+      return Array;
+    }
+  }
+
+  let arr2 = new PowerArray2(1, 2, 5, 10, 50);
+  console.log(arr2.isEmpty()); // false
+
+  // filter 使用 arr.constructor[Symbol.species] 作为 constructor 创建新数组
+  let filteredArr2 = arr2.filter(item => item >= 10);
+
+  // filteredArr 不是 PowerArray，而是 Array
+  console.log(filteredArr2.isEmpty()); // Error: filteredArr.isEmpty is not a function
+</script>
+</body>
+</html>
