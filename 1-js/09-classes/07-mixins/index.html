@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+  // mixin
+  let sayHiMixin = {
+    sayHi() {
+      console.log(`Hello ${this.name}`);
+    },
+
+    sayBye() {
+      console.log(`Bye ${this.name}`);
+    },
+  };
+
+  // 用法：
+  class User {
+    constructor(name) {
+      this.name = name;
+    }
+  }
+
+  // 拷贝方法
+  Object.assign(User.prototype, sayHiMixin);
+
+  // 现在 User 可以打招呼了
+  new User('Dude').sayHi();
+  console.log(User.prototype);
+</script>
+<script>
+  let sayMixin = {
+    say(phrase) {
+      console.log(phrase);
+    },
+  };
+
+  let sayHiMixin2 = {
+    __proto__: sayMixin,// (或者，我们可以在这儿使用 Object.setPrototypeOf 来设置原型)
+
+    sayHi() {
+      // 调用父类方法
+      super.say(`Hello ${this.name}`);
+    },
+
+    sayBye() {
+      super.say(`Bye ${this.name}`);
+    },
+  };
+
+  class User2 {
+    constructor(name) {
+      this.name = name;
+    }
+  }
+
+  // 拷贝方法
+  Object.assign(User2.prototype, sayHiMixin2);
+
+  // 现在 User 可以打招呼了
+  new User2('Dude').sayHi(); // Hello Dude!
+  new User2('Dude').sayBye();
+</script>
+<script>
+  let eventMixin = {
+    /**
+     * 订阅事件，用法：
+     *  menu.on('select', function(item) { ... }
+     */
+    on(eventName, handler) {
+      if (!this._eventHandlers) this._evnetHandlers = {};
+      if (!this._evnetHandlers[eventName]) {
+        this._evnetHandlers[eventName] = [];
+      }
+      this._evnetHandlers[eventName].push(handler);
+    },
+
+    /**
+     * 取消订阅，用法：
+     *  menu.off('select', handler)
+     */
+    off(eventName, handler) {
+      let handlers = this._evnetHandlers?.[eventName];
+      if (!handlers) return;
+      for (let i = 0; i < handlers.length; i++) {
+        if (handlers[i] === handler) {
+          handlers.splice(i--, 1);
+        }
+      }
+    },
+
+    /**
+     * 生成具有给定名称和数据的事件
+     *  this.trigger('select', data1, data2);
+     */
+    trigger(eventName, ...args) {
+      if (!this._evnetHandlers?.[eventName]) {
+        return; // 该事件名称没有对应的事件处理程序（handler）
+      }
+
+      // 调用事件处理程序（handler）
+      this._evnetHandlers[eventName].forEach(handler => handler.apply(this, args));
+    },
+  };
+
+  // 创建一个 class
+  class Menu {
+    choose(value) {
+      this.trigger('select', value);
+    }
+  }
+
+  // 添加带有事件相关方法的 mixin
+  Object.assign(Menu.prototype, eventMixin);
+  let menu = new Menu();
+
+  // 添加一个事件处理程序（handler），在被选择时被调用：
+  menu.on('select', value => console.log(`Value selected: ${value}`));
+
+  // 触发事件 => 运行上述的事件处理程序（handler）并显示：
+  // 被选中的值：123
+  menu.choose('123');
+</script>
+</body>
+</html>

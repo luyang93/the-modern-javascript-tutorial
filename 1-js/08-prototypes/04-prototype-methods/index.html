@@ -21,10 +21,10 @@
   };
 
   let rabbit2 = Object.create(animal2, {
-        jumps: {
-          value: true,
-        },
+      jumps: {
+        value: true,
       },
+    },
   );
 
   console.log(rabbit2.jumps);
@@ -46,14 +46,14 @@
 </script>
 <script>
   let dictonary = Object.create(
-      null,
-      {
-        toString: {
-          value() {
-            return Object.keys(this).join();
-          },
+    null,
+    {
+      toString: {
+        value() {
+          return Object.keys(this).join();
         },
       },
+    },
   );
 
   dictonary.apple = 'Apple';
