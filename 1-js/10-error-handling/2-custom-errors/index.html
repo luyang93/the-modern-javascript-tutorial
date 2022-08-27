@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+  class ValidationError extends Error {
+    constructor(message) {
+      super(message);
+      this.name = 'ValidationError2';
+    }
+  }
+
+  function test() {
+    throw new ValidationError('Whoops!');
+  }
+
+  try {
+    test();
+  } catch (err) {
+    console.log(err.message);
+    console.log(err.name);
+    console.log(err.stack); // 一个嵌套调用的列表，每个调用都有对应的行号
+  }
+
+  function readUser(json) {
+    let user = JSON.parse(json);
+
+    if (!user.age) {
+      throw new ValidationError('No field: age');
+    }
+    if (!user.name) {
+      throw new ValidationError('No field: name');
+    }
+
+    return user;
+  }
+
+  try {
+    let user = readUser('{"age": 25}');
+  } catch (err) {
+    if (err instanceof ValidationError) {
+      console.log('Invalid data: ' + err.message);
+    } else if (err instanceof SyntaxError) {
+      console.log('JSON Syntax Error: ' + err.message);
+    } else {
+      throw err;
+    }
+  }
+</script>
+<script>
+  class ValidationError2 extends Error {
+    constructor(message) {
+      super(message);
+      this.name = 'ValidationError2';
+    }
+  }
+
+  class PropertyRequiredError2 extends ValidationError2 {
+    constructor(property) {
+      super('No property: ' + property);
+      this.name = 'PropertyRequiredError2';
+      this.property = property;
+    }
+  }
+
+  function readUser2(json) {
+    let user = JSON.parse(json);
+
+    if (!user.age) {
+      throw new PropertyRequiredError2('age');
+    }
+    if (!user.name) {
+      throw new PropertyRequiredError2('name');
+    }
+
+    return user;
+  }
+
+  try {
+    let user2 = readUser2('{"age": 25}');
+  } catch (err) {
+    if (err instanceof ValidationError2) {
+      console.log('Invalid data: ' + err.message); // Invalid data: No property: name
+      console.log(err.name); // PropertyRequiredError
+      console.log(err.property); // name
+    } else if (err instanceof SyntaxError) {
+      console.log('JSON Syntax Error: ' + err.message);
+    } else {
+      throw err;
+    }
+  }
+</script>
+<script>
+  class MyError extends Error {
+    constructor(message) {
+      super(message);
+      this.name = this.constructor.name;
+    }
+  }
+
+  class ValidationError3 extends MyError {}
+
+  class PropertyRequiredError3 extends ValidationError3 {
+    constructor(property) {
+      super('No property: ' + property);
+      this.property = property;
+    }
+  }
+
+  console.log(new PropertyRequiredError3('field').name);
+</script>
+<script>
+  class ReadError4 extends Error {
+    constructor(message, cause) {
+      super(message);
+      this.cause = cause;
+      this.name = 'ReadError';
+    }
+  }
+
+  class ValidationError4 extends Error {
+    constructor(message) {
+      super(message);
+      this.name = 'ValidationError4';
+    }
+  }
+
+  class PropertyRequiredError4 extends ValidationError4 {
+    constructor(property) {
+      super('No property: ' + property);
+      this.property = property;
+    }
+  }
+
+  function validateUser4(user) {
+    if (!user.age) {
+      throw new PropertyRequiredError4('age');
+    }
+    if (!user.name) {
+      throw new PropertyRequiredError4('name');
+    }
+  }
+
+  function readUser4(json) {
+    let user;
+
+    try {
+      user = JSON.parse(json);
+    } catch (err) {
+      if (err instanceof SyntaxError) {
+        throw new ReadError4('Syntax Error', err);
+      } else {
+        throw err;
+      }
+    }
+
+    try {
+      validateUser4(user);
+    } catch (err) {
+      if (err instanceof ValidationError4) {
+        throw new ReadError4('Validation Error', err);
+      } else {
+        throw err;
+      }
+    }
+  }
+
+  try {
+    readUser4('{bad json}');
+  } catch (e) {
+    if (e instanceof ReadError4) {
+      console.log(e);
+      // Original error: SyntaxError: Unexpected token b in JSON at position 1
+      console.log('Original error: ' + e.cause);
+    } else {
+      throw e;
+    }
+  }
+</script>
+<script>
+  class FormatError extends SyntaxError {
+    constructor(message) {
+      super(message);
+      this.name = this.constructor.name;
+    }
+  }
+
+  let err = new FormatError('formatting error');
+
+  console.log(err.message); // formatting error
+  console.log(err.name); // FormatError
+  console.log(err.stack); // stack
+
+  console.log(err instanceof SyntaxError); // true
+  console.log(err instanceof FormatError);
+</script>
+</body>
+</html>
