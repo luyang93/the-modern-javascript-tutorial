@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <style>
+    .circle {
+      transition-property: width, height, margin-left, margin-top;
+      transition-duration: 2s;
+      position: fixed;
+      transform: translateX(-50%) translateY(-50%);
+      background-color: red;
+      border-radius: 50%;
+    }
+
+    .message-ball {
+      font-size: 20px;
+      line-height: 200px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+<script>
+  let promise = new Promise(function(resolve, reject) {
+      // 当 promise 被构造完成时，自动执行此函数
+
+      // 1 秒后发出工作已经被完成的信号，并带有结果 "done"
+      setTimeout(() => resolve('done', 10000));
+    },
+  );
+  console.log(promise);
+</script>
+<script>
+  let promise2 = new Promise(function(resolve, reject) {
+      // 1 秒后发出工作已经被完成的信号，并带有 error
+      setTimeout(() => resolve(new Error('Whoops!'), 10000));
+    },
+  );
+  console.log(promise2);
+</script>
+<script>
+  let promise3 = new Promise(
+    function(resolve, reject) {
+      setTimeout(
+        () => resolve('done!'),
+        1000,
+      );
+    },
+  );
+
+  promise3.then(
+    result => console.log(result), // 1 秒后显示 "done!"
+    error => console.log(error), // 不运行
+  );
+</script>
+<script>
+  let promise4 = new Promise(
+    function(resolve, reject) {
+      setTimeout(
+        () => reject(new Error('Whoops!')),
+        2000,
+      );
+    },
+  );
+
+  promise4.then(
+    result => console.log(result), // 不运行
+    error => console.log(error), // 1 秒后显示 "Error: Whoops!"
+  );
+</script>
+<script>
+  let promise5 = new Promise(
+    resolve => {
+      setTimeout(
+        () => resolve('done'),
+        3000,
+      );
+    },
+  );
+
+  promise5.then(console.log);
+</script>
+<script>
+  let promise6 = new Promise(
+    (resolve, reject) => {
+      setTimeout(
+        () => reject(new Error('Whoops!')),
+        4000,
+      );
+    },
+  );
+
+  // .catch(f) 与 promise.then(null, f) 一样
+  promise6.catch(console.log); // 1 秒后显示 "Error: Whoops!"
+</script>
+<script>
+  new Promise(
+    (resolve, reject) => {
+      setTimeout(
+        () => resolve('Value'),
+        5000,
+      );
+    },
+  ).finally(
+    () => console.log('Promise ready'),
+  ).then(
+    result => console.log(result),
+  );
+</script>
+<script>
+  new Promise(
+    (resolve, reject) => {
+      throw new Error('error');
+    },
+  ).finally(
+    () => console.log('Promise ready'),  // 先触发
+  ).catch(
+    err => console.log(err),  // <-- .catch 显示这个 error
+  );
+</script>
+<script>
+  let promise7 = new Promise(
+    resolve => resolve('done!'),
+  );
+
+  promise7.then(console.log);
+</script>
+<script>
+  function loadScript(src) {
+    return new Promise(
+      function(resolve, reject) {
+        let script = document.createElement('script');
+        script.src = src;
+
+        script.onload = () => resolve(script);
+        script.onerror = () => reject(new Error(`Script load error for ${src}`));
+
+        document.head.append(script);
+      },
+    );
+  }
+
+  let promise8 = loadScript('https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.11/lodash.js');
+
+  promise8.then(
+    script => console.log(`${script.src} is loaded!`),
+    error => console.log(`Error: ${error.message}`),
+  );
+
+  promise8.then(script => console.log('Another handler...'));
+</script>
+<script>
+  let promise9 = new Promise(function(resolve, reject) {
+      resolve(1);
+
+      setTimeout(() => resolve(2), 1000);
+    },
+  );
+
+  promise9.then(console.log);
+</script>
+<script>
+  function delay(ms) {
+    return new Promise(
+      resolve => setTimeout(resolve, ms),
+    );
+  }
+
+  delay(8000).then(
+    () => console.log('run after 8 seconds'),
+  );
+</script>
+<script>
+  function showCircle(cx, cy, radius) {
+    let div = document.createElement('div');
+    div.style.width = 0;
+    div.style.height = 0;
+    div.style.left = cx + 'px';
+    div.style.top = cy + 'px';
+    div.className = 'circle';
+    document.body.append(div);
+
+    return new Promise(
+      resolve => {
+        setTimeout(
+          () => {
+            div.style.width = radius * 2 + 'px';
+            div.style.height = radius * 2 + 'px';
+
+            div.addEventListener('transitionend', function handler() {
+                div.removeEventListener('transitionend', handler);
+                resolve(div);
+              },
+            );
+          },
+          0,
+        );
+      },
+    );
+  }
+
+  showCircle(300, 300, 100).then(
+    div => {
+      div.classList.add('message-ball');
+      div.append('Hello, world!');
+    },
+  );
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
