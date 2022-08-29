@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+  let promise = Promise.resolve();
+
+  promise.then(
+    () => console.log('promise done!'),
+  );
+
+  console.log('code finished');
+</script>
+<script>
+  Promise.resolve().then(
+    () => console.log('promise done! 2'),
+  ).then(
+    () => console.log('code finished 2'),
+  );
+</script>
+<script>
+  let promise2 = Promise.reject(new Error('Promise Failed! 2'));
+  promise2.catch(err => console.log('caught'));
+
+  let promise3 = Promise.reject(new Error('Promise Failed! 3'));
+
+  let promise4 = Promise.reject(new Error('Promise Failed! 4'));
+  setTimeout(
+    () => promise4.catch(err => console.log('caught')),
+    1000,
+  );
+
+  window.addEventListener(
+    'unhandledrejection',
+    event => console.log(event.reason),
+  );
+</script>
+</body>
+</html>
