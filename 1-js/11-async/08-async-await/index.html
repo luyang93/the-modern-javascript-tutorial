@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+  async function f() {
+    return 1;
+  }
+
+  f().then(console.log);
+</script>
+<script>
+  async function f2() {
+    return Promise.resolve(2);
+  }
+
+  f2().then(console.log);
+</script>
+<script>
+  async function f3() {
+    let promise = new Promise(
+      (resolve, reject) => {
+        setTimeout(
+          () => resolve('done!'),
+          1000,
+        );
+      },
+    );
+
+    let result = await promise; // 等待，直到 promise resolve (*)
+
+    console.log(result); // "done!"
+  }
+
+  f3();
+</script>
+<script>
+  async function showAvatar() {
+
+    // 读取我们的 JSON
+    let response = await fetch('/article/promise-chaining/user.json');
+    let user = await response.json();
+
+    // 读取 github 用户信息
+    let githubResponse = await fetch(`https://api.github.com/users/${user.name}`);
+    let githubUser = await githubResponse.json();
+
+    // 显示头像
+    let img = document.createElement('img');
+    img.src = githubUser.avatar_url;
+    img.className = 'promise-avatar-example';
+    document.body.append(img);
+
+    // 等待 3 秒
+    await new Promise(
+      (resolve, reject) => setTimeout(
+        resolve,
+        3000,
+      ),
+    );
+
+    img.remove();
+
+    return githubUser;
+  }
+
+  showAvatar();
+</script>
+<script>
+  // 我们假设此代码在 module 中的顶层运行
+  let response = await fetch('/article/promise-chaining/user.json');
+  let user = await response.json();
+
+  console.log(user);
+</script>
+<script>
+  (
+    async () => {
+      let response = await fetch('/article/promise-chaining/user.json');
+      let user = await response.json();
+
+      console.log(user);
+    }
+  )();
+</script>
+<script>
+  class Thenable {
+    constructor(num) {
+      this.num = num;
+    }
+
+    then(resolve, reject) {
+      console.log(resolve);
+      // 1000ms 后使用 this.num*2 进行 resolve
+      setTimeout(
+        () => resolve(this.num * 10),
+        4000,
+      );
+    }
+  }
+
+  async function f4() {
+    // 等待 1 秒，之后 result 变为 2
+    let result = await new Thenable(3);
+    console.log(result);
+  }
+
+  f4();
+</script>
+<script>
+  class Waiter {
+    async wait() {
+      return await Promise.resolve(100);
+    }
+  }
+
+  new Waiter().wait().then(console.log);
+</script>
+<script>
+  async function f5() {
+    await Promise.reject(new Error('Whoops!'));
+  }
+
+  async function f6() {
+    throw new Error('Whoops!');
+  }
+
+  async function f7() {
+    try {
+      let reponse = await fetch('http://no-such-url');
+      let user = await response.json();
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  f7();
+
+  async function f8() {
+    let reponse = await fetch('http://no-such-url');
+    let user = await response.json();
+  }
+
+  f8().catch(console.log);
+
+  f8();
+</script>
+<script>
+  let results = await Promise.all(
+    [
+      fetch(url1),
+      fetch(url2),
+    ],
+  );
+</script>
+<script>
+  async function loadJson(url) {
+    let response = await fetch(url);
+    if (response.status === 200) {
+      return await response.json();
+    }
+    throw new Error(response.status);
+  }
+
+  loadJson('https://javascript.info/no-such-user.json').catch(console.log);
+</script>
+<script>
+  class HttpError extends Error {
+    constructor(response) {
+      super(`${response.status} for ${response.url}`);
+      this.name = 'HttpError';
+      this.response = response;
+    }
+  }
+
+  async function loadJson(url) {
+    let response = await fetch(url);
+    if (response.status === 200) {
+      return response.json();
+    } else {
+      throw new HttpError(response);
+    }
+  }
+
+  async function demoGithubUser() {
+
+    let user;
+    while (true) {
+      let name = prompt('Enter a name?', 'iliakan');
+
+      try {
+        user = await loadJson(`https://api.github.com/users/${name}`);
+        break;
+      } catch (err) {
+        if (err instanceof HttpError && err.response.status === 404) {
+          console.log('No such user, please reenter.');
+        } else {
+          throw err;
+        }
+      }
+    }
+
+    console.log(`Full name: ${user.name}.`);
+    return user;
+  }
+
+  demoGithubUser();
+</script>
+<script>
+  async function wait() {
+    await new Promise(
+      resolve => setTimeout(
+        resolve,
+        1000,
+      ),
+    );
+
+    return 9999;
+  }
+
+  function f10() {
+    wait().then(result => console.log(result));
+  }
+
+  f10();
+</script>
+</body>
+</html>
