@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+  let range = {
+    from: 1,
+    to: 5,
+
+    [Symbol.iterator]() { // 在 for..of 循环开始时被调用一次
+      return {
+        current: this.from,
+        last: this.to,
+
+        next() { // 每次迭代时都会被调用，来获取下一个值
+          if (this.current <= this.last) {
+            return {
+              done: false,
+              value: this.current++,
+            };
+          } else {
+            return {
+              done: true,
+            };
+          }
+        },
+      };
+    },
+  };
+
+  for (let value of range) {
+    console.log(value);
+  }
+</script>
+<script>
+  let range2 = {
+    from: 1,
+    to: 5,
+
+    [Symbol.asyncIterator]() {
+      return {
+        current: this.from,
+        last: this.to,
+
+        async next() {
+          await new Promise(
+            resolve => setTimeout(
+              resolve,
+              1000,
+            ),
+          );
+
+          if (this.current <= this.last) {
+            return {
+              done: false,
+              value: this.current++,
+            };
+          } else {
+            return {
+              done: true,
+            };
+          }
+        },
+      };
+    },
+  };
+
+  (
+    async () => {
+      for await (let value of range2) {
+        console.log(value);
+      }
+    }
+  )();
+
+  console.log([...range2]);
+</script>
+<script>
+  function* generateSequence(start, end) {
+    for (let i = start; i <= end; i++) {
+      yield i;
+    }
+  }
+
+  for (let value of generateSequence(1, 5)) {
+    console.log(value);
+  }
+</script>
+<script>
+  let range3 = {
+    from: 1,
+    to: 5,
+    [Symbol.iterator]: function* () {
+      for (let value = this.from; value <= this.to; value++) {
+        yield value;
+      }
+    },
+  };
+
+  for (let value of range3) {
+    console.log(value);
+  }
+</script>
+<script>
+  async function* generateSequence2(start, end) {
+    for (let i = start; i <= end; i++) {
+      await new Promise(
+        resolve => setTimeout(
+          resolve,
+          1000,
+        ),
+      );
+      yield i;
+    }
+  }
+
+  (
+    async () => {
+      let generator = generateSequence2(1, 5);
+      for await (let value of generator) {
+        console.log(value);
+      }
+    }
+  )();
+</script>
+<script>
+  async function* fetchCommits(repo) {
+    let url = `https://api.github.com/repos/${repo}/commits`;
+
+    while (url) {
+      const response = await fetch(
+        url,
+        {
+          headers: {
+            'User-Agent': 'Our script',
+          },
+        },
+      );
+
+      const body = await response.json();
+
+      let nextPage = response.headers.get('Link').match(/<(.*?)>; rel="next"/);
+      nextPage = nextPage?.[1];
+
+      url = nextPage;
+
+      for (let commit of body) {
+        yield commit;
+      }
+    }
+  }
+
+  (async () => {
+      let count = 0;
+      for await (let commit of fetchCommits('javascript-tutorial/en.javascript.info')) {
+        console.log(commit.author.login);
+
+        if (++count === 100) {
+          break;
+        }
+      }
+    }
+  )();
+</script>
+</body>
+</html>
