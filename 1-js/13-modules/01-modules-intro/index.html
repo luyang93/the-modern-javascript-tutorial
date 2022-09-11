@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <script type="module">
+    import {sayHi} from './say.js';
+
+    document.body.innerHTML = sayHi('John');
+  </script>
+  <script type="module" src="user.js">
+  </script>
+  <script type="module" src="hello.js">
+  </script>
+  <script type="module">
+    let user3 = 'user3';
+    window.user4 = 'user4';
+  </script>
+  <script type="module">
+    console.log(user4);
+  </script>
+  <script type="module">
+    import {admin} from './admin.js';
+
+    admin.name = 'Pete';
+    console.log(admin.name);
+  </script>
+  <script type="module">
+    import {admin} from './admin.js';
+
+    console.log(admin.name);
+  </script>
+  <script src="init.js" type="module">
+  </script>
+  <script src="another.js" type="module">
+  </script>
+  <script type="module">
+    console.log(import.meta.url);
+  </script>
+  <script>
+    console.log(this); // window
+  </script>
+  <script type="module">
+    console.log(this); // undefined
+  </script>
+  <script type="module">
+    console.log(typeof button); // object：脚本可以“看见”下面的 button
+    // 因为模块是被延迟的（deferred，所以模块脚本会在整个页面加载完成后才运行
+  </script>
+  <script>
+    console.log(typeof button); // button 为 undefined，脚本看不到下面的元素
+    // 常规脚本会立即运行，常规脚本的运行是在在处理页面的其余部分之前进行的
+  </script>
+  <!-- 所有依赖都获取完成（analytics.js）然后脚本开始运行 -->
+  <!-- 不会等待 HTML 文档或者其他 <script> 标签 -->
+  <script async type="module">
+    import {counter} from './analytics.js';
+
+    counter.count();
+  </script>
+</head>
+<body>
+<button id="button">Button</button>
+</body>
+</html>
