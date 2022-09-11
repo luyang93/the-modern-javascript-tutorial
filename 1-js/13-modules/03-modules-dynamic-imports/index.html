@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <script>
+    let modulePath = 'module path';
+    import(modulePath).then(
+      obj => {},
+    ).catch(
+      err => {},
+    );
+
+    async function load() {
+      // let obj = await import('./say.js')
+      // let say = obj.default
+
+      let say = await import('./say.js');
+
+      let {default: say_default} = await import('./say.js');
+
+      say_default();
+
+      say.hi();
+      say.bye();
+      say.default();
+    }
+
+    load();
+  </script>
+</head>
+<body>
+</body>
+</html>
