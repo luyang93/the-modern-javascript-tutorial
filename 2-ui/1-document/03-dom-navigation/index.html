@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+      console.log('From HEAD: ' + document.body); // null，这里目前还没有 <body>
+    </script>
+</head>
+<body>
+<script>
+  console.log('From BODY: ' + document.body); // HTMLBodyElement，现在存在了
+</script>
+<div>Begin</div>
+
+<ul>
+    <li>Information</li>
+</ul>
+
+<div>End</div>
+
+<script>
+  for (let i = 0; i < document.body.childNodes.length; i++) {
+    console.log(document.body.childNodes[i]); // Text, DIV, Text, UL, ..., SCRIPT
+  }
+
+  console.log(document.body.childNodes[0] === document.body.firstChild);
+  console.log(document.body.childNodes[document.body.childNodes.length - 1] === document.body.lastChild);
+</script>
+<script>
+  for (let node of document.body.childNodes) {
+    console.log(node); // 显示集合中的所有节点
+  }
+
+  console.log(document.body.childNodes.filter);
+
+  console.log(Array.from(document.body.childNodes).filter); // function
+
+  for (let prop in document.body.childNodes) console.log(prop);
+</script>
+<script>
+  console.log(document.body.parentNode === document.documentElement);
+  console.log(document.head.nextSibling);
+  console.log(document.body.previousSibling);
+</script>
+<script>
+  console.log(document.documentElement.parentNode);
+  console.log(document.documentElement.parentElement);
+</script>
+<script>
+  elem = document.documentElement.children[1].children[2].children[0];
+  while (elem = elem.parentElement) { // 向上，直到 <html>
+    console.log(elem);
+  }
+</script>
+<script>
+  for (let elem of document.body.children) {
+    console.log(elem); // DIV, UL, DIV, SCRIPT
+  }
+</script>
+<table id="table">
+    <tr>
+        <td>one</td>
+        <td>two</td>
+    </tr>
+    <tr>
+        <td>three</td>
+        <td>four</td>
+    </tr>
+</table>
+
+<script>
+  // 获取带有 "two" 的 td（第一行，第二列）
+  let td = table.rows[0].cells[1];
+  td.style.backgroundColor = 'red'; // highlight it
+</script>
+<table id="table2">
+    <tr>
+        <td>1:1</td>
+        <td>2:1</td>
+        <td>3:1</td>
+        <td>4:1</td>
+        <td>5:1</td>
+    </tr>
+    <tr>
+        <td>1:2</td>
+        <td>2:2</td>
+        <td>3:2</td>
+        <td>4:2</td>
+        <td>5:2</td>
+    </tr>
+    <tr>
+        <td>1:3</td>
+        <td>2:3</td>
+        <td>3:3</td>
+        <td>4:3</td>
+        <td>5:3</td>
+    </tr>
+    <tr>
+        <td>1:4</td>
+        <td>2:4</td>
+        <td>3:4</td>
+        <td>4:4</td>
+        <td>5:4</td>
+    </tr>
+    <tr>
+        <td>1:5</td>
+        <td>2:5</td>
+        <td>3:5</td>
+        <td>4:5</td>
+        <td>5:5</td>
+    </tr>
+</table>
+<script>
+  for (let i = 0; i < table2.rows.length; i++) {
+    let row = table2.rows[i];
+    row.cells[i].style.backgroundColor = 'red';
+  }
+</script>
+</body>
+</html>
