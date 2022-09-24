@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="elem">
+    <div id="elem-content">
+        Element
+    </div>
+</div>
+<script>
+  // 获取该元素
+  let elem_ = document.getElementById('elem');
+
+  // 将该元素背景改为红色
+  elem_.style.background = 'red';
+</script>
+<script>
+  elem.style.background = 'blue';
+  window['elem-content'].style.background = 'green';
+</script>
+<div>
+    <ul>
+        <li>The</li>
+        <li>test</li>
+    </ul>
+    <ul>
+        <li>has</li>
+        <li>passed</li>
+    </ul>
+</div>
+<script>
+  let elements = document.querySelectorAll('ul > li:last-child');
+
+  for (let elem of elements) {
+    console.log(elem.innerHTML); // "test", "passed"
+  }
+
+  console.log(document.querySelector('ul > li'));
+</script>
+<a href="http://example.com/file.zip">...</a>
+<a href="http://ya.ru">...</a>
+<script>
+  // 不一定是 document.body.children，还可以是任何集合
+  for (let elem of document.body.children) {
+    if (elem.matches('a[href$="zip"]')) {
+      console.log('The archive reference: ' + elem.href);
+    }
+  }
+</script>
+<h1>
+    Contents
+</h1>
+<div class="contents">
+    <ul class="book">
+        <li class="chapter">Chapter 1</li>
+        <li class="chapter">Chapter 2</li>
+    </ul>
+</div>
+<script>
+  let chapter = document.querySelector('.chapter'); // LI
+
+  console.log(chapter.closest('.book')); // UL
+  console.log(chapter.closest('.contents')); // DIV
+
+  console.log(chapter.closest('.h1')); // null（因为 h1 不是祖先）
+</script>
+<table id="table">
+    <tr>
+        <td>Your age:</td>
+
+        <td>
+            <label>
+                <input type="radio" name="age" value="young" checked> less than 18
+            </label>
+            <label>
+                <input type="radio" name="age" value="mature"> from 18 to 50
+            </label>
+            <label>
+                <input type="radio" name="age" value="senior"> more than 60
+            </label>
+        </td>
+    </tr>
+</table>
+<script>
+  let inputs = table.getElementsByTagName('input');
+
+  for (let input of inputs) {
+    console.log(input.value + ': ' + input.checked);
+  }
+
+  // 应该可以运行（如果有 input）
+  document.getElementsByTagName('input')[0].value = 5;
+</script>
+<form name="my-form">
+    <div class="article">Article</div>
+    <div class="long article">Long article</div>
+</form>
+<script>
+  // 按 name 特性查找
+  let form = document.getElementsByName('my-form')[0];
+
+  let articles = form.getElementsByClassName('article');
+  console.log(articles.length); // 2, found two elements with class "article"
+</script>
+<div>First div</div>
+<script>
+  let divs = document.getElementsByTagName('div');
+  let divs_ = document.querySelectorAll('div');
+  console.log(divs.length); // 1
+  console.log(divs_.length);
+</script>
+<div>Second div</div>
+<script>
+  console.log(divs.length); // 2
+  console.log(divs_.length);
+</script>
+<form name="search">
+    <label>Search the site:
+        <input type="text" name="search">
+    </label>
+    <input type="submit" value="Search!">
+</form>
+<hr>
+<form name="search-person">
+    Search the visitors:
+    <table id="age-table">
+        <tbody>
+        <tr>
+            <td>Age:</td>
+            <td id="age-list">
+                <label>
+                    <input type="radio" name="age" value="young">less than 18</label>
+                <label>
+                    <input type="radio" name="age" value="mature">18-50</label>
+                <label>
+                    <input type="radio" name="age" value="senior">more than 50</label>
+            </td>
+        </tr>
+        <tr>
+            <td>Additionally:</td>
+            <td>
+                <label>
+                    <input type="text" name="info[0]">
+                </label>
+                <label>
+                    <input type="text" name="info[1]">
+                </label>
+                <label>
+                    <input type="text" name="info[2]">
+                </label>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <input type="submit" value="Search!">
+</form>
+<script>
+  // 1. 带有 id="age-table" 的表格。
+  let table2 = document.getElementById('age-table');
+  console.log(table2);
+
+  // 2. 表格内的所有 label 元素
+  console.log(table2.getElementsByTagName('label'));
+  console.log(document.querySelectorAll('#age-table label'));
+
+  // 3. 表格中的第一个 td（带有 "Age" 字段）
+  console.log(table2.rows[0].cells[0]);
+  console.log(table2.getElementsByTagName('td')[0]);
+  console.log(table2.querySelector('td'));
+
+  // 4. 带有 name="search" 的 form。
+  // 假设文档中只有一个 name="search" 的元素
+  let form2 = document.getElementsByName('search')[0];
+  console.log(form2);
+  console.log(document.querySelector('form[name="search"]'));
+
+  // 5. 表单中的第一个 input
+  console.log(form2.getElementsByTagName('input')[0]);
+  console.log(form2.querySelector('input'));
+
+  // 6. 表单中的最后一个 input
+  let inputs2 = form2.querySelectorAll('input');
+  console.log(inputs2[inputs2.length - 1]);
+</script>
+</body>
+</html>
