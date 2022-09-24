@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+  const bigint = 1234567890123456789012345678901234567890n;
+
+  const sameBigint = BigInt('1234567890123456789012345678901234567890');
+
+  const bigintFromNumber = BigInt(10); // 与 10n 相同
+</script>
+<script>
+  console.log(1n + 2n); // 3n
+
+  console.log(5n / 2n); // 2n
+
+  console.log(1n + 2); // Error: Cannot mix BigInt and other types
+</script>
+<script>
+  let bigint1 = 1n;
+  let number = 2;
+
+  // 将 number 转换为 bigint
+  console.log(bigint1 + BigInt(number)); // 3n
+
+  // 将 bigint 转换为 number
+  console.log(Number(bigint1) + number); // 3
+</script>
+<script>
+  let bigint2 = 1n;
+
+  console.log(+bigint2); // error
+</script>
+<script>
+  console.log(2n > 1n); // true
+
+  console.log(2n > 1); // true
+
+  console.log(1 == 1n); // true
+
+  console.log(1 === 1n); // false
+</script>
+<script>
+  if (0n) {
+    // 永远不会执行
+  }
+</script>
+<script>
+  console.log( 1n || 2 ); // 1（1n 被认为是真）
+
+  console.log( 0n || 2 ); // 2（0n 被认为是假）
+</script>
+</body>
+</html>
