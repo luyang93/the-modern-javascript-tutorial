@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
+</head>
+<body>
+<script>
+  function curry(f) { // curry(f) 执行柯里化转换
+    return function(a) {
+      return function(b) {
+        return f(a, b);
+      };
+    };
+  }
+
+  // 用法
+  function sum(a, b) {
+    return a + b;
+  }
+
+  let curriedSum = curry(sum);
+
+  console.log(curriedSum(1)(2));
+</script>
+<script>
+  function sum2(a, b) {
+    return a + b;
+  }
+
+  let curriedSum2 = _.curry(sum); // 使用来自 lodash 库的 _.curry
+
+  console.log(curriedSum2(1, 2));
+  console.log(curriedSum2(1)(2));
+</script>
+<script>
+  function log(date, importance, message) {
+    console.log(`[${date.getHours()}:${date.getMinutes()}] [${importance}] ${message}`);
+  }
+
+  log = _.curry(log);
+
+  log(new Date(), 'DEBUG', 'some debug'); // log(a, b, c)
+
+  log(new Date())('DEBUG')('some debug'); // log(a)(b)(c)
+
+  // logNow 会是带有固定第一个参数的日志的偏函数
+  let logNow = log(new Date());
+
+  // 使用它
+  logNow('INFO', 'message'); // [HH:mm] INFO message
+  let debugNow = logNow('DEBUG');
+  debugNow('message'); // [HH:mm] DEBUG message
+</script>
+<script>
+  function curry3(func) {
+    return function curried3(...args) {
+      if (args.length >= func.length) {
+        return func.apply(this, args);
+      } else {
+        return function(...args2) {
+          return curried3.apply(this, args.concat(args2));
+        };
+      }
+    };
+  }
+
+  function sum3(a, b, c) {
+    return a + b + c;
+  }
+
+  let curriedSum3 = curry3(sum3);
+
+  console.log(curriedSum3(1, 2, 3)); // 6，仍然可以被正常调用
+  console.log(curriedSum3(1)(2, 3)); // 6，对第一个参数的柯里化
+  console.log(curriedSum3(1)(2)(3)); // 6，全柯里化
+</script>
+</body>
+</html>
