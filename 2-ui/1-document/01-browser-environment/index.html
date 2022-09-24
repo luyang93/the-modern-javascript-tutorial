@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+  function sayHi() {
+    console.log('Hello');
+  }
+
+  // 全局函数是全局对象的方法：
+  window.sayHi();
+
+  console.log(window.innerHeight); // 内部窗口高度
+</script>
+<script>
+  // 将背景颜色修改为红色
+  document.body.style.background = 'red';
+
+  // 在 1 秒后将其修改回来
+  setTimeout(() => document.body.style.background = '', 10000);
+</script>
+<script>
+  console.log(navigator.userAgent);
+  console.log(navigator.platform);
+  console.log(location.href); // 显示当前 URL
+  if (confirm('Go to Wikipedia?')) {
+    location.href = 'https://wikipedia.org'; // 将浏览器重定向到另一个 URL
+  }
+</script>
+</body>
+</html>
