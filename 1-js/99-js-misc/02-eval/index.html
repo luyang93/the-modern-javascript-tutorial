@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+  let code = 'console.log("Hello")';
+  eval(code);
+
+  let value = eval('1+1');
+  console.log(value);
+
+  let value2 = eval('let i=0;++i');
+  console.log(value2);
+</script>
+<script>
+  let a = 1;
+
+  function f() {
+    // let a = 2;
+
+    eval('console.log(a)'); // 1
+  }
+
+  f();
+</script>
+<script>
+  let x = 5;
+  eval('x = 10');
+  console.log(x); // 10，值被更改了
+</script>
+<script>
+  'use strict';
+
+  // 提示：本教程所有可运行的示例都默认启用了严格模式 'use strict'
+
+  eval('let y = 5; function f() {}');
+
+  console.log(typeof y); // undefined（没有这个变量）
+  // 函数 f 也不可从外部进行访问
+</script>
+<script>
+  let x1 = 1;
+  {
+    let x1 = 5;
+    window.eval('console.log(x1)');
+  }
+</script>
+<script>
+  let f1 = new Function('a1', 'console.log(a1)');
+
+  f1(5); // 5
+</script>
+<script>
+  let expr = prompt('Type an arithmetic expression?', '2*3+2');
+
+  console.log(eval(expr));
+</script>
+</body>
+</html>
