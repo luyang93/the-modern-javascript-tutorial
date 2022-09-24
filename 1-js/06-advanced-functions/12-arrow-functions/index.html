@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Title</title>
+    <meta charset="UTF-8">
+    <title>Title</title>
 </head>
 <body>
 <script>
@@ -12,7 +12,7 @@
 
     showList() {
       this.students.forEach(
-        student => console.log(this.tittle + ': ' + student),
+          student => console.log(this.tittle + ': ' + student),
       );
     },
   };
@@ -53,10 +53,10 @@
     return function(...args) {
       let ctx = this;
       setTimeout(
-        function() {
-          return f.apply(ctx, args);
-        },
-        ms,
+          function() {
+            return f.apply(ctx, args);
+          },
+          ms,
       );
     };
   }

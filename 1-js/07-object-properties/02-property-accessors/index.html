@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Title</title>
+    <meta charset="UTF-8">
+    <title>Title</title>
 </head>
 <body>
 <script>
@@ -34,17 +34,17 @@
   };
 
   Object.defineProperty(
-    user2,
-    'fullName',
-    {
-      get() {
-        return `${this.name} ${this.surname}`;
-      },
+      user2,
+      'fullName',
+      {
+        get() {
+          return `${this.name} ${this.surname}`;
+        },
 
-      set(value) {
-        [this.name, this.surname] = value.split(' ');
+        set(value) {
+          [this.name, this.surname] = value.split(' ');
+        },
       },
-    },
   );
 
   console.log(user2.fullName);
@@ -54,14 +54,14 @@
 <script>
   // Error: Invalid property descriptor.
   Object.defineProperty(
-    {},
-    'prop',
-    {
-      get() {
-        return 1;
+      {},
+      'prop',
+      {
+        get() {
+          return 1;
+        },
+        value: 2,
       },
-      value: 2,
-    },
   );
 </script>
 <script>
@@ -99,14 +99,14 @@
     this.birthday = birthday;
 
     Object.defineProperty(
-      this,
-      'age',
-      {
-        get() {
-          let todayYear = new Date().getFullYear();
-          return todayYear - this.birthday.getFullYear();
+        this,
+        'age',
+        {
+          get() {
+            let todayYear = new Date().getFullYear();
+            return todayYear - this.birthday.getFullYear();
+          },
         },
-      },
     );
   }
 

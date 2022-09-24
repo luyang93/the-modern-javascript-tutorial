@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Title</title>
+    <meta charset="UTF-8">
+    <title>Title</title>
 </head>
 <body>
 <script>
@@ -122,12 +122,12 @@
   room4.occupiedBy = meetup4; // room 引用了 meetup
 
   console.log(JSON.stringify(
-      meetup4,
-      function replacer(key, value) {
-        console.log(`${key}: ${value}`);
-        return (key == 'occupiedBy') ? undefined : value;
-      },
-    ),
+          meetup4,
+          function replacer(key, value) {
+            console.log(`${key}: ${value}`);
+            return (key == 'occupiedBy') ? undefined : value;
+          },
+      ),
   );
 
   /* key:value pairs that come to replacer:
@@ -222,14 +222,14 @@
   let str = '{"title":"Conference","date":"2017-11-30T12:00:00.000Z"}';
 
   let meetup8 = JSON.parse(
-    str,
-    function(key, value) {
-      if (key == 'date') {
-        return new Date(value);
-      } else {
-        return value;
-      }
-    },
+      str,
+      function(key, value) {
+        if (key == 'date') {
+          return new Date(value);
+        } else {
+          return value;
+        }
+      },
   );
   console.log(meetup8);
   console.log(meetup8.date.getDate()); // 现在正常运行了！
@@ -274,16 +274,16 @@
 
   console.log(meetup11);
   console.log(
-    JSON.stringify(
-      meetup11,
-      function replacer(key, value) {
-        if (key != '' && value == meetup11) {
-          return undefined;
-        } else {
-          return value;
-        }
-      },
-    ),
+      JSON.stringify(
+          meetup11,
+          function replacer(key, value) {
+            if (key != '' && value == meetup11) {
+              return undefined;
+            } else {
+              return value;
+            }
+          },
+      ),
   );
 </script>
 </body>

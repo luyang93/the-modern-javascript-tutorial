@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Title</title>
+    <meta charset="UTF-8">
+    <title>Title</title>
 </head>
 <body>
 <script>
@@ -24,10 +24,10 @@
   };
 
   setTimeout(
-    function() {
-      user2.sayHi();
-    },
-    1000,
+      function() {
+        user2.sayHi();
+      },
+      1000,
   );
 </script>
 <script>
@@ -39,8 +39,8 @@
   };
 
   setTimeout(
-    () => user3.sayHi(),
-    1000,
+      () => user3.sayHi(),
+      1000,
   );
 
   user3 = {
@@ -113,10 +113,10 @@
   };
 
   user6.sayNow = partial(
-    user6.say,
-    new Date().getHours() +
-    ':' +
-    new Date().getMinutes(),
+      user6.say,
+      new Date().getHours() +
+      ':' +
+      new Date().getMinutes(),
   );
 
   user6.sayNow('Hello');
@@ -138,9 +138,9 @@
   }
 
   f = f.bind(
-    {name: 'John'},
+      {name: 'John'},
   ).bind(
-    {name: 'Ann'},
+      {name: 'Ann'},
   );
 
   f();
@@ -153,7 +153,7 @@
   sayHi7.test = 5;
 
   let bound = sayHi7.bind(
-    {name: 'John'},
+      {name: 'John'},
   );
 
   console.log(bound.test);
@@ -179,13 +179,13 @@
   };
 
   askPassword(
-    user8.loginOk.bind(user8),
-    user8.loginFail.bind(user8),
+      user8.loginOk.bind(user8),
+      user8.loginFail.bind(user8),
   );
 
   askPassword(
-    () => user8.loginOk(),
-    () => user8.loginFail(),
+      () => user8.loginOk(),
+      () => user8.loginFail(),
   );
 </script>
 <script>
@@ -204,12 +204,12 @@
   };
 
   askPassword2(
-    () => user9.login(true),
-    () => user9.login(false),
+      () => user9.login(true),
+      () => user9.login(false),
   );
   askPassword2(
-    user9.login.bind(user9, true),
-    user9.login.bind(user9, false),
+      user9.login.bind(user9, true),
+      user9.login.bind(user9, false),
   );
 </script>
 </body>

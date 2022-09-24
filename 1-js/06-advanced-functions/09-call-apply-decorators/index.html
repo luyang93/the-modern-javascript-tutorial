@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Title</title>
+    <meta charset="UTF-8">
+    <title>Title</title>
 </head>
 <body>
 <script>
@@ -192,8 +192,8 @@
   function delay(func, ms) {
     return function() {
       setTimeout(
-        () => f.apply(this, arguments),
-        ms,
+          () => f.apply(this, arguments),
+          ms,
       );
     };
   }
@@ -210,8 +210,8 @@
     return function() {
       clearTimeout(timeout);
       timeout = setTimeout(
-        () => func.apply(this, arguments),
-        ms,
+          () => func.apply(this, arguments),
+          ms,
       );
     };
   }
@@ -230,8 +230,8 @@
   function throttle(func, ms) {
 
     let isThrottled = false,
-      savedArgs,
-      savedThis;
+        savedArgs,
+        savedThis;
 
     function wrapper() {
 
@@ -245,14 +245,14 @@
       func.apply(this, arguments); // (1)
 
       setTimeout(
-        function() {
-          isThrottled = false; // (3)
-          if (savedArgs) {
-            wrapper.apply(savedThis, savedArgs);
-            savedArgs = savedThis = null;
-          }
-        },
-        ms,
+          function() {
+            isThrottled = false; // (3)
+            if (savedArgs) {
+              wrapper.apply(savedThis, savedArgs);
+              savedArgs = savedThis = null;
+            }
+          },
+          ms,
       );
     }
 

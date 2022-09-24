@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Title</title>
+    <meta charset="UTF-8">
+    <title>Title</title>
 </head>
 <body>
 <script>
@@ -22,12 +22,12 @@
 <script>
   async function f3() {
     let promise = new Promise(
-      (resolve, reject) => {
-        setTimeout(
-          () => resolve('done!'),
-          1000,
-        );
-      },
+        (resolve, reject) => {
+          setTimeout(
+              () => resolve('done!'),
+              1000,
+          );
+        },
     );
 
     let result = await promise; // 等待，直到 promise resolve (*)
@@ -56,10 +56,10 @@
 
     // 等待 3 秒
     await new Promise(
-      (resolve, reject) => setTimeout(
-        resolve,
-        3000,
-      ),
+        (resolve, reject) => setTimeout(
+            resolve,
+            3000,
+        ),
     );
 
     img.remove();
@@ -78,12 +78,12 @@
 </script>
 <script>
   (
-    async () => {
-      let response = await fetch('/article/promise-chaining/user.json');
-      let user = await response.json();
+      async () => {
+        let response = await fetch('/article/promise-chaining/user.json');
+        let user = await response.json();
 
-      console.log(user);
-    }
+        console.log(user);
+      }
   )();
 </script>
 <script>
@@ -96,8 +96,8 @@
       console.log(resolve);
       // 1000ms 后使用 this.num*2 进行 resolve
       setTimeout(
-        () => resolve(this.num * 10),
-        4000,
+          () => resolve(this.num * 10),
+          4000,
       );
     }
   }
@@ -150,10 +150,10 @@
 </script>
 <script>
   let results = await Promise.all(
-    [
-      fetch(url1),
-      fetch(url2),
-    ],
+      [
+        fetch(url1),
+        fetch(url2),
+      ],
   );
 </script>
 <script>
@@ -212,10 +212,10 @@
 <script>
   async function wait() {
     await new Promise(
-      resolve => setTimeout(
-        resolve,
-        1000,
-      ),
+        resolve => setTimeout(
+            resolve,
+            1000,
+        ),
     );
 
     return 9999;

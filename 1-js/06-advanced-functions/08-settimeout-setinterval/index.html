@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Title</title>
+    <meta charset="UTF-8">
+    <title>Title</title>
 </head>
 <body>
 <script>
@@ -40,26 +40,26 @@
 </script>
 <script>
   let timerId2 = setTimeout(
-    function tick() {
-      console.log('tick2');
-      timerId2 = setTimeout(tick, 2000); // (*)
-    },
-    2000,
+      function tick() {
+        console.log('tick2');
+        timerId2 = setTimeout(tick, 2000); // (*)
+      },
+      2000,
   );
 </script>
 <script>
   let delay = 5000;
 
   let timerId3 = setTimeout(
-    function request() {
-      if (true) {
-        delay *= 2;
-        console.log(delay);
-      }
+      function request() {
+        if (true) {
+          delay *= 2;
+          console.log(delay);
+        }
 
-      timerId3 = setTimeout(request, delay);
-    },
-    delay,
+        timerId3 = setTimeout(request, delay);
+      },
+      delay,
   );
 </script>
 <script>
@@ -72,14 +72,14 @@
   let times = [];
 
   setTimeout(function run() {
-      times.push(Date.now() - start);
+        times.push(Date.now() - start);
 
-      if (start + 100 < Date.now()) {
-        console.log(times);
-      } else {
-        setTimeout(run);
-      }
-    },
+        if (start + 100 < Date.now()) {
+          console.log(times);
+        } else {
+          setTimeout(run);
+        }
+      },
   );
 </script>
 <script>
@@ -87,14 +87,14 @@
     let current = from;
 
     let timeId = setInterval(
-      function() {
-        console.log(current);
-        if (current == to) {
-          clearInterval(timeId);
-        }
-        current++;
-      },
-      1000,
+        function() {
+          console.log(current);
+          if (current == to) {
+            clearInterval(timeId);
+          }
+          current++;
+        },
+        1000,
     );
   }
 
@@ -105,14 +105,14 @@
     let current = from;
 
     setTimeout(
-      function go() {
-        console.log(current);
-        if (current < to) {
-          setTimeout(go, 1000);
-        }
-        current++;
-      },
-      1000,
+        function go() {
+          console.log(current);
+          if (current < to) {
+            setTimeout(go, 1000);
+          }
+          current++;
+        },
+        1000,
     );
   }
 

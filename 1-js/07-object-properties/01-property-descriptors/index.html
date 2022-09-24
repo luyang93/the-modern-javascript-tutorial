@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Title</title>
+    <meta charset="UTF-8">
+    <title>Title</title>
 </head>
 <body>
 <script>
@@ -27,9 +27,9 @@
   let user2 = {};
 
   Object.defineProperty(
-    user2,
-    'name',
-    {value: 'John'},
+      user2,
+      'name',
+      {value: 'John'},
   );
 
   let descriptor2 = Object.getOwnPropertyDescriptor(user2, 'name');
@@ -43,9 +43,9 @@
   };
 
   Object.defineProperty(
-    user3,
-    'name',
-    {writable: false},
+      user3,
+      'name',
+      {writable: false},
   );
 
   user3.name = 'Pete'; // Error: Cannot assign to read only property 'name'
@@ -55,9 +55,9 @@
   let user4 = {};
 
   Object.defineProperty(
-    user4,
-    'name',
-    {value: 'John', enumerable: true, configurable: true},
+      user4,
+      'name',
+      {value: 'John', enumerable: true, configurable: true},
   );
 
   console.log(user4.name);
@@ -86,9 +86,9 @@
   };
 
   Object.defineProperty(
-    user6,
-    'toString',
-    {enumerable: false},
+      user6,
+      'toString',
+      {enumerable: false},
   );
 
   for (let key in user6) {
@@ -113,9 +113,9 @@
   }
   */
   Object.defineProperty(
-    Math,
-    'PI',
-    {writable: true},
+      Math,
+      'PI',
+      {writable: true},
   );
 
   Math.PI = 3;
@@ -127,9 +127,9 @@
   };
 
   Object.defineProperty(
-    user8,
-    'name',
-    {configurable: false},
+      user8,
+      'name',
+      {configurable: false},
   );
 
   user8.name = 'Pete';
@@ -142,9 +142,9 @@
   };
 
   Object.defineProperty(
-    user9,
-    'name',
-    {writable: false, configurable: false},
+      user9,
+      'name',
+      {writable: false, configurable: false},
   );
 
   user9.name = 'Pete';
@@ -155,15 +155,15 @@
   let user10 = {};
 
   Object.defineProperties(
-    user10,
-    {
-      name: {
-        value: 'John', writable: false,
+      user10,
+      {
+        name: {
+          value: 'John', writable: false,
+        },
+        surname: {
+          value: 'Smith', writable: false,
+        },
       },
-      surname: {
-        value: 'Smith', writable: false,
-      },
-    },
   );
 
   console.log(Object.getOwnPropertyDescriptors(user10));
@@ -174,8 +174,8 @@
   };
 
   let clone = Object.defineProperties(
-    {},
-    Object.getOwnPropertyDescriptors(user11),
+      {},
+      Object.getOwnPropertyDescriptors(user11),
   );
 
   console.log(clone);
