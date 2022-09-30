@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+Hello
+<!-- comment -->
+<script>
+  console.log(document.body.constructor.name);
+  console.log(document.body.toString());
+
+  console.log(document.body instanceof HTMLBodyElement);
+  console.log(document.body instanceof HTMLElement);
+  console.log(document.body instanceof Element);
+  console.log(document.body instanceof Node);
+  console.log(document.body instanceof EventTarget);
+
+  console.log(document.body);
+  console.dir(document.body);
+</script>
+<script>
+  let elem = document.body;
+
+  // 让我们检查一下：elem 中的节点类型是什么？
+  console.log(elem.nodeType); // 1 => element
+
+  // 它的第一个子节点的类型是……
+  console.log(elem.firstChild.nodeType); // 3 => text
+
+  // 对于 document 对象，类型是 9
+  console.log(document.nodeType); // 9
+</script>
+<script>
+  console.log(document.body.nodeName);
+  console.log(document.body.tagName);
+
+  console.log(elem.firstChild.nodeName);
+  console.log(elem.firstChild.tagName);
+
+  console.log(document.nodeName);
+  console.log(document.tagName);
+</script>
+<p>A paragraph</p>
+<div>A div</div>
+
+<script>
+  console.log(document.body.innerHTML); // 读取当前内容
+  document.body.innerHTML = 'The new BODY!'; // 替换它
+
+  setTimeout(
+      () => {document.body.innerHTML = '<b>test';}, // 忘记闭合标签
+      10000,
+  );
+
+  setTimeout(
+      () => {
+        document.body.innerHTML += '<div>Hello<img src=\'smile.gif\'/> !</div>';
+        document.body.innerHTML += 'How goes?';
+      },
+      20000);
+</script>
+<div id="elem">Hello <b>World</b></div>
+
+<script>
+  console.log(elem.outerHTML); // <div id="elem">Hello <b>World</b></div>
+  let elem_ = document.getElementById('elem');
+
+  // 使用 <p>...</p> 替换 div.outerHTML
+  elem_.outerHTML = '<p>A new element</p>'; // (*)
+
+  console.log(elem_.outerHTML);
+</script>
+<script>
+  let text = document.body.firstChild;
+  console.log(text.data); // Hello
+
+  let comment = text.nextSibling;
+  console.log(comment.data); // Comment
+</script>
+<div id="news">
+    <h1>Headline!</h1>
+    <p>Martians attack people!</p>
+</div>
+
+<script>
+  // Headline! Martians attack people!
+  console.log(news.textContent);
+</script>
+<div id="elem1"></div>
+<div id="elem2"></div>
+
+<script>
+  let name = prompt('What\'s your name?', '<b>Winnie-the-Pooh!</b>');
+
+  elem1.innerHTML = name;
+  elem2.textContent = name;
+</script>
+<div>Both divs below are hidden</div>
+
+<div hidden>With the attribute "hidden"</div>
+
+<div id="elem3">JavaScript assigned the property "hidden"</div>
+
+<script>
+  elem3.hidden = true;
+</script>
+<div id="elem4">A blinking element</div>
+
+<script>
+  b = document.querySelector('b');
+  setInterval(() => b.hidden = !b.hidden, 1000);
+</script>
+
+<input type="text" id="elem5" value="value">
+
+<script>
+  console.log(elem5.type); // "text"
+  console.log(elem5.id); // "elem"
+  console.log(elem5.value); // value
+</script>
+<div id="li1">
+    <ul>
+        <li>Animals
+            <ul>
+                <li>Mammals
+                    <ul>
+                        <li>Cows</li>
+                        <li>Donkeys</li>
+                        <li>Dogs</li>
+                        <li>Tigers</li>
+                    </ul>
+                </li>
+                <li>Other
+                    <ul>
+                        <li>Snakes</li>
+                        <li>Birds</li>
+                        <li>Lizards</li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li>Fishes
+            <ul>
+                <li>Aquarium
+                    <ul>
+                        <li>Guppy</li>
+                        <li>Angelfish</li>
+                    </ul>
+                </li>
+                <li>Sea
+                    <ul>
+                        <li>Sea trout</li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</div>
+<script>
+  for (let li of li1.querySelectorAll('li')) {
+    // get the title from the text node
+    let title = li.firstChild.data;
+
+    title = title.trim(); // remove extra spaces from ends
+
+    // get the descendants count
+    let count = li.getElementsByTagName('li').length;
+
+    console.log(title + ': ' + count);
+  }
+</script>
+<script>
+  console.log(document.body.lastChild.nodeType);
+</script>
+<script>
+  let body = document.body;
+
+  body.innerHTML = '<!--' + body.tagName + '-->';
+
+  console.log(body.firstChild.data); // 这里会显示什么？
+</script>
+<script>
+  console.log(document);
+  console.log(document.constructor.name);
+
+  console.log(HTMLDocument.prototype.constructor === HTMLDocument);
+
+  console.log(HTMLDocument.prototype.constructor.name); // HTMLDocument
+  console.log(HTMLDocument.prototype.__proto__.constructor.name); // Document
+  console.log(HTMLDocument.prototype.__proto__.__proto__.constructor.name); // Node
+
+  console.dir(document);
+</script>
+</body>
+</html>
