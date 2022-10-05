@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body id="page" something="non-standard" type="..." data-about="Elephants">
+<script>
+  document.body.myData = {
+    name: 'Caesar',
+    title: 'Imperator',
+  };
+
+  console.log(document.body.myData.title); // Imperator
+</script>
+<script>
+  document.body.sayTagName = function() {
+    console.log(this.tagName);
+  };
+
+  document.body.sayTagName(); // BODY（这个方法中的 "this" 的值是 document.body）
+</script>
+<script>
+  Element.prototype.sayHi = function() {
+    console.log(`Hello, I'm ${this.tagName}`);
+  };
+
+  document.documentElement.sayHi(); // Hello, I'm HTML
+  document.body.sayHi(); // Hello, I'm BODY
+</script>
+<script>
+  console.log(document.body.id); // test
+  // 非标准的特性没有获得对应的属性
+  console.log(document.body.something); // undefined
+</script>
+<input id="input" type="text">
+<script>
+  console.log(input.type); // text
+  console.log(document.body.type); // undefined：DOM 属性没有被创建，因为它不是一个标准的特性
+</script>
+<script>
+  console.log(document.body.hasAttribute('something'));
+  console.log(document.body.getAttribute('something'));
+  console.log(document.body.setAttribute('something', 'new-value'));
+  console.log(document.body.getAttribute('something'));
+  console.log(document.body.removeAttribute('something'));
+  console.log(document.body.hasAttribute('something'));
+</script>
+<div id="elem" about="Elephant"></div>
+<script>
+  console.log(elem.getAttribute('About')); // (1) 'Elephant'，读取
+
+  elem.setAttribute('Test', 123); // (2) 写入
+
+  console.log(elem.outerHTML); // (3) 查看特性是否在 HTML 中（在）
+
+  for (let attr of elem.attributes) { // (4) 列出所有
+    console.log(`${attr.name} = ${attr.value}`);
+  }
+</script>
+<input id="input2">
+<script>
+  let a = input2;
+
+  // 特性 => 属性
+  a.setAttribute('id', 'id2');
+  console.log(a.id); // id（被更新了）
+  a.setAttribute('value', 'text');
+  console.log(a.value); // text
+
+  // 属性 => 特性
+  a.id = 'newId';
+  console.log(a.getAttribute('id')); // newId（被更新了）
+  a.value = 'newValue';
+  console.log(a.getAttribute('value')); // text（没有被更新！）
+</script>
+<input id="input3" type="checkbox" checked> checkbox
+<script>
+  console.log(input3.getAttribute('checked'));
+  console.log(input3.checked);
+</script>
+<div id="div2" style="color:red;font-size:120%">Hello</div>
+<script>
+  // 字符串
+  console.log(div2.getAttribute('style')); // color:red;font-size:120%
+
+  // 对象
+  console.log(div2.style); // [object CSSStyleDeclaration]
+  console.log(div2.style.color); // red
+</script>
+<a id="a123" href="#hello">link</a>
+<script>
+  console.log(a123.getAttribute('href'));
+  console.log(a123.href);
+</script>
+<!-- 标记这个 div 以在这显示 "name" -->
+<div show-info="name"></div>
+<!-- 标记这个 div 以在这显示 "age" -->
+<div show-info="age"></div>
+<script>
+  // 这段代码找到带有标记的元素，并显示需要的内容
+  let user = {
+    name: 'Pete',
+    age: 25,
+  };
+
+  for (let div of document.querySelectorAll('[show-info]')) {
+    // 在字段中插入相应的信息
+    let field = div.getAttribute('show-info');
+    div.innerHTML = user[field]; // 首先 "name" 变为 Pete，然后 "age" 变为 25
+  }
+</script>
+<style>
+    /* 样式依赖于自定义特性 "order-state" */
+    .order[order-state="new"] {
+        color: green;
+    }
+
+    .order[order-state="pending"] {
+        color: blue;
+    }
+
+    .order[order-state="canceled"] {
+        color: red;
+    }
+</style>
+<div id="div_new" class="order" order-state="new">
+    A new order.
+</div>
+<div id="div_pending" class="order" order-state="pending">
+    A pending order.
+</div>
+<div id="div_cancled" class="order" order-state="canceled">
+    A canceled order.
+</div>
+<script>
+  setTimeout(
+      () => {div_new.setAttribute('order-state', 'canceled');},
+      1000,
+  );
+</script>
+<script>
+  console.log(document.body.dataset.about); // Elephants
+</script>
+<style>
+    .order[data-order-state="new"] {
+        color: green;
+    }
+
+    .order[data-order-state="pending"] {
+        color: blue;
+    }
+
+    .order[data-order-state="canceled"] {
+        color: red;
+    }
+</style>
+<div id="order" class="order" data-order-state="new">
+    A new order.
+</div>
+
+<script>
+  // 读取
+  console.log(order.dataset.orderState); // new
+
+  // 修改
+  setTimeout(
+      () => {
+        order.dataset.orderState = 'pending'; // (*)
+      },
+      1000,
+  );
+</script>
+<div data-widget-name="menu">Choose the genre</div>
+<script>
+  // 获取它
+  let elem2 = document.querySelector('[data-widget-name]');
+
+  // 读取值
+  console.log(elem2.dataset.widgetName);
+  // 或
+  console.log(elem2.getAttribute('data-widget-name'));
+</script>
+<a name="list">the list</a>
+<ul>
+    <li><a href="http://google.com">http://google.com</a></li>
+    <li><a href="/tutorial">/tutorial.html</a></li>
+    <li><a href="local/path">local/path</a></li>
+    <li><a href="ftp://ftp.com/my.zip">ftp://ftp.com/my.zip</a></li>
+    <li><a href="http://nodejs.org">http://nodejs.org</a></li>
+    <li><a href="http://internal.com/test">http://internal.com/test</a></li>
+</ul>
+<script>
+  // 为单个链接设置样式
+  let link = document.querySelector('li a');
+  link.style.color = 'orange';
+
+  let links = document.querySelectorAll('li a');
+
+  for (let link of links) {
+    let href = link.getAttribute('href');
+
+    if (!href) {
+      continue;
+    }
+    if (!href.includes('://')) {
+      continue;
+    }
+    if (href.startsWith('http://internal.com')) {
+      continue;
+    }
+
+    link.style.color = 'orange';
+  }
+</script>
+<ul id="ul2">
+    <li><a href="http://google.com">http://google.com</a></li>
+    <li><a href="/tutorial">/tutorial.html</a></li>
+    <li><a href="local/path">local/path</a></li>
+    <li><a href="ftp://ftp.com/my.zip">ftp://ftp.com/my.zip</a></li>
+    <li><a href="http://nodejs.org">http://nodejs.org</a></li>
+    <li><a href="http://internal.com/test">http://internal.com/test</a></li>
+</ul>
+<script>
+  let selector = 'li a[href*="://"]:not([href^="http://internal.com"])';
+  let links2 = ul2.querySelectorAll(selector);
+
+  links2.forEach(link => link.style.color = 'orange');
+</script>
+</body>
+</html>
