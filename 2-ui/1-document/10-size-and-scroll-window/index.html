@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+  console.log(document.documentElement.clientHeight);
+  console.log(document.documentElement.clientWidth);
+
+  console.log(window.innerHeight);
+  console.log(window.innerWidth);
+</script>
+<script>
+  let scrollHeight = Math.max(
+      document.body.scrollHeight, document.documentElement.scrollHeight,
+      document.body.offsetHeight, document.documentElement.offsetHeight,
+      document.body.clientHeight, document.documentElement.clientHeight,
+  );
+
+  console.log('Full document height, with scrolled out part: ' + scrollHeight);
+</script>
+<script>
+  console.log('当前已从顶部滚动：' + window.pageYOffset);
+  console.log('当前已从左侧滚动：' + window.pageXOffset);
+
+  console.log('当前已从顶部滚动：' + window.scrollY);
+  console.log('当前已从左侧滚动：' + window.scrollX);
+
+  console.log('当前已从顶部滚动：' + document.documentElement.scrollTop);
+  console.log('当前已从左侧滚动：' + document.documentElement.scrollLeft);
+</script>
+<script>
+  window.scrollBy(0, 10);
+  window.scrollTo(0, 0);
+
+  elem.scrollIntoView();
+  elem.scrollIntoView(false);
+
+  document.body.style.overflow = 'hidden';
+  document.body.style.overflow = '';
+</script>
+</body>
+</html>
