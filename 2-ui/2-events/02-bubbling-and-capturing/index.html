@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        form {
+            background-color: green;
+            position: relative;
+            width: 150px;
+            height: 150px;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        div {
+            background-color: blue;
+            position: absolute;
+            top: 25px;
+            left: 25px;
+            width: 100px;
+            height: 100px;
+        }
+
+        p {
+            background-color: red;
+            position: absolute;
+            top: 25px;
+            left: 25px;
+            width: 50px;
+            height: 50px;
+            line-height: 50px;
+            margin: 0;
+        }
+
+        body {
+            line-height: 25px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body onclick="console.log(`the bubbling doesn't reach here`)">
+<div onclick="console.log('The handler!')">
+    <em>If you click on <code>EM</code>, the handler on <code>DIV</code> runs.</em>
+</div>
+<div>
+    <form onclick="console.log('form')">FORM
+        <div onclick="console.log('div')">DIV
+            <p onclick="console.log('p')">P</p>
+        </div>
+    </form>
+    A click shows both <code>event.target</code> and <code>this</code> to compare:
+    <form id="form">FORM
+        <div>DIV
+            <p>P</p>
+        </div>
+    </form>
+    <form>FORM
+        <div>DIV
+            <p>P</p>
+        </div>
+    </form>
+</div>
+<script src="script.js"></script>
+<script>
+  for (let elem of document.querySelectorAll('*')) {
+    elem.addEventListener('click', e => console.log(`Capturing: ${elem.tagName}`), true);
+    elem.addEventListener('click', e => console.log(`Bubbling: ${elem.tagName}`));
+    elem.addEventListener('click', e => console.log(1)); // 会先被触发
+    elem.addEventListener('click', e => console.log(2));
+  }
+</script>
+<button onclick="event.stopPropagation()">Click me</button>
+</body>
+</html>
