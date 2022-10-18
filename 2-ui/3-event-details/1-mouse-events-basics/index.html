@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .selected {
+            background: #0f0;
+        }
+
+        li {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<p>
+    <input onmousedown="return logMouse(event)"
+           onmouseup="return logMouse(event)"
+           onclick="return logMouse(event)"
+           oncontextmenu="return logMouse(event)"
+           ondblclick="return logMouse(event)"
+           value="使用鼠标左键或右键点击我"
+           type="button"
+    >
+    <input onclick="logClear('test')"
+           value="Clear"
+           type="button"
+    >
+</p>
+<form id="testform" name="testform">
+    <textarea style="font-size:12px;height:150px;width:360px;">
+    </textarea>
+</form>
+<script>
+  let timer = 0;
+
+  function showmesg(t, form) {
+
+    if (timer == 0) {
+      timer = new Date();
+    }
+
+    let tm = new Date();
+
+    if (tm - timer > 300) {
+      t = '------------------------------\n' + t;
+    }
+
+    let area = document.forms[form + 'form'].getElementsByTagName('textarea')[0];
+
+    area.value += t + '\n';
+    area.scrollTop = area.scrollHeight;
+
+    timer = tm;
+  }
+
+  function logMouse(e) {
+    let evt = e.type;
+    while (evt.length < 11) evt += ' ';
+    showmesg(evt + ' button=' + e.button, 'test');
+    return false;
+  }
+
+  function logClear(form) {
+    timer = 0;
+    document.forms[form + 'form'].getElementsByTagName('textarea')[0].value = '';
+    lines = 0;
+  }
+
+  window.logClear = logClear;
+  window.logMouse = logMouse;
+</script>
+<button id="button2">Alt+Shift+Click on me!</button>
+<script>
+  button2.onclick = function(event) {
+    if (event.altKey && event.shiftKey) {
+      console.log('Hooray!');
+    }
+  };
+</script>
+<input
+        onmousemove="this.value=event.clientX+':'+event.clientY"
+        value="Mouse over me"
+>
+<span ondblclick="return false">Double-click me</span>
+<div>
+    Before...
+    <b ondblclick="console.log('Click!')" onmousedown="return false">
+        Double-click me
+    </b>
+    ...After
+</div>
+<div oncopy="console.log('Copying forbidden!');return false">
+    Dear user,
+    The copying is forbidden for you.
+    If you know JS or HTML, then you can get everything from the page source though.
+</div>
+<div>
+    Click on a list item to select it.
+    <br>
+
+    <ul id="ul">
+        <li>Christopher Robin</li>
+        <li>Winnie-the-Pooh</li>
+        <li>Tigger</li>
+        <li>Kanga</li>
+        <li>Rabbit. Just rabbit.</li>
+    </ul>
+</div>
+<script>
+  ul.onclick = function(event) {
+    if (event.target.tagName != 'LI') return;
+
+    if (event.ctrlKey || event.metaKey) {
+      toggleSelect(event.target);
+    } else {
+      singleSelect(event.target);
+    }
+
+    // prevent unneeded selection of list elements on clicks
+    ul.onmousedown = function() {
+      return false;
+    };
+
+    function toggleSelect(li) {
+      li.classList.toggle('selected');
+    }
+
+    function singleSelect(li) {
+      let selected = ul.querySelectorAll('.selected');
+      for (let elem of selected) {
+        elem.classList.remove('selected');
+      }
+      li.classList.add('selected');
+    }
+  };
+</script>
+</body>
+</html>
