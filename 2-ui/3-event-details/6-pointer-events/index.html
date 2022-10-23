@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #area {
+            border: 1px solid black;
+            width: 90%;
+            height: 180px;
+            cursor: pointer;
+            overflow: scroll;
+            user-select: none;
+        }
+    </style>
+    <style>
+        #ball {
+            touch-action: none;
+        }
+    </style>
+    <style>
+        .slider {
+            border-radius: 5px;
+            background: #E0E0E0;
+            background: linear-gradient(left top, #E0E0E0, #EEEEEE);
+            width: 310px;
+            height: 15px;
+            margin: 5px;
+        }
+
+        .thumb {
+            touch-action: none;
+            width: 10px;
+            height: 25px;
+            border-radius: 3px;
+            position: relative;
+            left: 10px;
+            top: -5px;
+            background: blue;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<div id="area">
+    Multi-touch here
+</div>
+<script>
+  document.onpointerdown = document.onpointerup = log;
+
+  function log(event) {
+    area.insertAdjacentHTML('beforeend', `
+        <div>${event.type} isPrimary=${event.isPrimary} pointerId=${event.pointerId}</div>
+      `);
+    area.scrollTop = 1e9;
+  }
+</script>
+<div>
+    <p>Drag the ball.</p>
+    <img src="https://js.cx/clipart/ball.svg" style="cursor:pointer" width="40" height="40" id="ball">
+    <textarea id="text" style="display:block;width:300px;height:100px"></textarea>
+</div>
+<script>
+  ball.onpointerdown = log;
+  ball.onpointerup = log;
+  ball.onpointermove = log;
+  ball.onpointercancel = log;
+
+  ball.ondragstart = () => false;
+
+  let lastEventType;
+  let n = 1;
+
+  function log(event) {
+    if (lastEventType == event.type) {
+      n++;
+      text.value = text.value.replace(/.*\n$/, `${event.type} * ${n}\n`);
+      return;
+    }
+    lastEventType = event.type;
+    n = 1;
+    text.value += event.type + '\n';
+    text.scrollTop = 1e9;
+  }
+</script>
+<div>
+    <div id="slider" class="slider">
+        <div class="thumb"></div>
+    </div>
+
+    <p style="border:1px solid gray" onmousemove="this.textContent = new Date()">Mouse over here to see the date</p>
+</div>
+<script>
+  let thumb = slider.querySelector('.thumb');
+  let shiftX;
+
+  function onThumbDown(event) {
+    event.preventDefault(); // 阻止开始选择（浏览器行为）
+
+    shiftX = event.clientX - thumb.getBoundingClientRect().left;
+
+    thumb.setPointerCapture(event.pointerId);
+
+    thumb.onpointermove = onThumbMove;
+
+    thumb.onpointerup = event => {
+      // 拖动结束，不再需要跟踪指针
+      // ...这里还可以处理“拖动结束”相关的逻辑
+      thumb.onpointermove = null;
+      thumb.onpointerup = null;
+    };
+  }
+
+  function onThumbMove(event) {
+    let newLeft = event.clientX - shiftX - slider.getBoundingClientRect().left;
+
+    // 如果指针移出了滑块 => 调整 left 来防止其超出边界
+    if (newLeft < 0) {
+      newLeft = 0;
+    }
+    let rightEdge = slider.offsetWidth - thumb.offsetWidth;
+    if (newLeft > rightEdge) {
+      newLeft = rightEdge;
+    }
+
+    thumb.style.left = newLeft + 'px';
+  }
+
+  thumb.onpointerdown = onThumbDown;
+
+  thumb.ondragstart = () => false;
+
+</script>
+</body>
+</html>
