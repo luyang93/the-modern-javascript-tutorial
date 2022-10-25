@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form name="my">
+    <input name="one" value="1">
+    <input name="two" value="2">
+</form>
+
+<script>
+  // 获取表单
+  let form = document.forms.my; // <form name="my"> 元素
+
+  // 获取表单中的元素
+  let elem = form.elements.one; // <input name="one"> 元素
+
+  console.log(elem.value); // 1
+</script>
+<form>
+    <input type="radio" name="age" value="10">
+    <input type="radio" name="age" value="20">
+</form>
+<script>
+  let form2 = document.forms[1];
+
+  let ageElems = form2.elements.age;
+
+  console.log(ageElems[0]); // [object HTMLInputElement]
+</script>
+<form id="form3">
+    <fieldset name="userFields">
+        <legend>info</legend>
+        <input name="login" type="text">
+    </fieldset>
+</form>
+<script>
+  console.log(form3.elements.login); // <input name="login">
+
+  let fieldset = form3.elements.userFields;
+  console.log(fieldset); // HTMLFieldSetElement
+
+  // 我们可以通过名字从表单和 fieldset 中获取 input
+  console.log(fieldset.elements.login == form3.elements.login); // true
+</script>
+<form id="form5">
+    <input name="login">
+</form>
+
+<script>
+  console.log(form5.elements.login == form5.login); // true，与 <input> 相同
+
+  form5.login.name = 'username'; // 修改 input 的 name
+
+  // form.elements 更新了 name：
+  console.log(form5.elements.login); // undefined
+  console.log(form5.elements.username); // input
+
+  // form 允许我们使用两个名字：新的名字和旧的名字
+  console.log(form5.username == form5.login); // true
+</script>
+<form id="form6">
+    <input type="text" name="login">
+</form>
+<script>
+  // form -> element
+  let login = form6.login;
+
+  // element -> form
+  console.log(login.form);
+  console.log(login.form == form6);
+</script>
+<select id="select">
+    <option value="apple">Apple</option>
+    <option value="pear">Pear</option>
+    <option value="banana">Banana</option>
+</select>
+<script>
+  // 下面这三行做的都是同一件事
+  select.options[2].selected = true;
+  select.selectedIndex = 2;
+  select.value = 'banana';
+  // 请注意：选项编号是从零开始的，所以编号 2 表示的是第三项
+</script>
+<select id="select2" multiple>
+    <option value="blues" selected>Blues</option>
+    <option value="rock" selected>Rock</option>
+    <option value="classic">Classic</option>
+</select>
+<script>
+  let selected = Array.from(select2.options).filter(option => option.selected).map(option => option.value);
+  console.log(selected);
+  let option1 = new Option('Text', 'value', true, true);
+  let option2 = new Option('Text', 'value');
+  select2.options.add(option1);
+  select2.options.add(option2);
+</script>
+<select id="genres">
+    <option value="rock">Rock</option>
+    <option value="blues" selected>Blues</option>
+</select>
+<script>
+  // 1)
+  let selectedOption = genres.options[genres.selectedIndex];
+  console.log(selectedOption.value);
+
+  // 2)
+  let newOption = new Option('Classic', 'classic');
+  genres.append(newOption);
+
+  // 3)
+  newOption.selected = true;
+</script>
+</body>
+</html>
